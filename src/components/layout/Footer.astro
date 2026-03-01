@@ -2,14 +2,14 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-white/10 py-12">
+<footer class="border-t border-border py-12">
   <div class="mx-auto max-w-6xl px-6">
     <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
       <div>
-        <p class="text-sm text-[#9ca3af]">
+        <p class="text-sm text-muted">
           © {currentYear} Kristian López. All rights reserved.
         </p>
-        <p class="mt-1 text-xs text-[#9ca3af]/60">
+        <p class="mt-1 text-xs text-muted/60">
           Built with <a href="https://astro.build" class="hover:text-violet-400 transition-colors">Astro</a> + TypeScript + Tailwind
         </p>
       </div>
@@ -21,7 +21,7 @@ const currentYear = new Date().getFullYear();
               href="https://github.com/kristianlom"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-[#9ca3af] hover:text-[#f1f1f1] transition-colors"
+              class="text-sm text-muted hover:text-text-primary transition-colors"
               aria-label="GitHub profile"
             >
               GitHub
@@ -32,19 +32,19 @@ const currentYear = new Date().getFullYear();
               href="https://linkedin.com/in/lopezkristian"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-[#9ca3af] hover:text-[#f1f1f1] transition-colors"
+              class="text-sm text-muted hover:text-text-primary transition-colors"
               aria-label="LinkedIn profile"
             >
               LinkedIn
             </a>
           </li>
           <li>
-            <a href="/writing/rss.xml" class="text-sm text-[#9ca3af] hover:text-[#f1f1f1] transition-colors" aria-label="RSS feed">
+            <a href="/writing/rss.xml" class="text-sm text-muted hover:text-text-primary transition-colors" aria-label="RSS feed">
               RSS
             </a>
           </li>
           <li>
-            <a href="/privacy" class="text-sm text-[#9ca3af] hover:text-[#f1f1f1] transition-colors">
+            <a href="/privacy" class="text-sm text-muted hover:text-text-primary transition-colors">
               Privacy
             </a>
           </li>

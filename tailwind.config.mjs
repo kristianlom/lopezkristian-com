@@ -5,14 +5,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: { dark: '#0a0a0a', light: '#f9f9f9' },
-        surface: { dark: '#111111', light: '#ffffff' },
+        bg: 'var(--color-bg)',
+        surface: 'var(--color-surface)',
+        'text-primary': 'var(--color-text)',
+        muted: 'var(--color-muted)',
+        border: 'var(--color-border)',
+        'surface-hover': 'var(--color-surface-hover)',
         accent: {
           primary: '#7c3aed',
           secondary: '#ef4444',
         },
-        'text-primary': { dark: '#f1f1f1', light: '#111111' },
-        muted: '#9ca3af',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

@@ -11,9 +11,9 @@ const navLinks = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a0a]/80 backdrop-blur-sm">
+<header class="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-sm">
   <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4" aria-label="Main navigation">
-    <a href="/" class="text-lg font-bold text-[#f1f1f1] hover:text-violet-400 transition-colors" aria-label="Kristian López — Home">
+    <a href="/" class="text-lg font-bold text-text-primary hover:text-violet-400 transition-colors" aria-label="Kristian López — Home">
       KL
     </a>
 
@@ -25,7 +25,7 @@ const currentPath = Astro.url.pathname;
             class={`rounded px-3 py-2 text-sm font-medium transition-colors ${
               currentPath === href || (href !== '/' && currentPath.startsWith(href))
                 ? 'bg-violet-600/20 text-violet-400'
-                : 'text-[#9ca3af] hover:text-[#f1f1f1]'
+                : 'text-muted hover:text-text-primary'
             }`}
             aria-current={currentPath === href ? 'page' : undefined}
           >
@@ -39,7 +39,7 @@ const currentPath = Astro.url.pathname;
       <button
         id="theme-toggle"
         aria-label="Toggle dark/light mode"
-        class="rounded-lg p-2 text-[#9ca3af] hover:bg-white/10 hover:text-[#f1f1f1] transition-colors"
+        class="rounded-lg p-2 text-muted hover:bg-surface-hover hover:text-text-primary transition-colors"
       >
         <svg id="icon-sun" class="hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
@@ -51,7 +51,7 @@ const currentPath = Astro.url.pathname;
 
       <button
         id="mobile-menu-toggle"
-        class="rounded-lg p-2 text-[#9ca3af] hover:bg-white/10 hover:text-[#f1f1f1] transition-colors md:hidden"
+        class="rounded-lg p-2 text-muted hover:bg-surface-hover hover:text-text-primary transition-colors md:hidden"
         aria-label="Toggle mobile menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
@@ -63,7 +63,7 @@ const currentPath = Astro.url.pathname;
     </div>
   </nav>
 
-  <div id="mobile-menu" class="hidden border-t border-white/10 md:hidden" role="menu">
+  <div id="mobile-menu" class="hidden border-t border-border md:hidden" role="menu">
     <ul class="flex flex-col gap-1 px-6 py-4" role="list">
       {navLinks.map(({ href, label }) => (
         <li>
@@ -72,9 +72,10 @@ const currentPath = Astro.url.pathname;
             class={`block rounded px-3 py-2 text-sm font-medium transition-colors ${
               currentPath === href
                 ? 'bg-violet-600/20 text-violet-400'
-                : 'text-[#9ca3af] hover:text-[#f1f1f1]'
+                : 'text-muted hover:text-text-primary'
             }`}
             role="menuitem"
+            aria-current={currentPath === href ? 'page' : undefined}
           >
             {label}
           </a>

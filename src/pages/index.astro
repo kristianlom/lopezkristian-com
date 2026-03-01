@@ -33,17 +33,17 @@ const skills = [
   <JsonLd type="Person" />
 
   <!-- Hero -->
-  <section class="relative overflow-hidden border-b border-white/10 py-24 sm:py-32">
+  <section class="relative overflow-hidden border-b border-border py-24 sm:py-32">
     <div class="absolute inset-0 bg-gradient-to-br from-violet-600/5 via-transparent to-red-500/5" aria-hidden="true" />
     <div class="relative mx-auto max-w-6xl px-6">
       <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-violet-400">Available for senior roles</p>
-      <h1 class="mb-4 text-4xl font-bold leading-tight text-[#f1f1f1] sm:text-6xl">
+      <h1 class="mb-4 text-4xl font-bold leading-tight text-text-primary sm:text-6xl">
         Kristian López
       </h1>
-      <p class="mb-6 text-xl font-medium text-[#9ca3af] sm:text-2xl">
+      <p class="mb-6 text-xl font-medium text-muted sm:text-2xl">
         Software Architect · Staff Engineer
       </p>
-      <p class="mb-8 max-w-2xl text-base leading-relaxed text-[#9ca3af] sm:text-lg">
+      <p class="mb-8 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
         I design and build distributed systems that scale. Specialized in microservices, 
         event-driven architectures, AWS cloud-native deployments, and clean, testable 
         codebases that teams can maintain for years.
@@ -57,12 +57,12 @@ const skills = [
 
   <!-- Skills -->
   <Section id="skills">
-    <h2 class="mb-8 text-2xl font-bold text-[#f1f1f1]">Core Technologies</h2>
+    <h2 class="mb-8 text-2xl font-bold text-text-primary">Core Technologies</h2>
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
       {skills.map(({ name, icon }) => (
-        <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-[#111111] p-4 transition-colors hover:border-violet-500/30">
+        <div class="flex items-center gap-3 rounded-xl border border-border bg-surface p-4 transition-colors hover:border-violet-500/30">
           <span class="text-2xl" aria-hidden="true">{icon}</span>
-          <span class="font-medium text-[#f1f1f1]">{name}</span>
+          <span class="font-medium text-text-primary">{name}</span>
         </div>
       ))}
     </div>
@@ -70,9 +70,9 @@ const skills = [
 
   <!-- Featured Projects -->
   {projects.length > 0 && (
-    <Section id="projects" class="border-t border-white/10">
+    <Section id="projects" class="border-t border-border">
       <div class="mb-8 flex items-center justify-between">
-        <h2 class="text-2xl font-bold text-[#f1f1f1]">Featured Projects</h2>
+        <h2 class="text-2xl font-bold text-text-primary">Featured Projects</h2>
         <a href="/projects" class="text-sm text-violet-400 hover:text-violet-300 transition-colors">
           All projects →
         </a>
@@ -92,9 +92,9 @@ const skills = [
 
   <!-- Latest Posts -->
   {posts.length > 0 && (
-    <Section id="writing" class="border-t border-white/10">
+    <Section id="writing" class="border-t border-border">
       <div class="mb-8 flex items-center justify-between">
-        <h2 class="text-2xl font-bold text-[#f1f1f1]">Latest Writing</h2>
+        <h2 class="text-2xl font-bold text-text-primary">Latest Writing</h2>
         <a href="/writing" class="text-sm text-violet-400 hover:text-violet-300 transition-colors">
           All posts →
         </a>

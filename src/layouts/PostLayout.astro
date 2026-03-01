@@ -45,6 +45,7 @@ const postUrl = `https://lopezkristian.com/writing/${slug}`;
     title={title}
     description={description}
     publishedTime={isoDate(pubDate)}
+    modifiedTime={updatedDate ? isoDate(updatedDate) : undefined}
     url={postUrl}
   />
 
@@ -53,23 +54,23 @@ const postUrl = `https://lopezkristian.com/writing/${slug}`;
       <article class="min-w-0">
         <header class="mb-10">
           <div class="mb-4 flex flex-wrap items-center gap-3">
-            <time class="text-sm text-[#9ca3af]" datetime={isoDate(pubDate)}>
+            <time class="text-sm text-muted" datetime={isoDate(pubDate)}>
               {formatDate(pubDate)}
             </time>
             {updatedDate && (
-              <span class="text-sm text-[#9ca3af]">
+              <span class="text-sm text-muted">
                 · Updated {formatDate(updatedDate)}
               </span>
             )}
             {readingTime && (
-              <span class="text-sm text-[#9ca3af]">· {readingTime}</span>
+              <span class="text-sm text-muted">· {readingTime}</span>
             )}
           </div>
 
-          <h1 class="mb-4 text-3xl font-bold leading-tight text-[#f1f1f1] sm:text-4xl">
+          <h1 class="mb-4 text-3xl font-bold leading-tight text-text-primary sm:text-4xl">
             {title}
           </h1>
-          <p class="text-lg text-[#9ca3af]">{description}</p>
+          <p class="text-lg text-muted">{description}</p>
 
           {tags.length > 0 && (
             <div class="mt-4 flex flex-wrap gap-2">
@@ -80,15 +81,15 @@ const postUrl = `https://lopezkristian.com/writing/${slug}`;
           )}
         </header>
 
-        <div class="prose prose-invert prose-violet max-w-none prose-headings:font-bold prose-a:text-violet-400 prose-code:font-mono prose-pre:rounded-xl prose-img:rounded-xl">
+        <div class="prose prose-violet max-w-none prose-headings:font-bold prose-headings:text-text-primary prose-p:text-muted prose-li:text-muted prose-a:text-violet-400 prose-strong:text-text-primary prose-code:font-mono prose-pre:rounded-xl prose-img:rounded-xl">
           <slot />
         </div>
 
-        <footer class="mt-12 border-t border-white/10 pt-8">
+        <footer class="mt-12 border-t border-border pt-8">
           <div class="flex items-center gap-4">
             <div>
-              <p class="font-semibold text-[#f1f1f1]">Kristian López</p>
-              <p class="text-sm text-[#9ca3af]">Software Architect · Staff Engineer</p>
+              <p class="font-semibold text-text-primary">Kristian López</p>
+              <p class="text-sm text-muted">Software Architect · Staff Engineer</p>
             </div>
           </div>
         </footer>

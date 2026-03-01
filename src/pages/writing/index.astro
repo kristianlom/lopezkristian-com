@@ -16,8 +16,8 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 >
   <Section>
     <header class="mb-12">
-      <h1 class="mb-4 text-4xl font-bold text-[#f1f1f1]">Writing</h1>
-      <p class="max-w-2xl text-lg text-[#9ca3af]">
+      <h1 class="mb-4 text-4xl font-bold text-text-primary">Writing</h1>
+      <p class="max-w-2xl text-lg text-muted">
         Deep dives into architecture patterns, production lessons, and technical trade-offs. 
         No fluff, no tutorials for beginners — written for engineers who've shipped systems 
         and want to think more carefully about them.
@@ -27,6 +27,7 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
     <div class="mb-8 flex flex-wrap gap-2" id="tag-filters" role="group" aria-label="Filter by tag">
       <button
         data-tag=""
+        aria-pressed="true"
         class="tag-btn rounded-full bg-violet-600 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-violet-500"
       >
         All
@@ -34,7 +35,8 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
       {allTags.map((tag) => (
         <button
           data-tag={tag}
-          class="tag-btn rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-[#9ca3af] transition-colors hover:bg-violet-600/20 hover:text-violet-400"
+          aria-pressed="false"
+          class="tag-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400"
         >
           {tag}
         </button>
@@ -67,9 +69,11 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
       const tag = btn.dataset.tag ?? '';
 
       buttons.forEach((b) => {
-        b.className = 'tag-btn rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-[#9ca3af] transition-colors hover:bg-violet-600/20 hover:text-violet-400';
+        b.className = 'tag-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400';
+        b.setAttribute('aria-pressed', 'false');
       });
       btn.className = 'tag-btn rounded-full bg-violet-600 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-violet-500';
+      btn.setAttribute('aria-pressed', 'true');
 
       cards.forEach((card) => {
         const tags = card.dataset.tags ?? '';

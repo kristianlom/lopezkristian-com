@@ -7,6 +7,7 @@ interface ArticleSchema {
   title: string;
   description: string;
   publishedTime: string;
+  modifiedTime?: string;
   url: string;
 }
 interface WebSiteSchema {
@@ -26,6 +27,8 @@ if (props.type === 'Person') {
     '@type': 'Person',
     name: 'Kristian López',
     url: siteUrl,
+    description: 'Software Architect and Staff Engineer specialized in microservices, AWS, DDD, and reactive systems.',
+    image: `${siteUrl}/og-default.png`,
     jobTitle: 'Software Architect & Staff Engineer',
     knowsAbout: [
       'Software Architecture',
@@ -53,6 +56,7 @@ if (props.type === 'Person') {
     headline: props.title,
     description: props.description,
     datePublished: props.publishedTime,
+    ...(props.modifiedTime && { dateModified: props.modifiedTime }),
     url: props.url,
     author: {
       '@type': 'Person',
