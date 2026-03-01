@@ -1,11 +1,14 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/layout/Section.astro';
+
+const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 ---
 
 <BaseLayout
   title="Contact — Kristian López"
   description="Get in touch with Kristian López for software architecture consulting, staff engineering roles, or technical collaborations."
+  image="/og/og-home.png"
 >
   <Section>
     <div class="grid gap-12 lg:grid-cols-2">
@@ -56,12 +59,15 @@ import Section from '@components/layout/Section.astro';
           class="space-y-6 rounded-xl border border-border bg-surface p-8"
           novalidate
         >
+          <input type="hidden" name="access_key" value={web3formsKey} />
+          <input type="hidden" name="subject" value="New contact from lopezkristian.com" />
+          <input type="hidden" name="from_name" value="Portfolio Contact Form" />
           <div class="hidden" aria-hidden="true">
-            <label for="company">Company</label>
+            <label for="botcheck">Botcheck</label>
             <input
-              type="text"
-              id="company"
-              name="company"
+              type="checkbox"
+              id="botcheck"
+              name="botcheck"
               tabindex="-1"
               autocomplete="off"
             />
@@ -141,7 +147,6 @@ import Section from '@components/layout/Section.astro';
     const nameField = form.querySelector<HTMLInputElement>('#name');
     const emailField = form.querySelector<HTMLInputElement>('#email');
     const messageField = form.querySelector<HTMLTextAreaElement>('#message');
-    const companyField = form.querySelector<HTMLInputElement>('#company');
     const fields = [nameField, emailField, messageField].filter(Boolean) as Array<HTMLInputElement | HTMLTextAreaElement>;
 
     function clearFeedback() {
@@ -251,31 +256,22 @@ import Section from '@components/layout/Section.astro';
         return;
       }
 
-      const payload = {
-        name: nameField?.value.trim() ?? '',
-        email: emailField?.value.trim() ?? '',
-        message: messageField?.value.trim() ?? '',
-        company: companyField?.value ?? '',
-      };
-
       if (submitButton) {
         submitButton.disabled = true;
         submitButton.textContent = 'Sending...';
       }
 
       try {
-        const response = await fetch('/api/contact', {
+        const formData = new FormData(form);
+        const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
+          body: formData,
         });
 
         const data = await response.json().catch(() => ({}));
 
-        if (!response.ok) {
-          setFeedback(data?.error ?? 'Unable to send your message right now. Try again later.', 'error');
+        if (!response.ok || !data.success) {
+          setFeedback(data?.message ?? 'Unable to send your message right now. Try again later.', 'error');
           return;
         }
 
