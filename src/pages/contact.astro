@@ -12,7 +12,7 @@ import Section from '@components/layout/Section.astro';
       <div>
         <h1 class="mb-4 text-4xl font-bold text-text-primary">Get in Touch</h1>
         <p class="mb-8 text-lg leading-relaxed text-muted">
-          I'm open to senior engineering roles, architecture consulting, and interesting 
+          I'm open to senior engineering roles, architecture consulting, and interesting
           technical conversations. Fill out the form or reach me directly.
         </p>
 
@@ -44,8 +44,8 @@ import Section from '@components/layout/Section.astro';
           </a>
 
           <div class="rounded-xl border border-border bg-surface p-4">
-            <p class="font-semibold text-text-primary">Schedule a call</p>
-            <p class="text-sm text-muted">Calendly integration — coming soon</p>
+            <p class="font-semibold text-text-primary">Response SLA</p>
+            <p class="text-sm text-muted">Usually within 24 business hours.</p>
           </div>
         </div>
       </div>
@@ -56,6 +56,17 @@ import Section from '@components/layout/Section.astro';
           class="space-y-6 rounded-xl border border-border bg-surface p-8"
           novalidate
         >
+          <div class="hidden" aria-hidden="true">
+            <label for="company">Company</label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </div>
+
           <div>
             <label for="name" class="mb-2 block text-sm font-medium text-text-primary">Name</label>
             <input
@@ -63,8 +74,10 @@ import Section from '@components/layout/Section.astro';
               id="name"
               name="name"
               required
+              minlength="2"
+              maxlength="80"
               autocomplete="name"
-              class="w-full rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
+              class="w-full rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted transition-colors focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
               placeholder="Your name"
             />
           </div>
@@ -76,8 +89,9 @@ import Section from '@components/layout/Section.astro';
               id="email"
               name="email"
               required
+              maxlength="120"
               autocomplete="email"
-              class="w-full rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
+              class="w-full rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted transition-colors focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
               placeholder="you@example.com"
             />
           </div>
@@ -88,21 +102,26 @@ import Section from '@components/layout/Section.astro';
               id="message"
               name="message"
               required
-              rows={5}
-              class="w-full resize-none rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
+              minlength="20"
+              maxlength="2000"
+              rows={6}
+              class="w-full resize-none rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted transition-colors focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
               placeholder="Tell me about the opportunity or project..."
             ></textarea>
           </div>
 
           <button
+            id="contact-submit"
             type="submit"
-            class="w-full rounded-lg bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition-all hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-bg"
+            class="w-full rounded-lg bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition-all hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-bg disabled:cursor-not-allowed disabled:opacity-70"
           >
             Send message
           </button>
 
+          <p id="contact-feedback" class="hidden text-sm" role="status" aria-live="polite"></p>
+
           <p class="text-xs text-muted">
-            This form is ready for serverless integration (Netlify Forms, Formspree, etc.).
+            Protected with client-side validation, honeypot anti-spam and basic rate limiting.
           </p>
         </form>
       </div>
@@ -111,9 +130,33 @@ import Section from '@components/layout/Section.astro';
 </BaseLayout>
 
 <script>
+  const RATE_LIMIT_KEY = 'contact_form_attempts';
+  const MAX_SUBMISSIONS_PER_HOUR = 3;
+
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitButton = document.getElementById('contact-submit') as HTMLButtonElement | null;
+  const feedback = document.getElementById('contact-feedback');
+
   if (form) {
-    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]');
+    const nameField = form.querySelector<HTMLInputElement>('#name');
+    const emailField = form.querySelector<HTMLInputElement>('#email');
+    const messageField = form.querySelector<HTMLTextAreaElement>('#message');
+    const companyField = form.querySelector<HTMLInputElement>('#company');
+    const fields = [nameField, emailField, messageField].filter(Boolean) as Array<HTMLInputElement | HTMLTextAreaElement>;
+
+    function clearFeedback() {
+      if (!feedback) return;
+      feedback.classList.add('hidden');
+      feedback.classList.remove('text-green-400', 'text-red-400');
+      feedback.textContent = '';
+    }
+
+    function setFeedback(message: string, type: 'success' | 'error') {
+      if (!feedback) return;
+      feedback.classList.remove('hidden', 'text-green-400', 'text-red-400');
+      feedback.classList.add(type === 'success' ? 'text-green-400' : 'text-red-400');
+      feedback.textContent = message;
+    }
 
     function showError(field: HTMLInputElement | HTMLTextAreaElement, message: string) {
       clearError(field);
@@ -135,37 +178,112 @@ import Section from '@components/layout/Section.astro';
 
     function validateField(field: HTMLInputElement | HTMLTextAreaElement): boolean {
       clearError(field);
-      if (!field.value.trim()) {
+      const value = field.value.trim();
+
+      if (!value) {
         showError(field, `${field.labels?.[0]?.textContent ?? 'This field'} is required.`);
         return false;
       }
-      if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
+
+      if (field.id === 'name' && value.length < 2) {
+        showError(field, 'Name must be at least 2 characters.');
+        return false;
+      }
+
+      if (field.id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
         showError(field, 'Please enter a valid email address.');
         return false;
       }
+
+      if (field.id === 'message' && value.length < 20) {
+        showError(field, 'Message must be at least 20 characters.');
+        return false;
+      }
+
       return true;
+    }
+
+    function getRecentAttempts(): number[] {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(RATE_LIMIT_KEY) ?? '[]');
+        if (!Array.isArray(parsed)) return [];
+        const oneHourAgo = Date.now() - 60 * 60 * 1000;
+        return parsed.filter((value) => Number.isFinite(value) && value > oneHourAgo);
+      } catch {
+        return [];
+      }
+    }
+
+    function canSubmitNow() {
+      return getRecentAttempts().length < MAX_SUBMISSIONS_PER_HOUR;
+    }
+
+    function registerAttempt() {
+      const attempts = [...getRecentAttempts(), Date.now()];
+      localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(attempts));
     }
 
     fields.forEach((field) => {
       field.addEventListener('blur', () => validateField(field));
       field.addEventListener('input', () => {
+        clearFeedback();
         if (field.getAttribute('aria-invalid') === 'true') validateField(field);
       });
     });
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      clearFeedback();
+
       let valid = true;
       fields.forEach((field) => {
         if (!validateField(field)) valid = false;
       });
-      if (valid) {
-        // Form is valid — submit when a backend is configured
-        const btn = form.querySelector<HTMLButtonElement>('[type="submit"]');
-        if (btn) {
-          btn.textContent = 'Message sent!';
-          btn.disabled = true;
-          btn.classList.add('opacity-60', 'cursor-not-allowed');
+
+      if (!valid) return;
+
+      if (!canSubmitNow()) {
+        setFeedback('Rate limit reached. Please wait before sending another message.', 'error');
+        return;
+      }
+
+      const payload = {
+        name: nameField?.value.trim() ?? '',
+        email: emailField?.value.trim() ?? '',
+        message: messageField?.value.trim() ?? '',
+        company: companyField?.value ?? '',
+      };
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
+      }
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          setFeedback(data?.error ?? 'Unable to send your message right now. Try again later.', 'error');
+          return;
+        }
+
+        registerAttempt();
+        form.reset();
+        setFeedback('Message sent successfully. Thanks for reaching out.', 'success');
+      } catch {
+        setFeedback('Network error while sending message. Please try again.', 'error');
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Send message';
         }
       }
     });
