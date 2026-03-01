@@ -10,8 +10,8 @@ import Section from '@components/layout/Section.astro';
   <Section>
     <div class="grid gap-12 lg:grid-cols-2">
       <div>
-        <h1 class="mb-4 text-4xl font-bold text-[#f1f1f1]">Get in Touch</h1>
-        <p class="mb-8 text-lg leading-relaxed text-[#9ca3af]">
+        <h1 class="mb-4 text-4xl font-bold text-text-primary">Get in Touch</h1>
+        <p class="mb-8 text-lg leading-relaxed text-muted">
           I'm open to senior engineering roles, architecture consulting, and interesting 
           technical conversations. Fill out the form or reach me directly.
         </p>
@@ -21,11 +21,11 @@ import Section from '@components/layout/Section.astro';
             href="https://linkedin.com/in/lopezkristian"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center gap-4 rounded-xl border border-white/10 bg-[#111111] p-4 transition-colors hover:border-violet-500/30"
+            class="flex items-center gap-4 rounded-xl border border-border bg-surface p-4 transition-colors hover:border-violet-500/30"
           >
             <span class="text-2xl" aria-hidden="true">💼</span>
             <div>
-              <p class="font-semibold text-[#f1f1f1]">LinkedIn</p>
+              <p class="font-semibold text-text-primary">LinkedIn</p>
               <p class="text-sm text-violet-400">linkedin.com/in/lopezkristian</p>
             </div>
           </a>
@@ -34,18 +34,18 @@ import Section from '@components/layout/Section.astro';
             href="https://github.com/kristianlom"
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center gap-4 rounded-xl border border-white/10 bg-[#111111] p-4 transition-colors hover:border-violet-500/30"
+            class="flex items-center gap-4 rounded-xl border border-border bg-surface p-4 transition-colors hover:border-violet-500/30"
           >
             <span class="text-2xl" aria-hidden="true">⚙️</span>
             <div>
-              <p class="font-semibold text-[#f1f1f1]">GitHub</p>
+              <p class="font-semibold text-text-primary">GitHub</p>
               <p class="text-sm text-violet-400">github.com/kristianlom</p>
             </div>
           </a>
 
-          <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
-            <p class="font-semibold text-[#f1f1f1]">Schedule a call</p>
-            <p class="text-sm text-[#9ca3af]">Calendly integration — coming soon</p>
+          <div class="rounded-xl border border-border bg-surface p-4">
+            <p class="font-semibold text-text-primary">Schedule a call</p>
+            <p class="text-sm text-muted">Calendly integration — coming soon</p>
           </div>
         </div>
       </div>
@@ -53,55 +53,55 @@ import Section from '@components/layout/Section.astro';
       <div>
         <form
           id="contact-form"
-          class="space-y-6 rounded-xl border border-white/10 bg-[#111111] p-8"
+          class="space-y-6 rounded-xl border border-border bg-surface p-8"
           novalidate
         >
           <div>
-            <label for="name" class="mb-2 block text-sm font-medium text-[#f1f1f1]">Name</label>
+            <label for="name" class="mb-2 block text-sm font-medium text-text-primary">Name</label>
             <input
               type="text"
               id="name"
               name="name"
               required
               autocomplete="name"
-              class="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-[#f1f1f1] placeholder-[#9ca3af] focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
+              class="w-full rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
               placeholder="Your name"
             />
           </div>
 
           <div>
-            <label for="email" class="mb-2 block text-sm font-medium text-[#f1f1f1]">Email</label>
+            <label for="email" class="mb-2 block text-sm font-medium text-text-primary">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               required
               autocomplete="email"
-              class="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-[#f1f1f1] placeholder-[#9ca3af] focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
+              class="w-full rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label for="message" class="mb-2 block text-sm font-medium text-[#f1f1f1]">Message</label>
+            <label for="message" class="mb-2 block text-sm font-medium text-text-primary">Message</label>
             <textarea
               id="message"
               name="message"
               required
               rows={5}
-              class="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-[#f1f1f1] placeholder-[#9ca3af] focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
+              class="w-full resize-none rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 transition-colors"
               placeholder="Tell me about the opportunity or project..."
             ></textarea>
           </div>
 
           <button
             type="submit"
-            class="w-full rounded-lg bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition-all hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-[#111111]"
+            class="w-full rounded-lg bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition-all hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-bg"
           >
             Send message
           </button>
 
-          <p class="text-xs text-[#9ca3af]">
+          <p class="text-xs text-muted">
             This form is ready for serverless integration (Netlify Forms, Formspree, etc.).
           </p>
         </form>
@@ -109,3 +109,65 @@ import Section from '@components/layout/Section.astro';
     </div>
   </Section>
 </BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]');
+
+    function showError(field: HTMLInputElement | HTMLTextAreaElement, message: string) {
+      clearError(field);
+      const error = document.createElement('p');
+      error.className = 'mt-1 text-xs text-red-500';
+      error.setAttribute('role', 'alert');
+      error.textContent = message;
+      field.parentElement?.appendChild(error);
+      field.classList.add('border-red-500');
+      field.setAttribute('aria-invalid', 'true');
+    }
+
+    function clearError(field: HTMLInputElement | HTMLTextAreaElement) {
+      const existing = field.parentElement?.querySelector('[role="alert"]');
+      existing?.remove();
+      field.classList.remove('border-red-500');
+      field.removeAttribute('aria-invalid');
+    }
+
+    function validateField(field: HTMLInputElement | HTMLTextAreaElement): boolean {
+      clearError(field);
+      if (!field.value.trim()) {
+        showError(field, `${field.labels?.[0]?.textContent ?? 'This field'} is required.`);
+        return false;
+      }
+      if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
+        showError(field, 'Please enter a valid email address.');
+        return false;
+      }
+      return true;
+    }
+
+    fields.forEach((field) => {
+      field.addEventListener('blur', () => validateField(field));
+      field.addEventListener('input', () => {
+        if (field.getAttribute('aria-invalid') === 'true') validateField(field);
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+      fields.forEach((field) => {
+        if (!validateField(field)) valid = false;
+      });
+      if (valid) {
+        // Form is valid — submit when a backend is configured
+        const btn = form.querySelector<HTMLButtonElement>('[type="submit"]');
+        if (btn) {
+          btn.textContent = 'Message sent!';
+          btn.disabled = true;
+          btn.classList.add('opacity-60', 'cursor-not-allowed');
+        }
+      }
+    });
+  }
+</script>

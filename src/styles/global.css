@@ -5,30 +5,42 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --color-bg: #0a0a0a;
+    --color-surface: #111111;
+    --color-text: #f1f1f1;
+    --color-muted: #9ca3af;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-surface-hover: rgba(255, 255, 255, 0.05);
   }
-  
+
+  html.light {
+    color-scheme: light;
+    --color-bg: #f9f9f9;
+    --color-surface: #ffffff;
+    --color-text: #111111;
+    --color-muted: #6b7280;
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-surface-hover: rgba(0, 0, 0, 0.05);
+  }
+
   html {
-    @apply bg-[#0a0a0a] text-[#f1f1f1];
+    background-color: var(--color-bg);
+    color: var(--color-text);
     scroll-behavior: smooth;
   }
-  
-  html.light {
-    @apply bg-[#f9f9f9] text-[#111111];
-    color-scheme: light;
-  }
-  
+
   body {
     @apply font-sans leading-[1.7] antialiased;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight;
   }
-  
+
   code {
     @apply font-mono;
   }
-  
+
   a {
     @apply transition-colors duration-200;
   }
