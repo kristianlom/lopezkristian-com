@@ -7,17 +7,35 @@ export async function getStaticPaths() {
   const posts = (await getCollection('writing', ({ data }) => !data.draft))
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
+  // Build a tag -> posts index once to avoid O(n^2) scans.
+  const tagIndex = new Map<string, typeof posts>();
+  for (const post of posts) {
+    for (const tag of post.data.tags ?? []) {
+      if (!tagIndex.has(tag)) tagIndex.set(tag, []);
+      tagIndex.get(tag)!.push(post);
+    }
+  }
+
   return posts.map((post, index, allPosts) => {
     const prevPost = allPosts[index - 1];
     const nextPost = allPosts[index + 1];
-    const relatedPosts = allPosts
-      .filter((candidate) => candidate.slug !== post.slug)
-      .map((candidate) => ({
-        post: candidate,
-        score: candidate.data.tags.filter((tag) => post.data.tags.includes(tag)).length,
-      }))
-      .filter(({ score }) => score > 0)
-      .sort((a, b) => b.score - a.score || b.post.data.pubDate.getTime() - a.post.data.pubDate.getTime())
+
+    const candidateScores = new Map<string, { post: (typeof posts)[number]; score: number }>();
+    for (const tag of post.data.tags ?? []) {
+      for (const candidate of tagIndex.get(tag) ?? []) {
+        if (candidate.slug === post.slug) continue;
+        const existing = candidateScores.get(candidate.slug) ?? { post: candidate, score: 0 };
+        existing.score += 1;
+        candidateScores.set(candidate.slug, existing);
+      }
+    }
+
+    const relatedPosts = Array.from(candidateScores.values())
+      .sort(
+        (a, b) =>
+          b.score - a.score ||
+          b.post.data.pubDate.getTime() - a.post.data.pubDate.getTime(),
+      )
       .slice(0, 3)
       .map(({ post: related }) => related);
 

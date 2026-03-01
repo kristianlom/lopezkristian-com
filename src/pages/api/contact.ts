@@ -9,6 +9,33 @@ interface ContactPayload {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Server-side in-memory rate limiter: max 5 submissions per IP per hour.
+const SERVER_RATE_LIMIT = 5;
+const SERVER_RATE_WINDOW_MS = 60 * 60 * 1000;
+const ipAttempts = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const windowStart = now - SERVER_RATE_WINDOW_MS;
+  const attempts = (ipAttempts.get(ip) ?? []).filter((t) => t > windowStart);
+  if (attempts.length >= SERVER_RATE_LIMIT) return true;
+  attempts.push(now);
+  ipAttempts.set(ip, attempts);
+  return false;
+}
+
+function cleanupRateLimitMap() {
+  const windowStart = Date.now() - SERVER_RATE_WINDOW_MS;
+  for (const [ip, attempts] of ipAttempts) {
+    const valid = attempts.filter((t) => t > windowStart);
+    if (valid.length === 0) {
+      ipAttempts.delete(ip);
+    } else {
+      ipAttempts.set(ip, valid);
+    }
+  }
+}
+
 function jsonResponse(status: number, body: Record<string, unknown>) {
   return new Response(JSON.stringify(body), {
     status,
@@ -19,6 +46,20 @@ function jsonResponse(status: number, body: Record<string, unknown>) {
 }
 
 export const POST: APIRoute = async ({ request }) => {
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
+    request.headers.get('x-real-ip');
+
+  if (!ip) {
+    return jsonResponse(400, { error: 'Unable to verify request origin.' });
+  }
+
+  cleanupRateLimitMap();
+
+  if (isRateLimited(ip)) {
+    return jsonResponse(429, { error: 'Too many requests. Please wait before trying again.' });
+  }
+
   let payload: ContactPayload;
 
   try {

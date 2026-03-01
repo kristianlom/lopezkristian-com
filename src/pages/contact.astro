@@ -220,7 +220,11 @@ import Section from '@components/layout/Section.astro';
 
     function registerAttempt() {
       const attempts = [...getRecentAttempts(), Date.now()];
-      localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(attempts));
+      try {
+        localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(attempts));
+      } catch {
+        // Swallow errors: failure to persist attempts should not block submission
+      }
     }
 
     fields.forEach((field) => {
