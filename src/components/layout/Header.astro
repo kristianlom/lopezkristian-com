@@ -2,13 +2,23 @@
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/writing', label: 'Writing' },
+  { href: '/projects', label: 'Projects', homeHref: '#projects' },
+  { href: '/writing', label: 'Writing', homeHref: '#writing' },
   { href: '/resume', label: 'Resume' },
   { href: '/contact', label: 'Contact' },
 ];
 
-const currentPath = Astro.url.pathname;
+const normalizePath = (path: string) => {
+  if (path !== '/' && path.endsWith('/')) return path.slice(0, -1);
+  return path;
+};
+
+const currentPath = normalizePath(Astro.url.pathname);
+const isHomePage = currentPath === '/';
+const isActiveLink = (href: string) => {
+  const normalizedHref = normalizePath(href);
+  return currentPath === normalizedHref || (normalizedHref !== '/' && currentPath.startsWith(`${normalizedHref}/`));
+};
 ---
 
 <header class="sticky top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-sm">
@@ -18,16 +28,16 @@ const currentPath = Astro.url.pathname;
     </a>
 
     <ul class="hidden items-center gap-1 md:flex" role="list">
-      {navLinks.map(({ href, label }) => (
+      {navLinks.map(({ href, label, homeHref }) => (
         <li>
           <a
-            href={href}
+            href={isHomePage && homeHref ? homeHref : href}
             class={`rounded px-3 py-2 text-sm font-medium transition-colors ${
-              currentPath === href || (href !== '/' && currentPath.startsWith(href))
+              isActiveLink(href)
                 ? 'bg-violet-600/20 text-violet-400'
                 : 'text-muted hover:text-text-primary'
             }`}
-            aria-current={currentPath === href ? 'page' : undefined}
+            aria-current={isActiveLink(href) ? 'page' : undefined}
           >
             {label}
           </a>
@@ -65,17 +75,17 @@ const currentPath = Astro.url.pathname;
 
   <div id="mobile-menu" class="hidden border-t border-border md:hidden" role="menu">
     <ul class="flex flex-col gap-1 px-6 py-4" role="list">
-      {navLinks.map(({ href, label }) => (
+      {navLinks.map(({ href, label, homeHref }) => (
         <li>
           <a
-            href={href}
+            href={isHomePage && homeHref ? homeHref : href}
             class={`block rounded px-3 py-2 text-sm font-medium transition-colors ${
-              currentPath === href
+              isActiveLink(href)
                 ? 'bg-violet-600/20 text-violet-400'
                 : 'text-muted hover:text-text-primary'
             }`}
             role="menuitem"
-            aria-current={currentPath === href ? 'page' : undefined}
+            aria-current={isActiveLink(href) ? 'page' : undefined}
           >
             {label}
           </a>
@@ -115,10 +125,31 @@ const currentPath = Astro.url.pathname;
 
   const mobileToggle = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuLinks = mobileMenu?.querySelectorAll('a');
+
+  const setMobileMenu = (open: boolean) => {
+    mobileMenu?.classList.toggle('hidden', !open);
+    mobileToggle?.setAttribute('aria-expanded', String(open));
+  };
 
   mobileToggle?.addEventListener('click', () => {
     const isOpen = mobileMenu?.classList.contains('hidden') === false;
-    mobileMenu?.classList.toggle('hidden');
-    mobileToggle.setAttribute('aria-expanded', String(!isOpen));
+    setMobileMenu(!isOpen);
+  });
+
+  mobileMenuLinks?.forEach((link) => {
+    link.addEventListener('click', () => setMobileMenu(false));
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', href);
+    });
   });
 </script>
