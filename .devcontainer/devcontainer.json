@@ -1,0 +1,192 @@
+{
+  "name": "lopezkristian.com — Dev Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  // ─── Features preinstaladas ───────────────────────────────────────────────
+  "features": {
+    // Git (última versión — la imagen base trae uno, este lo actualiza)
+    "ghcr.io/devcontainers/features/git:1": {
+      "ppa": true,
+      "version": "latest"
+    },
+    // GitHub CLI (gh)
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    },
+    // AWS CLI v2
+    "ghcr.io/devcontainers/features/aws-cli:1": {
+      "version": "latest"
+    },
+    // Docker in Docker (para builds locales de imagen)
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    }
+  },
+
+  // ─── Extensiones de VS Code ───────────────────────────────────────────────
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Astro
+        "astro-build.astro-vscode",
+
+        // ESLint + Prettier
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "rvest.vs-code-prettier-eslint",
+
+        // Tailwind CSS
+        "bradlc.vscode-tailwindcss",
+
+        // GitLens
+        "eamodio.gitlens",
+
+        // TypeScript & JavaScript
+        "ms-vscode.vscode-typescript-next",
+        "christian-kohler.path-intellisense",
+
+        // MDX (para los posts del blog)
+        "unifiedjs.vscode-mdx",
+
+        // Editor quality of life
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-spanish",
+        "pkief.material-icon-theme",
+        "aaron-bond.better-comments",
+        "usernamehw.errorlens",
+        "wix.vscode-import-cost",
+
+        // Docker (útil con DinD)
+        "ms-azuretools.vscode-docker",
+
+        // GitHub Actions
+        "github.vscode-github-actions",
+
+        // Markdown
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint"
+      ],
+      "settings": {
+        // ── Editor general ──────────────────────────────────────────────
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.rulers": [80, 120],
+        "editor.bracketPairColorization.enabled": true,
+        "editor.guides.bracketPairs": true,
+        "editor.minimap.enabled": false,
+
+        // ── Archivos ────────────────────────────────────────────────────
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "files.associations": {
+          "*.astro": "astro",
+          "*.mdx": "mdx"
+        },
+        "files.exclude": {
+          "**/node_modules": true,
+          "**/.git": false,
+          "**/dist": true,
+          "**/.astro": true
+        },
+
+        // ── Astro ───────────────────────────────────────────────────────
+        "[astro]": {
+          "editor.defaultFormatter": "astro-build.astro-vscode"
+        },
+
+        // ── TypeScript ──────────────────────────────────────────────────
+        "typescript.preferences.importModuleSpecifier": "non-relative",
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "typescript.suggest.autoImports": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+
+        // ── Tailwind ────────────────────────────────────────────────────
+        "tailwindCSS.includeLanguages": {
+          "astro": "html"
+        },
+        "tailwindCSS.experimental.classRegex": [
+          ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+          ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+        ],
+
+        // ── Prettier ────────────────────────────────────────────────────
+        "prettier.requireConfig": true,
+
+        // ── Terminal ────────────────────────────────────────────────────
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.fontSize": 13,
+
+        // ── Git ─────────────────────────────────────────────────────────
+        "git.autofetch": true,
+        "git.confirmSync": false,
+        "gitlens.codeLens.enabled": true,
+
+        // ── Spell checker ───────────────────────────────────────────────
+        "cSpell.language": "en,es",
+
+        // ── ErrorLens ───────────────────────────────────────────────────
+        "errorLens.enabledDiagnosticLevels": ["error", "warning"],
+
+        // ── Iconos ──────────────────────────────────────────────────────
+        "workbench.iconTheme": "material-icon-theme"
+      }
+    }
+  },
+
+  // ─── Port forwarding ──────────────────────────────────────────────────────
+  "forwardPorts": [
+    4321,  // Astro dev server
+    4322,  // Astro preview
+    3000   // Reserve para herramientas auxiliares
+  ],
+  "portsAttributes": {
+    "4321": {
+      "label": "Astro Dev Server",
+      "onAutoForward": "openBrowser",
+      "protocol": "http"
+    },
+    "4322": {
+      "label": "Astro Preview",
+      "onAutoForward": "notify",
+      "protocol": "http"
+    }
+  },
+
+  // ─── Lifecycle hooks ──────────────────────────────────────────────────────
+  "onCreateCommand": "bash .devcontainer/scripts/on-create.sh",
+  "updateContentCommand": "bash .devcontainer/scripts/update-content.sh",
+  "postCreateCommand": "bash .devcontainer/scripts/post-create.sh",
+  "postStartCommand": "bash .devcontainer/scripts/post-start.sh",
+
+  // ─── Usuario dentro del contenedor ───────────────────────────────────────
+  "remoteUser": "node",
+
+  // ─── Esperar a que las dependencias estén instaladas antes de conectar ──
+  "waitFor": "updateContentCommand",
+
+  // ─── Detección de variables de entorno del shell ────────────────────────
+  "userEnvProbe": "bash",
+
+  // ─── Variables de entorno para procesos de herramientas (VS Code, terminal)
+  "remoteEnv": {
+    "NODE_ENV": "development",
+    "HOST": "0.0.0.0",
+    "PORT": "4321"
+  },
+
+  // ─── Comportamiento al cerrar VS Code ──────────────────────────────────
+  "shutdownAction": "stopCompose"
+}

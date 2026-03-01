@@ -1,0 +1,4 @@
+# No enviar al daemon Docker durante el build
+README.md
+scripts/
+.dockerignore
