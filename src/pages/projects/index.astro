@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/layout/Section.astro';
+import Card from '@components/ui/Card.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout
+  title="Projects — Kristian López"
+  description="Case studies and engineering projects: distributed systems, Rust microservices on AWS EKS, Restaurant POS platforms, and Git automation tooling."
+>
+  <Section>
+    <header class="mb-12">
+      <h1 class="mb-4 text-4xl font-bold text-[#f1f1f1]">Projects</h1>
+      <p class="max-w-2xl text-lg text-[#9ca3af]">
+        Case studies from real production systems. Each project documents the architecture 
+        decisions, technical trade-offs, and outcomes.
+      </p>
+    </header>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project) => (
+        <Card
+          title={project.data.title}
+          description={project.data.description}
+          href={`/projects/${project.slug}`}
+          tags={project.data.stack}
+        />
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

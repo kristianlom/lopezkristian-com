@@ -1,0 +1,44 @@
+---
+title: "Git Automation Tooling"
+description: "A suite of bash scripts and GitHub Actions workflows for enforcing Git conventions, automating branch management, and integrating commit validation into CI pipelines."
+stack: ["Bash", "GitHub Actions", "Git", "Node.js"]
+date: 2024-08-01
+status: "active"
+featured: false
+---
+
+## Overview
+
+A collection of production-hardened scripts and workflows that enforce consistent Git practices across a multi-team engineering organization. Adopted by 8 teams, reducing merge conflicts and CI failures caused by branch management issues by 70%.
+
+## Components
+
+### Branch Hygiene Automation
+Scheduled GitHub Action that runs nightly to:
+- Delete merged feature branches (local and remote)
+- Report stale branches (no commits in 30 days)
+- Post summary to Slack channel
+
+### Conventional Commit Enforcement
+- `commit-msg` hook: validates commit message format client-side
+- GitHub Actions check: validates all commits in a PR
+- Auto-generated changelog on release using `conventional-changelog`
+
+### Rebase Chain Manager
+Script for teams using a `feature → develop → staging → main` flow:
+- Detects when parent branch has moved ahead
+- Automatically rebases child branches in order
+- Uses `--force-with-lease` to avoid overwriting concurrent pushes
+- Aborts and notifies on conflict
+
+### Branch Naming Enforcer
+GitHub Actions workflow that:
+- Validates PR branch names against pattern `type/description`
+- Comments on the PR with correction instructions if invalid
+- Required check before merge is allowed
+
+## Impact
+
+- Merge conflict rate: -70% (branches stay current)
+- CI failures from branch issues: -85%
+- Onboarding time for Git conventions: 1 day → 2 hours (scripts do the work)

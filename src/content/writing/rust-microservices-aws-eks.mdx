@@ -1,0 +1,133 @@
+---
+title: "Rust microservices on AWS EKS: minimal viable config"
+description: "Deploying Rust services to Amazon EKS with the minimum footprint: multi-stage Docker builds, IAM roles, S3 access, and Secrets Manager integration."
+pubDate: 2025-03-01
+tags: ["rust", "aws", "eks", "kubernetes", "docker", "microservices"]
+draft: false
+---
+
+Rust microservices on EKS have a compelling story: small binaries, near-zero memory footprint, no GC pauses. But getting the AWS integration right takes some ceremony. Here's the minimal config that actually works in production.
+
+## Multi-Stage Docker Build
+
+```dockerfile
+FROM rust:1.76-slim as builder
+WORKDIR /app
+COPY Cargo.toml Cargo.lock ./
+COPY src ./src
+RUN cargo build --release
+
+FROM gcr.io/distroless/cc-debian12
+COPY --from=builder /app/target/release/my-service /usr/local/bin/my-service
+EXPOSE 8080
+CMD ["/usr/local/bin/my-service"]
+```
+
+The distroless base gives you a ~10MB final image with no shell attack surface.
+
+## EKS Pod Identity for S3 Access
+
+Use IRSA (IAM Roles for Service Accounts) — never mount static credentials:
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::123456789:role/my-service-role
+```
+
+IAM policy:
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": ["s3:GetObject", "s3:PutObject"],
+    "Resource": "arn:aws:s3:::my-bucket/*"
+  }]
+}
+```
+
+In Rust, the `aws-sdk-rust` automatically picks up the IRSA token via the default credentials chain:
+
+```rust
+use aws_config::BehaviorVersion;
+use aws_sdk_s3::Client;
+
+let config = aws_config::load_defaults(BehaviorVersion::latest()).await;
+let s3 = Client::new(&config);
+```
+
+## Secrets Manager Integration
+
+```rust
+use aws_sdk_secretsmanager::Client as SecretsClient;
+
+async fn get_secret(client: &SecretsClient, name: &str) -> anyhow::Result<String> {
+    let resp = client
+        .get_secret_value()
+        .secret_id(name)
+        .send()
+        .await?;
+    Ok(resp.secret_string().unwrap_or_default().to_string())
+}
+```
+
+Cache secrets at startup. Reload on SIGHUP to avoid pod restarts for rotation.
+
+## Kubernetes Deployment
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-service
+  template:
+    metadata:
+      labels:
+        app: my-service
+    spec:
+      serviceAccountName: my-service
+      containers:
+      - name: my-service
+        image: 123456789.dkr.ecr.us-east-1.amazonaws.com/my-service:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "50m"
+          limits:
+            memory: "64Mi"
+            cpu: "200m"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+```
+
+32MB memory request for a production Rust service. That number alone justifies the learning curve.
+
+## Minimal Rust Health Endpoint
+
+```rust
+use axum::{routing::get, Router};
+
+#[tokio::main]
+async fn main() {
+    let app = Router::new().route("/health", get(|| async { "ok" }));
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+```
+
+This is the baseline. From here you add domain logic, tracing (`tracing` + `opentelemetry`), and metrics (`metrics` crate).

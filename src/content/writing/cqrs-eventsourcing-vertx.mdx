@@ -1,0 +1,83 @@
+---
+title: "CQRS + Event Sourcing with Vert.x: a practical guide"
+description: "How to implement Command Query Responsibility Segregation and Event Sourcing on the Vert.x reactive toolkit — projections, snapshots, and real-world gotchas."
+pubDate: 2025-02-10
+tags: ["vertx", "cqrs", "event-sourcing", "java", "reactive"]
+draft: false
+---
+
+Vert.x is a polyglot reactive toolkit that fits naturally with Event Sourcing: its event loop model, non-blocking I/O, and EventBus are first-class citizens that map directly to the command/event/projection pipeline.
+
+## CQRS in 60 Seconds
+
+- **Command side**: receives commands, validates them, emits domain events, persists events to an event store
+- **Query side**: subscribes to events, maintains denormalized read models optimized for queries
+
+The separation enables independent scaling, different consistency models per side, and total audit history.
+
+## Vert.x EventBus as Command Bus
+
+```java
+vertx.eventBus().<JsonObject>consumer("orders.commands.place", message -> {
+    PlaceOrderCommand cmd = PlaceOrderCommand.from(message.body());
+    commandHandler.handle(cmd)
+        .onSuccess(orderId -> message.reply(new JsonObject().put("orderId", orderId.value())))
+        .onFailure(err -> message.fail(400, err.getMessage()));
+});
+```
+
+## Event Store with PostgreSQL
+
+Use the `vertx-pg-client` for non-blocking writes:
+
+```java
+public Future<Void> appendEvents(String aggregateId, List<DomainEvent> events, long expectedVersion) {
+    return pool.withTransaction(conn ->
+        conn.preparedQuery(
+            "INSERT INTO events (aggregate_id, sequence, event_type, payload, occurred_at) " +
+            "VALUES ($1, $2, $3, $4, NOW())"
+        )
+        .executeBatch(events.stream()
+            .map(e -> Tuple.of(aggregateId, e.sequence(), e.type(), e.toJson()))
+            .collect(Collectors.toList()))
+        .mapEmpty()
+    );
+}
+```
+
+## Projections as Verticles
+
+```java
+public class OrderReadModelVerticle extends AbstractVerticle {
+    @Override
+    public void start() {
+        vertx.eventBus().<JsonObject>consumer("events.OrderPlaced", msg -> {
+            var event = msg.body();
+            readModelStore.upsert(
+                event.getString("orderId"),
+                new OrderSummary(event)
+            );
+        });
+    }
+}
+```
+
+## Snapshots
+
+Once aggregates accumulate hundreds of events, rehydration gets expensive. Snapshot when the event count crosses a threshold:
+
+```java
+if (aggregate.version() % SNAPSHOT_THRESHOLD == 0) {
+    snapshotStore.save(new Snapshot(aggregate.id(), aggregate.version(), aggregate.state()));
+}
+```
+
+On load: fetch the latest snapshot, then replay only events after that version.
+
+## Gotchas
+
+- **Eventual consistency**: the query side lags behind the command side. Design your UX for it.
+- **Event schema evolution**: never delete fields — use optional additions or new event types.
+- **Idempotency**: projections may receive duplicate events (at-least-once delivery). Use a processed-event ledger.
+
+The combination of Vert.x's reactive model with Event Sourcing's append-only store produces systems that are observable, debuggable, and recoverable from any state.

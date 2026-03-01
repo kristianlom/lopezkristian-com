@@ -1,0 +1,115 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/layout/Section.astro';
+import Tag from '@components/ui/Tag.astro';
+import CTA from '@components/ui/CTA.astro';
+
+const specialties = [
+  'Hexagonal Architecture',
+  'Clean Architecture',
+  'Domain-Driven Design',
+  'CQRS',
+  'Event-Driven Architecture',
+  'Microservices',
+  'Event Sourcing',
+  'Reactive Systems',
+];
+
+const experience = [
+  { year: '2023–now', role: 'Staff Software Engineer', company: 'Leading tech company', tech: ['Java', 'Kafka', 'AWS EKS', 'Kubernetes'] },
+  { year: '2021–2023', role: 'Senior Software Architect', company: 'Fintech startup', tech: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'] },
+  { year: '2019–2021', role: 'Backend Engineer', company: 'Software consultancy', tech: ['Java', 'Go', 'REST APIs', 'MySQL'] },
+  { year: '2017–2019', role: 'Junior Developer', company: 'First role', tech: ['Java', 'JavaScript', 'SQL'] },
+];
+---
+
+<BaseLayout
+  title="About — Kristian López"
+  description="Software Architect and Staff Engineer with 7+ years building distributed systems, microservices, and event-driven architectures on AWS."
+>
+  <Section>
+    <div class="max-w-3xl">
+      <h1 class="mb-6 text-4xl font-bold text-[#f1f1f1]">About Me</h1>
+
+      <div class="space-y-4 text-lg leading-relaxed text-[#9ca3af]">
+        <p>
+          I'm Kristian López, a Software Architect and Staff Engineer with 7+ years of experience 
+          designing distributed systems that survive contact with reality. My work sits at the 
+          intersection of clean architecture, cloud-native deployment, and developer experience.
+        </p>
+        <p>
+          My engineering philosophy is simple: <strong class="text-[#f1f1f1]">complexity is the enemy</strong>. 
+          I design for replaceability — systems where any component can be swapped, tested, and 
+          reasoned about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven 
+          patterns not because they're fashionable, but because they work.
+        </p>
+        <p>
+          Outside of architecture decisions, I enjoy writing about the trade-offs I've made in 
+          production, mentoring engineers through the jump from senior to staff, and exploring 
+          what Rust can do in domains traditionally owned by JVM languages.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Section class="border-t border-white/10">
+    <h2 class="mb-8 text-2xl font-bold text-[#f1f1f1]">Specialties</h2>
+    <div class="flex flex-wrap gap-3">
+      {specialties.map((s) => (
+        <Tag label={s} />
+      ))}
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-2">
+      <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+        <h3 class="mb-3 font-semibold text-[#f1f1f1]">Architecture Principles</h3>
+        <ul class="space-y-2 text-sm text-[#9ca3af]">
+          <li>• Ports & Adapters (Hexagonal) as the default shape</li>
+          <li>• Bounded contexts over shared databases</li>
+          <li>• Event-first design — facts, not commands</li>
+          <li>• Testability as a first-class design constraint</li>
+          <li>• Evolutionary architecture over big-bang rewrites</li>
+        </ul>
+      </div>
+      <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+        <h3 class="mb-3 font-semibold text-[#f1f1f1]">Cloud & Infrastructure</h3>
+        <ul class="space-y-2 text-sm text-[#9ca3af]">
+          <li>• AWS: EKS, S3, SQS, SNS, Secrets Manager, IAM</li>
+          <li>• Kubernetes: workloads, RBAC, Helm, GitOps</li>
+          <li>• Observability: OpenTelemetry, Prometheus, Grafana</li>
+          <li>• CI/CD: GitHub Actions, ArgoCD</li>
+          <li>• IaC: Terraform, CDK</li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section class="border-t border-white/10">
+    <h2 class="mb-8 text-2xl font-bold text-[#f1f1f1]">Experience</h2>
+    <div class="space-y-6">
+      {experience.map(({ year, role, company, tech }) => (
+        <div class="flex gap-6 rounded-xl border border-white/10 bg-[#111111] p-6">
+          <div class="w-28 shrink-0">
+            <span class="text-sm font-mono text-violet-400">{year}</span>
+          </div>
+          <div>
+            <p class="font-semibold text-[#f1f1f1]">{role}</p>
+            <p class="mb-3 text-sm text-[#9ca3af]">{company}</p>
+            <div class="flex flex-wrap gap-2">
+              {tech.map((t) => (
+                <span class="rounded bg-white/5 px-2 py-0.5 text-xs text-[#9ca3af]">{t}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section class="border-t border-white/10">
+    <div class="flex flex-wrap gap-4">
+      <CTA href="/resume" variant="primary">View full resume →</CTA>
+      <CTA href="/contact" variant="secondary">Let's talk</CTA>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,136 @@
+---
+title: "Automating Git workflows with advanced bash scripts"
+description: "Production-grade bash scripts for multi-branch Git strategies: automated rebasing, conflict detection, branch hygiene, and CI integration."
+pubDate: 2025-03-15
+tags: ["git", "bash", "automation", "devops", "ci-cd"]
+draft: false
+---
+
+Git is the backbone of every software delivery pipeline. Yet most teams use it interactively, manually, repetitively. Automating the repetitive parts — branch sync, rebase chains, cleanup — saves hours per week and eliminates entire classes of human error.
+
+## Branch Hygiene Script
+
+Delete merged branches locally and remotely:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+MAIN_BRANCH="${1:-main}"
+REMOTE="${2:-origin}"
+
+echo "→ Fetching and pruning..."
+git fetch "$REMOTE" --prune
+
+echo "→ Deleting merged local branches..."
+git branch --merged "$MAIN_BRANCH" \
+  | grep -vE "^\*|$MAIN_BRANCH|develop|staging" \
+  | xargs -r git branch -d
+
+echo "→ Deleting merged remote branches..."
+git branch -r --merged "$REMOTE/$MAIN_BRANCH" \
+  | grep -v "$MAIN_BRANCH\|HEAD\|develop\|staging" \
+  | sed "s|$REMOTE/||" \
+  | xargs -r -I{} git push "$REMOTE" --delete {}
+
+echo "✓ Branch cleanup complete."
+```
+
+## Automated Rebase Chain
+
+When you have `feature → develop → staging → main`, keeping all branches up to date manually is error-prone:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+BRANCHES=(main staging develop feature/current)
+
+for i in "${!BRANCHES[@]}"; do
+  if [[ $i -eq 0 ]]; then continue; fi
+  
+  PARENT="${BRANCHES[$((i-1))]}"
+  CHILD="${BRANCHES[$i]}"
+  
+  echo "→ Rebasing $CHILD onto $PARENT..."
+  git checkout "$CHILD"
+  
+  if ! git rebase "$PARENT"; then
+    echo "✗ Conflict on $CHILD. Resolve and re-run."
+    git rebase --abort
+    exit 1
+  fi
+  
+  git push --force-with-lease origin "$CHILD"
+  echo "✓ $CHILD rebased and pushed."
+done
+```
+
+`--force-with-lease` is the safe force push — it refuses to overwrite if someone else has pushed since you last fetched.
+
+## Pre-Commit Validation Hook
+
+```bash
+#!/usr/bin/env bash
+# .git/hooks/pre-commit
+
+set -euo pipefail
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+
+echo "→ Running pre-commit checks..."
+
+# Lint
+if echo "$STAGED" | grep -qE '\.(ts|tsx|js|jsx)$'; then
+  npx eslint $(echo "$STAGED" | grep -E '\.(ts|tsx|js|jsx)$') || exit 1
+fi
+
+# Type check
+if echo "$STAGED" | grep -qE '\.(ts|tsx)$'; then
+  npx tsc --noEmit || exit 1
+fi
+
+# Detect debug statements
+if git diff --cached | grep -E '^\+.*(console\.log|debugger|TODO:|FIXME:)' | grep -qv '^+++'; then
+  echo "✗ Debug statements or TODO markers found in staged changes."
+  exit 1
+fi
+
+echo "✓ Pre-commit checks passed."
+```
+
+## Conventional Commit Linter
+
+Pair with `commitlint` for enforced message format:
+
+```bash
+#!/usr/bin/env bash
+# .git/hooks/commit-msg
+
+COMMIT_MSG=$(cat "$1")
+PATTERN="^(feat|fix|docs|style|refactor|test|chore|ci|perf|build|revert)(\(.+\))?: .{1,72}$"
+
+if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
+  echo "✗ Commit message format invalid."
+  echo "  Expected: type(scope): description"
+  echo "  Example:  feat(auth): add JWT refresh token rotation"
+  exit 1
+fi
+```
+
+## CI Integration
+
+Use GitHub Actions to validate branch naming:
+
+```yaml
+- name: Validate branch name
+  run: |
+    BRANCH="${{ github.head_ref }}"
+    PATTERN="^(feat|fix|docs|chore|refactor|test|ci)/[a-z0-9-]+$"
+    if ! echo "$BRANCH" | grep -qE "$PATTERN"; then
+      echo "Branch name '$BRANCH' does not follow convention."
+      exit 1
+    fi
+```
+
+Automation turns Git from a version control tool into a delivery pipeline primitive.

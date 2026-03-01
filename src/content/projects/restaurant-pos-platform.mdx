@@ -1,0 +1,37 @@
+---
+title: "Restaurant POS & Payments Platform"
+description: "End-to-end point-of-sale and payment processing platform for restaurant chains, including CFDI 4.0 tax compliance, Kafka-based event streaming, and multi-tenant architecture."
+stack: ["Java", "Spring Boot", "Kafka", "PostgreSQL", "Docker", "Kubernetes"]
+date: 2024-06-01
+status: "active"
+featured: true
+---
+
+## Overview
+
+A distributed POS platform serving 50+ restaurant locations, processing thousands of transactions daily with full CFDI 4.0 (Mexican electronic invoice) compliance built into the payment flow.
+
+## Architecture
+
+The system is structured around bounded contexts:
+
+- **Order Context**: takes orders, manages item lifecycle, publishes `OrderPlaced` / `OrderUpdated` events
+- **Payment Context**: subscribes to order events, orchestrates payment providers, issues CFDI documents
+- **Inventory Context**: updates stock levels reactively from order events
+- **Reporting Context**: projects events into analytics-ready read models
+
+All inter-context communication flows through Kafka. No direct service-to-service HTTP calls except for synchronous user-facing APIs.
+
+## Key Technical Decisions
+
+**Kafka for reliability**: The event log serves as the source of truth for order state. If the payment service restarts mid-transaction, it replays from its last committed offset.
+
+**CFDI compliance as a domain service**: The tax document generation logic is encapsulated behind a `CfdiService` port, with adapters for both the SAT (Mexican Tax Authority) web service and a local XML-signing library.
+
+**Multi-tenancy at the data layer**: Each restaurant chain gets a dedicated PostgreSQL schema. The application resolves the schema from the JWT tenant claim. No cross-tenant queries possible at the ORM level.
+
+## Outcomes
+
+- Zero data loss across 18 months in production
+- Payment reconciliation time reduced from 4 hours/day (manual) to 15 minutes (automated)
+- CFDI compliance rate: 99.97% (failures are retried with dead-letter queue)

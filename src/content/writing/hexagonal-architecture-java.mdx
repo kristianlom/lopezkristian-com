@@ -1,0 +1,94 @@
+---
+title: "Hexagonal Architecture in Java: from theory to production"
+description: "A deep dive into implementing Ports & Adapters in production Java services — dependency inversion, testing strategies, and real-world trade-offs."
+pubDate: 2025-01-15
+tags: ["java", "architecture", "hexagonal", "clean-code", "ddd"]
+draft: false
+---
+
+Hexagonal Architecture — also known as *Ports and Adapters* — is one of those patterns that sounds simple in theory but reveals its true complexity when you apply it to a real production codebase. I've used it across multiple Java systems and this post documents the lessons that stick.
+
+## The Core Idea
+
+The fundamental rule is simple: **your domain logic must not depend on infrastructure**. HTTP frameworks, databases, message brokers — all of these are implementation details. Your business rules should be expressible and testable in pure Java, without spinning up a database or an HTTP server.
+
+```java
+// Port (inbound) — defined in the domain
+public interface OrderService {
+    OrderId placeOrder(PlaceOrderCommand command);
+    Order findById(OrderId id);
+}
+
+// Port (outbound) — defined in the domain
+public interface OrderRepository {
+    void save(Order order);
+    Optional<Order> findById(OrderId id);
+}
+```
+
+## Ports and Adapters in Practice
+
+The real architecture is a set of concentric circles:
+
+- **Core**: Domain entities, value objects, domain events, business rules
+- **Application**: Use cases, command/query handlers, input ports, output port interfaces
+- **Infrastructure**: Adapters implementing output ports (JPA, REST clients, Kafka producers)
+- **Entrypoints**: Adapters implementing input ports (REST controllers, Kafka consumers, CLI)
+
+```java
+// Adapter (infrastructure) — implements domain port
+@Repository
+public class JpaOrderRepository implements OrderRepository {
+    private final SpringDataOrderRepository springRepo;
+
+    @Override
+    public void save(Order order) {
+        springRepo.save(OrderMapper.toJpa(order));
+    }
+
+    @Override
+    public Optional<Order> findById(OrderId id) {
+        return springRepo.findById(id.value()).map(OrderMapper::toDomain);
+    }
+}
+```
+
+## Testing Strategy
+
+The greatest benefit is testability. Your use case tests become pure unit tests:
+
+```java
+@Test
+void should_place_order_and_emit_event() {
+    // Arrange
+    var repo = new InMemoryOrderRepository();
+    var events = new InMemoryEventBus();
+    var service = new PlaceOrderUseCase(repo, events);
+
+    // Act
+    var orderId = service.execute(new PlaceOrderCommand(customerId, items));
+
+    // Assert
+    assertThat(repo.findById(orderId)).isPresent();
+    assertThat(events.published()).hasSize(1)
+        .first().isInstanceOf(OrderPlaced.class);
+}
+```
+
+No Spring context. No Testcontainers. Milliseconds to run.
+
+## Common Pitfalls
+
+1. **Anemic domain model**: Putting all logic in use cases and leaving entities as data bags defeats the purpose. Push invariants and behavior into the domain.
+2. **Over-mapping**: Every layer boundary doesn't need a new DTO. Map at the application boundary only.
+3. **Port explosion**: Don't create a port per use case. Group by capability (read vs write, per bounded context).
+4. **Leaking infrastructure types**: If your domain entity references `javax.persistence.Entity`, you've lost the battle.
+
+## Production Checklist
+
+- [ ] Domain module has zero infrastructure dependencies in `pom.xml`
+- [ ] All use cases are tested without Spring context
+- [ ] Integration tests use the input port interface, not the use case class directly
+- [ ] Adapters are swappable (you can replace JPA with JDBC without touching the domain)
+
+Hexagonal Architecture adds code volume. Accept that cost and you'll have a codebase that can evolve without fear.

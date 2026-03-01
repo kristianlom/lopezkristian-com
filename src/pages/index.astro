@@ -1,0 +1,116 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import JsonLd from '@components/seo/JsonLd.astro';
+import Section from '@components/layout/Section.astro';
+import Card from '@components/ui/Card.astro';
+import CTA from '@components/ui/CTA.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+
+const projects = (await getCollection('projects', ({ data }) => data.featured))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const skills = [
+  { name: 'Java', icon: '☕' },
+  { name: 'Go', icon: '🐹' },
+  { name: 'Rust', icon: '🦀' },
+  { name: 'Vert.x', icon: '⚡' },
+  { name: 'AWS', icon: '☁️' },
+  { name: 'Kubernetes', icon: '⚙️' },
+  { name: 'Kafka', icon: '📨' },
+  { name: 'Docker', icon: '🐳' },
+];
+---
+
+<BaseLayout
+  title="Kristian López — Software Architect & Staff Engineer"
+  description="Software Architect and Staff Engineer specialized in microservices, AWS EKS, Hexagonal Architecture, DDD, CQRS, Event-Driven Architecture, Java, Go, and Rust."
+>
+  <JsonLd type="Person" />
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-white/10 py-24 sm:py-32">
+    <div class="absolute inset-0 bg-gradient-to-br from-violet-600/5 via-transparent to-red-500/5" aria-hidden="true" />
+    <div class="relative mx-auto max-w-6xl px-6">
+      <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-violet-400">Available for senior roles</p>
+      <h1 class="mb-4 text-4xl font-bold leading-tight text-[#f1f1f1] sm:text-6xl">
+        Kristian López
+      </h1>
+      <p class="mb-6 text-xl font-medium text-[#9ca3af] sm:text-2xl">
+        Software Architect · Staff Engineer
+      </p>
+      <p class="mb-8 max-w-2xl text-base leading-relaxed text-[#9ca3af] sm:text-lg">
+        I design and build distributed systems that scale. Specialized in microservices, 
+        event-driven architectures, AWS cloud-native deployments, and clean, testable 
+        codebases that teams can maintain for years.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <CTA href="/contact" variant="primary">Get in touch →</CTA>
+        <CTA href="/projects" variant="secondary">View projects</CTA>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <Section id="skills">
+    <h2 class="mb-8 text-2xl font-bold text-[#f1f1f1]">Core Technologies</h2>
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      {skills.map(({ name, icon }) => (
+        <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-[#111111] p-4 transition-colors hover:border-violet-500/30">
+          <span class="text-2xl" aria-hidden="true">{icon}</span>
+          <span class="font-medium text-[#f1f1f1]">{name}</span>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Featured Projects -->
+  {projects.length > 0 && (
+    <Section id="projects" class="border-t border-white/10">
+      <div class="mb-8 flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-[#f1f1f1]">Featured Projects</h2>
+        <a href="/projects" class="text-sm text-violet-400 hover:text-violet-300 transition-colors">
+          All projects →
+        </a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => (
+          <Card
+            title={project.data.title}
+            description={project.data.description}
+            href={`/projects/${project.slug}`}
+            tags={project.data.stack.slice(0, 3)}
+          />
+        ))}
+      </div>
+    </Section>
+  )}
+
+  <!-- Latest Posts -->
+  {posts.length > 0 && (
+    <Section id="writing" class="border-t border-white/10">
+      <div class="mb-8 flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-[#f1f1f1]">Latest Writing</h2>
+        <a href="/writing" class="text-sm text-violet-400 hover:text-violet-300 transition-colors">
+          All posts →
+        </a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <Card
+            title={post.data.title}
+            description={post.data.description}
+            href={`/writing/${post.slug}`}
+            tags={post.data.tags.slice(0, 3)}
+            date={post.data.pubDate}
+            variant="post"
+          />
+        ))}
+      </div>
+    </Section>
+  )}
+</BaseLayout>

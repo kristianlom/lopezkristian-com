@@ -1,0 +1,43 @@
+---
+title: "Rust Microservices on AWS EKS"
+description: "Production deployment of Rust-based microservices on Amazon EKS using Distroless containers, IRSA for S3 and Secrets Manager access, and a full GitOps CI/CD pipeline."
+stack: ["Rust", "AWS EKS", "Docker", "Kubernetes", "S3", "Secrets Manager", "GitHub Actions"]
+date: 2024-11-01
+status: "active"
+featured: true
+---
+
+## Overview
+
+A suite of lightweight Rust microservices running on Amazon EKS, each with sub-100MB memory footprint. The project demonstrates that Rust is viable for production cloud services beyond systems programming.
+
+## Services
+
+- **Document Processor**: reads from S3, transforms documents, writes results back. Handles 10,000 documents/hour on a single 2-vCPU pod.
+- **Notification Dispatcher**: subscribes to SNS topics, dispatches emails and SMS via third-party APIs with retry and circuit breaker logic.
+- **Auth Gateway**: validates JWT tokens, forwards requests with enriched headers. ~2ms p99 latency.
+
+## Infrastructure Design
+
+Each service follows the same pattern:
+1. Multi-stage Docker build → distroless image (~12MB)
+2. Kubernetes ServiceAccount annotated with IRSA role ARN
+3. AWS SDK credential chain picks up IAM role automatically
+4. Secrets loaded from Secrets Manager at startup, cached in-process
+5. Health endpoints at `/health/live` and `/health/ready`
+
+## CI/CD Pipeline
+
+```
+Push → GitHub Actions → cargo test → cargo clippy → docker build → 
+ECR push → kubectl rollout (staging) → smoke test → kubectl rollout (prod)
+```
+
+Rollback is a single `kubectl rollout undo` command, automated when smoke tests fail.
+
+## Results
+
+- Image size: 12–18MB per service (vs 250–400MB for equivalent JVM services)
+- Cold start: &lt;500ms (vs 5–15s for JVM)
+- Memory usage: 20–45MB per pod at load
+- Cost reduction: ~60% vs equivalent JVM workload on same node class
