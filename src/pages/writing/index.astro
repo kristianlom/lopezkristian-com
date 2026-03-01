@@ -13,6 +13,7 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 <BaseLayout
   title="Writing — Kristian López"
   description="Technical articles on software architecture, microservices, Rust, Java, AWS, DDD, CQRS, and distributed systems."
+  image="/og/og-writing.png"
 >
   <Section>
     <header class="mb-12">
@@ -43,6 +44,10 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
       ))}
     </div>
 
+    <p id="posts-empty" class="mb-6 hidden text-sm text-muted">
+      No posts found for the selected tag.
+    </p>
+
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="posts-grid">
       {posts.map((post) => (
         <div class="post-card" data-tags={post.data.tags.join(',')}>
@@ -57,32 +62,119 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
         </div>
       ))}
     </div>
+
+    <nav id="pagination" class="mt-10 hidden items-center justify-center gap-3" aria-label="Posts pagination">
+      <button
+        id="pagination-prev"
+        class="rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-violet-500/40 hover:text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Previous
+      </button>
+      <span id="pagination-info" class="text-sm text-muted"></span>
+      <button
+        id="pagination-next"
+        class="rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-violet-500/40 hover:text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        Next
+      </button>
+    </nav>
   </Section>
 </BaseLayout>
 
 <script>
+  const PAGE_SIZE = 10;
   const buttons = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
-  const cards = document.querySelectorAll<HTMLElement>('.post-card');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.post-card'));
+  const emptyState = document.getElementById('posts-empty');
+  const pagination = document.getElementById('pagination');
+  const prevButton = document.getElementById('pagination-prev') as HTMLButtonElement | null;
+  const nextButton = document.getElementById('pagination-next') as HTMLButtonElement | null;
+  const paginationInfo = document.getElementById('pagination-info');
+
+  let selectedTag = '';
+  let currentPage = 1;
+
+  function applyButtonStyle(btn: HTMLButtonElement, active: boolean) {
+    btn.className = active
+      ? 'tag-btn rounded-full bg-violet-600 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-violet-500'
+      : 'tag-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400';
+    btn.setAttribute('aria-pressed', String(active));
+  }
+
+  function getFilteredCards() {
+    return cards.filter((card) => {
+      const tags = (card.dataset.tags ?? '').split(',');
+      return !selectedTag || tags.includes(selectedTag);
+    });
+  }
+
+  function updateUrlTag(tag: string) {
+    const url = new URL(window.location.href);
+    if (tag) {
+      url.searchParams.set('tag', tag);
+    } else {
+      url.searchParams.delete('tag');
+    }
+    history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+  }
+
+  function render() {
+    const filteredCards = getFilteredCards();
+    const totalPages = Math.max(1, Math.ceil(filteredCards.length / PAGE_SIZE));
+    currentPage = Math.min(currentPage, totalPages);
+
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+
+    cards.forEach((card) => {
+      card.classList.add('hidden');
+    });
+    filteredCards.slice(start, end).forEach((card) => {
+      card.classList.remove('hidden');
+    });
+
+    if (emptyState) {
+      emptyState.classList.toggle('hidden', filteredCards.length > 0);
+    }
+
+    const showPagination = filteredCards.length > PAGE_SIZE;
+    pagination?.classList.toggle('hidden', !showPagination);
+    pagination?.classList.toggle('flex', showPagination);
+
+    if (paginationInfo) {
+      paginationInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    }
+    if (prevButton) prevButton.disabled = currentPage <= 1;
+    if (nextButton) nextButton.disabled = currentPage >= totalPages;
+  }
 
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const tag = btn.dataset.tag ?? '';
+      selectedTag = btn.dataset.tag ?? '';
+      currentPage = 1;
 
-      buttons.forEach((b) => {
-        b.className = 'tag-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400';
-        b.setAttribute('aria-pressed', 'false');
-      });
-      btn.className = 'tag-btn rounded-full bg-violet-600 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-violet-500';
-      btn.setAttribute('aria-pressed', 'true');
-
-      cards.forEach((card) => {
-        const tags = card.dataset.tags ?? '';
-        if (tag === '' || tags.split(',').includes(tag)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      buttons.forEach((button) => applyButtonStyle(button, button === btn));
+      updateUrlTag(selectedTag);
+      render();
     });
   });
+
+  prevButton?.addEventListener('click', () => {
+    currentPage -= 1;
+    render();
+  });
+
+  nextButton?.addEventListener('click', () => {
+    currentPage += 1;
+    render();
+  });
+
+  const tagFromUrl = new URLSearchParams(window.location.search).get('tag') ?? '';
+  const targetButton = Array.from(buttons).find((btn) => (btn.dataset.tag ?? '') === tagFromUrl);
+  if (targetButton) {
+    selectedTag = tagFromUrl;
+    buttons.forEach((btn) => applyButtonStyle(btn, btn === targetButton));
+  }
+
+  render();
 </script>

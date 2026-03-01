@@ -4,7 +4,9 @@ import JsonLd from '@components/seo/JsonLd.astro';
 import Section from '@components/layout/Section.astro';
 import Card from '@components/ui/Card.astro';
 import CTA from '@components/ui/CTA.astro';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+import profileImage from '../assets/profile/profile-original.jpg';
 
 const posts = (await getCollection('writing', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -29,28 +31,42 @@ const skills = [
 <BaseLayout
   title="Kristian López — Software Architect & Staff Engineer"
   description="Software Architect and Staff Engineer specialized in microservices, AWS EKS, Hexagonal Architecture, DDD, CQRS, Event-Driven Architecture, Java, Go, and Rust."
+  image="/og/og-home.png"
 >
   <JsonLd type="Person" />
 
   <!-- Hero -->
   <section class="relative overflow-hidden border-b border-border py-24 sm:py-32">
     <div class="absolute inset-0 bg-gradient-to-br from-violet-600/5 via-transparent to-red-500/5" aria-hidden="true" />
-    <div class="relative mx-auto max-w-6xl px-6">
-      <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-violet-400">Available for senior roles</p>
-      <h1 class="mb-4 text-4xl font-bold leading-tight text-text-primary sm:text-6xl">
-        Kristian López
-      </h1>
-      <p class="mb-6 text-xl font-medium text-muted sm:text-2xl">
-        Software Architect · Staff Engineer
-      </p>
-      <p class="mb-8 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-        I design and build distributed systems that scale. Specialized in microservices, 
-        event-driven architectures, AWS cloud-native deployments, and clean, testable 
-        codebases that teams can maintain for years.
-      </p>
-      <div class="flex flex-wrap gap-4">
-        <CTA href="/contact" variant="primary">Get in touch →</CTA>
-        <CTA href="/projects" variant="secondary">View projects</CTA>
+    <div class="relative mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-[1fr_320px] md:items-center">
+      <div>
+        <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-violet-400">Available for senior roles</p>
+        <h1 class="mb-4 text-4xl font-bold leading-tight text-text-primary sm:text-6xl">
+          Kristian López
+        </h1>
+        <p class="mb-6 text-xl font-medium text-muted sm:text-2xl">
+          Software Architect · Staff Engineer
+        </p>
+        <p class="mb-8 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+          I design and build distributed systems that scale. Specialized in microservices, 
+          event-driven architectures, AWS cloud-native deployments, and clean, testable 
+          codebases that teams can maintain for years.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <CTA href="/contact" variant="primary">Get in touch →</CTA>
+          <CTA href="/projects" variant="secondary">View projects</CTA>
+        </div>
+      </div>
+      <div class="mx-auto w-full max-w-[280px] md:justify-self-end">
+        <Image
+          src={profileImage}
+          alt="Portrait of Kristian López"
+          widths={[240, 320, 400]}
+          sizes="(max-width: 768px) 240px, 320px"
+          format="webp"
+          loading="eager"
+          class="aspect-square rounded-2xl border border-border object-cover shadow-lg shadow-violet-500/10"
+        />
       </div>
     </div>
   </section>

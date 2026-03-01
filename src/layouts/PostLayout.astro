@@ -3,7 +3,18 @@ import BaseLayout from './BaseLayout.astro';
 import JsonLd from '@components/seo/JsonLd.astro';
 import TableOfContents from '@components/ui/TableOfContents.astro';
 import Tag from '@components/ui/Tag.astro';
+import Card from '@components/ui/Card.astro';
 import { formatDate, isoDate } from '@utils/date';
+
+interface RelatedPost {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+    pubDate: Date;
+    tags: string[];
+  };
+}
 
 interface Props {
   title: string;
@@ -15,6 +26,9 @@ interface Props {
   headings?: Array<{ depth: number; slug: string; text: string }>;
   readingTime?: string;
   slug: string;
+  prevPost?: RelatedPost;
+  nextPost?: RelatedPost;
+  relatedPosts?: RelatedPost[];
 }
 
 const {
@@ -27,6 +41,9 @@ const {
   headings = [],
   readingTime,
   slug,
+  prevPost,
+  nextPost,
+  relatedPosts = [],
 } = Astro.props;
 
 const postUrl = `https://lopezkristian.com/writing/${slug}`;
@@ -93,6 +110,53 @@ const postUrl = `https://lopezkristian.com/writing/${slug}`;
             </div>
           </div>
         </footer>
+
+        {(prevPost || nextPost) && (
+          <nav class="mt-10 grid gap-4 border-t border-border pt-8 sm:grid-cols-2" aria-label="Post navigation">
+            <div>
+              {prevPost && (
+                <a
+                  href={`/writing/${prevPost.slug}`}
+                  class="block rounded-xl border border-border bg-surface p-4 transition-colors hover:border-violet-500/40"
+                >
+                  <p class="text-xs uppercase tracking-wide text-muted">Previous</p>
+                  <p class="mt-1 font-semibold text-text-primary">{prevPost.data.title}</p>
+                </a>
+              )}
+            </div>
+            <div>
+              {nextPost && (
+                <a
+                  href={`/writing/${nextPost.slug}`}
+                  class="block rounded-xl border border-border bg-surface p-4 text-left transition-colors hover:border-violet-500/40 sm:text-right"
+                >
+                  <p class="text-xs uppercase tracking-wide text-muted">Next</p>
+                  <p class="mt-1 font-semibold text-text-primary">{nextPost.data.title}</p>
+                </a>
+              )}
+            </div>
+          </nav>
+        )}
+
+        {relatedPosts.length > 0 && (
+          <section class="mt-10 border-t border-border pt-8" aria-labelledby="related-posts-title">
+            <h2 id="related-posts-title" class="mb-6 text-xl font-bold text-text-primary">
+              Related Articles
+            </h2>
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedPosts.map((related) => (
+                <Card
+                  title={related.data.title}
+                  description={related.data.description}
+                  href={`/writing/${related.slug}`}
+                  tags={related.data.tags.slice(0, 3)}
+                  date={related.data.pubDate}
+                  variant="post"
+                />
+              ))}
+            </div>
+          </section>
+        )}
       </article>
 
       <aside class="hidden lg:block">

@@ -44,6 +44,28 @@
   a {
     @apply transition-colors duration-200;
   }
+
+  @media print {
+    :root,
+    html.light {
+      --color-bg: 255 255 255;
+      --color-surface: 255 255 255;
+      --color-text: 0 0 0;
+      --color-muted: 70 70 70;
+      --color-border: rgba(0, 0, 0, 0.15);
+      --color-surface-hover: rgba(0, 0, 0, 0.03);
+    }
+
+    header,
+    footer {
+      display: none !important;
+    }
+
+    body {
+      background: #fff !important;
+      color: #000 !important;
+    }
+  }
 }
 
 @layer utilities {
