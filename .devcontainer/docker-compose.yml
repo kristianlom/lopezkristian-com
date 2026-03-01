@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # Workspace principal
+      - ..:/workspace:cached
+      # Persistir caché de Astro
+      - astro_cache:/workspace/.astro
+      # AWS credentials (montar solo si existe en el host)
+      - ${HOME}/.aws:/home/node/.aws:ro
+    environment:
+      # Astro
+      - HOST=0.0.0.0
+      - PORT=4321
+      # Node
+      - NODE_ENV=development
+      # AWS region (credenciales se montan via ~/.aws — ver volumes)
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+      # Analytics (opcional — dejar vacío para deshabilitar)
+      - PUBLIC_ANALYTICS_ID=${PUBLIC_ANALYTICS_ID:-}
+    ports:
+      - "4321:4321"   # Astro dev
+      - "4322:4322"   # Astro preview
+      - "3000:3000"   # Reservado
+    command: sleep infinity   # El devcontainer mantiene el contenedor vivo
+    user: node
+
+volumes:
+  astro_cache:
