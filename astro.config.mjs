@@ -12,6 +12,9 @@ export default defineConfig({
     mdx(),
     sitemap(),
   ],
+  image: {
+    service: { entrypoint: 'astro/assets/services/sharp' },
+  },
   markdown: {
     shikiConfig: {
       theme: 'one-dark-pro',
