@@ -63,11 +63,5 @@ const { title, description, canonical, image, type, publishedTime, tags } = Astr
       <slot />
     </main>
     <Footer />
-    <script is:inline>
-      document.querySelectorAll('img:not([loading])').forEach((img) => {
-        img.setAttribute('loading', 'lazy');
-        img.setAttribute('decoding', 'async');
-      });
-    </script>
   </body>
 </html>
