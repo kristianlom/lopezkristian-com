@@ -1,0 +1,133 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/layout/Section.astro';
+import CTA from '@components/ui/CTA.astro';
+import Tag from '@components/ui/Tag.astro';
+---
+
+<BaseLayout
+  title="Resume — Kristian López"
+  description="Software Architect and Staff Engineer resume: experience, skills, education, and certifications."
+>
+  <Section>
+    <div class="mb-8 flex items-start justify-between gap-4">
+      <div>
+        <h1 class="mb-2 text-4xl font-bold text-[#f1f1f1]">Kristian López</h1>
+        <p class="text-lg text-[#9ca3af]">Software Architect · Staff Engineer</p>
+      </div>
+      <CTA href="/resume.pdf" variant="secondary" external>Download PDF</CTA>
+    </div>
+
+    <div class="mb-12">
+      <h2 class="mb-6 text-xl font-bold text-[#f1f1f1]">Experience</h2>
+      <div class="space-y-6">
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold text-[#f1f1f1]">Staff Software Engineer</h3>
+              <p class="text-[#9ca3af]">Leading tech company</p>
+            </div>
+            <span class="shrink-0 text-sm font-mono text-violet-400">2023 – present</span>
+          </div>
+          <ul class="mt-3 space-y-1 text-sm text-[#9ca3af]">
+            <li>• Designed event-driven microservices processing 1M+ daily transactions</li>
+            <li>• Led migration from monolith to bounded-context services on AWS EKS</li>
+            <li>• Established hexagonal architecture standards across 3 engineering teams</li>
+            <li>• Reduced deployment lead time from 2 days to 45 minutes via GitOps</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {['Java', 'Kafka', 'AWS EKS', 'Kubernetes', 'Hexagonal Arch'].map((t) => (
+              <Tag label={t} />
+            ))}
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold text-[#f1f1f1]">Senior Software Architect</h3>
+              <p class="text-[#9ca3af]">Fintech startup</p>
+            </div>
+            <span class="shrink-0 text-sm font-mono text-violet-400">2021 – 2023</span>
+          </div>
+          <ul class="mt-3 space-y-1 text-sm text-[#9ca3af]">
+            <li>• Architected POS and payments platform for 50+ restaurant locations</li>
+            <li>• Implemented CQRS + Event Sourcing with Vert.x for the order domain</li>
+            <li>• Built CFDI 4.0 compliance pipeline achieving 99.97% success rate</li>
+            <li>• Grew engineering team from 3 to 12 engineers</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {['Java', 'Vert.x', 'CQRS', 'Event Sourcing', 'PostgreSQL'].map((t) => (
+              <Tag label={t} />
+            ))}
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold text-[#f1f1f1]">Backend Engineer</h3>
+              <p class="text-[#9ca3af]">Software consultancy</p>
+            </div>
+            <span class="shrink-0 text-sm font-mono text-violet-400">2019 – 2021</span>
+          </div>
+          <ul class="mt-3 space-y-1 text-sm text-[#9ca3af]">
+            <li>• Built REST APIs and microservices for healthcare and logistics clients</li>
+            <li>• Introduced DDD patterns to a legacy Java codebase (500k lines)</li>
+            <li>• Delivered Go services for high-throughput data ingestion pipelines</li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {['Java', 'Go', 'REST APIs', 'DDD', 'MySQL'].map((t) => (
+              <Tag label={t} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-12">
+      <h2 class="mb-6 text-xl font-bold text-[#f1f1f1]">Technical Skills</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Languages</h3>
+          <p class="text-sm text-[#9ca3af]">Java (expert), Go (proficient), Rust (proficient), TypeScript (proficient), Bash (advanced)</p>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Architecture</h3>
+          <p class="text-sm text-[#9ca3af]">Hexagonal, Clean, DDD, CQRS, Event Sourcing, EDA, microservices, monorepo strategy</p>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Cloud & Infrastructure</h3>
+          <p class="text-sm text-[#9ca3af]">AWS (EKS, S3, SQS, SNS, IAM, Secrets Manager), Kubernetes, Helm, Terraform, Docker</p>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Frameworks & Tools</h3>
+          <p class="text-sm text-[#9ca3af]">Spring Boot, Vert.x, Axum (Rust), Kafka, PostgreSQL, Redis, GitHub Actions, ArgoCD</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-12">
+      <h2 class="mb-6 text-xl font-bold text-[#f1f1f1]">Education</h2>
+      <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+        <h3 class="font-semibold text-[#f1f1f1]">B.Sc. Computer Science</h3>
+        <p class="text-[#9ca3af]">Universidad · Mexico City</p>
+        <p class="text-sm font-mono text-violet-400">2013 – 2017</p>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="mb-6 text-xl font-bold text-[#f1f1f1]">Certifications</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+          <h3 class="font-semibold text-[#f1f1f1]">AWS Certified Solutions Architect</h3>
+          <p class="text-sm text-[#9ca3af]">Amazon Web Services · Associate level</p>
+        </div>
+        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+          <h3 class="font-semibold text-[#f1f1f1]">Certified Kubernetes Administrator</h3>
+          <p class="text-sm text-[#9ca3af]">CNCF</p>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

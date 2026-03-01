@@ -1,0 +1,67 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/layout/Section.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy — Kristian López"
+  description="Privacy policy for lopezkristian.com — how data is handled, analytics opt-in, and your rights under GDPR."
+>
+  <Section>
+    <div class="max-w-3xl">
+      <h1 class="mb-4 text-4xl font-bold text-[#f1f1f1]">Privacy Policy</h1>
+      <p class="mb-8 text-sm text-[#9ca3af]">Last updated: March 2025</p>
+
+      <div class="prose prose-invert max-w-none prose-headings:text-[#f1f1f1] prose-p:text-[#9ca3af] prose-li:text-[#9ca3af] prose-a:text-violet-400">
+        <h2>1. Introduction</h2>
+        <p>
+          This Privacy Policy describes how lopezkristian.com handles information 
+          when you visit it. I take your privacy seriously and aim to be transparent about what 
+          data, if any, is collected.
+        </p>
+
+        <h2>2. What Data Is Collected</h2>
+        <p>
+          <strong class="text-[#f1f1f1]">This site does not collect personal data by default.</strong> 
+          There are no tracking cookies, no third-party analytics scripts, and no user accounts.
+        </p>
+        <p>
+          If analytics are enabled via the PUBLIC_ANALYTICS_ID environment variable, 
+          a privacy-first analytics tool (Plausible or Umami) may collect aggregate, anonymized 
+          page view data. These tools do not use cookies and do not collect personal information.
+        </p>
+
+        <h2>3. Contact Form</h2>
+        <p>
+          If you submit the contact form, the data you provide (name, email, message) is sent 
+          to the configured serverless form handler. It is used solely to respond to your inquiry 
+          and is not shared with third parties.
+        </p>
+
+        <h2>4. Third-Party Links</h2>
+        <p>
+          This site links to external services (GitHub, LinkedIn). Those services have their own 
+          privacy policies. I am not responsible for their practices.
+        </p>
+
+        <h2>5. Your Rights (GDPR)</h2>
+        <p>If you are in the EU, you have the right to:</p>
+        <ul>
+          <li>Access any data I hold about you</li>
+          <li>Request correction or deletion of your data</li>
+          <li>Object to processing</li>
+          <li>Lodge a complaint with your local data protection authority</li>
+        </ul>
+        <p>
+          To exercise any of these rights, contact me via the contact form.
+        </p>
+
+        <h2>6. Changes to This Policy</h2>
+        <p>
+          This policy may be updated occasionally. Significant changes will be noted at the top 
+          of this page with the updated date.
+        </p>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

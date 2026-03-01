@@ -1,0 +1,84 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/layout/Section.astro';
+import Card from '@components/ui/Card.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+
+<BaseLayout
+  title="Writing — Kristian López"
+  description="Technical articles on software architecture, microservices, Rust, Java, AWS, DDD, CQRS, and distributed systems."
+>
+  <Section>
+    <header class="mb-12">
+      <h1 class="mb-4 text-4xl font-bold text-[#f1f1f1]">Writing</h1>
+      <p class="max-w-2xl text-lg text-[#9ca3af]">
+        Deep dives into architecture patterns, production lessons, and technical trade-offs. 
+        No fluff, no tutorials for beginners — written for engineers who've shipped systems 
+        and want to think more carefully about them.
+      </p>
+    </header>
+
+    <div class="mb-8 flex flex-wrap gap-2" id="tag-filters" role="group" aria-label="Filter by tag">
+      <button
+        data-tag=""
+        class="tag-btn rounded-full bg-violet-600 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-violet-500"
+      >
+        All
+      </button>
+      {allTags.map((tag) => (
+        <button
+          data-tag={tag}
+          class="tag-btn rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-[#9ca3af] transition-colors hover:bg-violet-600/20 hover:text-violet-400"
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="posts-grid">
+      {posts.map((post) => (
+        <div class="post-card" data-tags={post.data.tags.join(',')}>
+          <Card
+            title={post.data.title}
+            description={post.data.description}
+            href={`/writing/${post.slug}`}
+            tags={post.data.tags.slice(0, 3)}
+            date={post.data.pubDate}
+            variant="post"
+          />
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.post-card');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag ?? '';
+
+      buttons.forEach((b) => {
+        b.className = 'tag-btn rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-[#9ca3af] transition-colors hover:bg-violet-600/20 hover:text-violet-400';
+      });
+      btn.className = 'tag-btn rounded-full bg-violet-600 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-violet-500';
+
+      cards.forEach((card) => {
+        const tags = card.dataset.tags ?? '';
+        if (tag === '' || tags.split(',').includes(tag)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
