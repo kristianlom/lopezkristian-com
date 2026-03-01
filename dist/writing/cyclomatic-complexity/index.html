@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v5.18.0"><title>Cyclomatic complexity: the metric every architect should master | Kristian López</title><meta name="description" content="Cyclomatic complexity explained for architects: what it measures, thresholds that matter, how to use it to identify refactoring targets, and when to ignore it."><link rel="canonical" href="https://lopezkristian.com/writing/cyclomatic-complexity/"><!-- OpenGraph --><meta property="og:type" content="article"><meta property="og:url" content="https://lopezkristian.com/writing/cyclomatic-complexity/"><meta property="og:title" content="Cyclomatic complexity: the metric every architect should master | Kristian López"><meta property="og:description" content="Cyclomatic complexity explained for architects: what it measures, thresholds that matter, how to use it to identify refactoring targets, and when to ignore it."><meta property="og:image" content="https://lopezkristian.com/og-default.png"><meta property="og:site_name" content="Kristian López"><!-- Twitter Cards --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Cyclomatic complexity: the metric every architect should master | Kristian López"><meta name="twitter:description" content="Cyclomatic complexity explained for architects: what it measures, thresholds that matter, how to use it to identify refactoring targets, and when to ignore it."><meta name="twitter:image" content="https://lopezkristian.com/og-default.png"><meta property="article:published_time" content="2025-03-28T00:00:00.000Z"><meta property="article:tag" content="architecture"><meta property="article:tag" content="metrics"><meta property="article:tag" content="code-quality"><meta property="article:tag" content="refactoring"><meta property="article:tag" content="java"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Kristian López","url":"https://lopezkristian.com","description":"Software Architect & Staff Engineer specialized in microservices, AWS, DDD, and reactive systems."}</script><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Kristian López — Writing" href="/writing/rss.xml"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var preferred = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          if (preferred === 'light') document.documentElement.classList.add('light');
+        } catch (e) {}
+      })();
+    </script><link rel="stylesheet" href="/_astro/_slug_.DWATBPFE.css"></head> <body class="min-h-screen bg-[#0a0a0a] text-[#f1f1f1]"> <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:rounded focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white">
+Skip to main content
+</a> <header class="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a0a]/80 backdrop-blur-sm"> <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4" aria-label="Main navigation"> <a href="/" class="text-lg font-bold text-[#f1f1f1] hover:text-violet-400 transition-colors" aria-label="Kristian López — Home">
+KL
+</a> <ul class="hidden items-center gap-1 md:flex" role="list"> <li> <a href="/" class="rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]"> Home </a> </li><li> <a href="/about" class="rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]"> About </a> </li><li> <a href="/projects" class="rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]"> Projects </a> </li><li> <a href="/writing" class="rounded px-3 py-2 text-sm font-medium transition-colors bg-violet-600/20 text-violet-400"> Writing </a> </li><li> <a href="/resume" class="rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]"> Resume </a> </li><li> <a href="/contact" class="rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]"> Contact </a> </li> </ul> <div class="flex items-center gap-3"> <button id="theme-toggle" aria-label="Toggle dark/light mode" class="rounded-lg p-2 text-[#9ca3af] hover:bg-white/10 hover:text-[#f1f1f1] transition-colors"> <svg id="icon-sun" class="hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path> </svg> <svg id="icon-moon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path> </svg> </button> <button id="mobile-menu-toggle" class="rounded-lg p-2 text-[#9ca3af] hover:bg-white/10 hover:text-[#f1f1f1] transition-colors md:hidden" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-menu"> <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg> </button> </div> </nav> <div id="mobile-menu" class="hidden border-t border-white/10 md:hidden" role="menu"> <ul class="flex flex-col gap-1 px-6 py-4" role="list"> <li> <a href="/" class="block rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]" role="menuitem"> Home </a> </li><li> <a href="/about" class="block rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]" role="menuitem"> About </a> </li><li> <a href="/projects" class="block rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]" role="menuitem"> Projects </a> </li><li> <a href="/writing" class="block rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]" role="menuitem"> Writing </a> </li><li> <a href="/resume" class="block rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]" role="menuitem"> Resume </a> </li><li> <a href="/contact" class="block rounded px-3 py-2 text-sm font-medium transition-colors text-[#9ca3af] hover:text-[#f1f1f1]" role="menuitem"> Contact </a> </li> </ul> </div> </header> <script type="module">const i=document.getElementById("theme-toggle"),n=document.getElementById("icon-sun"),s=document.getElementById("icon-moon");function d(e){e==="light"?(document.documentElement.classList.add("light"),n?.classList.remove("hidden"),s?.classList.add("hidden")):(document.documentElement.classList.remove("light"),n?.classList.add("hidden"),s?.classList.remove("hidden"))}const l=localStorage.getItem("theme"),m=l??(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");d(m);i?.addEventListener("click",()=>{const t=!document.documentElement.classList.contains("light")?"light":"dark";localStorage.setItem("theme",t),d(t)});const o=document.getElementById("mobile-menu-toggle"),c=document.getElementById("mobile-menu");o?.addEventListener("click",()=>{const e=c?.classList.contains("hidden")===!1;c?.classList.toggle("hidden"),o.setAttribute("aria-expanded",String(!e))});</script> <main id="main-content">  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Cyclomatic complexity: the metric every architect should master","description":"Cyclomatic complexity explained for architects: what it measures, thresholds that matter, how to use it to identify refactoring targets, and when to ignore it.","datePublished":"2025-03-28T00:00:00.000Z","url":"https://lopezkristian.com/writing/cyclomatic-complexity","author":{"@type":"Person","name":"Kristian López","url":"https://lopezkristian.com"}}</script> <div class="mx-auto max-w-6xl px-6 py-12"> <div class="lg:grid lg:grid-cols-[1fr_280px] lg:gap-12"> <article class="min-w-0"> <header class="mb-10"> <div class="mb-4 flex flex-wrap items-center gap-3"> <time class="text-sm text-[#9ca3af]" datetime="2025-03-28T00:00:00.000Z"> March 28, 2025 </time>  <span class="text-sm text-[#9ca3af]">· 3 min read</span> </div> <h1 class="mb-4 text-3xl font-bold leading-tight text-[#f1f1f1] sm:text-4xl"> Cyclomatic complexity: the metric every architect should master </h1> <p class="text-lg text-[#9ca3af]">Cyclomatic complexity explained for architects: what it measures, thresholds that matter, how to use it to identify refactoring targets, and when to ignore it.</p> <div class="mt-4 flex flex-wrap gap-2"> <a href="/writing?tag=architecture" class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-colors bg-white/5 text-[#9ca3af] hover:bg-violet-600/20 hover:text-violet-400">architecture</a><a href="/writing?tag=metrics" class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-colors bg-white/5 text-[#9ca3af] hover:bg-violet-600/20 hover:text-violet-400">metrics</a><a href="/writing?tag=code-quality" class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-colors bg-white/5 text-[#9ca3af] hover:bg-violet-600/20 hover:text-violet-400">code-quality</a><a href="/writing?tag=refactoring" class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-colors bg-white/5 text-[#9ca3af] hover:bg-violet-600/20 hover:text-violet-400">refactoring</a><a href="/writing?tag=java" class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-colors bg-white/5 text-[#9ca3af] hover:bg-violet-600/20 hover:text-violet-400">java</a> </div> </header> <div class="prose prose-invert prose-violet max-w-none prose-headings:font-bold prose-a:text-violet-400 prose-code:font-mono prose-pre:rounded-xl prose-img:rounded-xl">  <p>Cyclomatic complexity is the oldest and most reliable software metric. First proposed by Thomas McCabe in 1976, it counts the number of linearly independent paths through a piece of code. In 2025, it remains the single best leading indicator of code that will be painful to test, maintain, and understand.</p>
+<h2 id="the-formula">The Formula</h2>
+<p>For a function with:</p>
+<ul>
+<li><code>d</code> decision points (if, else if, while, for, case, catch, &amp;&amp;, ||, ternary)</li>
+<li>The cyclomatic complexity CC = d + 1</li>
+</ul>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="java"><code><span class="line"><span style="color:#7F848E;font-style:italic">// CC = 1 (no decisions)</span></span>
+<span class="line"><span style="color:#C678DD">public</span><span style="color:#E5C07B"> String</span><span style="color:#61AFEF"> formatName</span><span style="color:#E06C75">(</span><span style="color:#E5C07B">String</span><span style="color:#E06C75"> first</span><span style="color:#ABB2BF">,</span><span style="color:#E5C07B"> String</span><span style="color:#E06C75"> last) {</span></span>
+<span class="line"><span style="color:#C678DD">    return</span><span style="color:#E06C75"> first </span><span style="color:#56B6C2">+</span><span style="color:#98C379"> &quot; &quot;</span><span style="color:#56B6C2"> +</span><span style="color:#E06C75"> last</span><span style="color:#ABB2BF">;</span></span>
+<span class="line"><span style="color:#E06C75">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic">// CC = 4 (three decisions)</span></span>
+<span class="line"><span style="color:#C678DD">public</span><span style="color:#E5C07B"> String</span><span style="color:#61AFEF"> classify</span><span style="color:#E06C75">(</span><span style="color:#C678DD">int</span><span style="color:#E06C75"> score) {</span></span>
+<span class="line"><span style="color:#C678DD">    if</span><span style="color:#E06C75"> (score </span><span style="color:#56B6C2">&gt;=</span><span style="color:#D19A66"> 90</span><span style="color:#E06C75">) </span><span style="color:#C678DD">return</span><span style="color:#98C379"> &quot;A&quot;</span><span style="color:#ABB2BF">;</span><span style="color:#7F848E;font-style:italic">        // +1</span></span>
+<span class="line"><span style="color:#C678DD">    else</span><span style="color:#C678DD"> if</span><span style="color:#E06C75"> (score </span><span style="color:#56B6C2">&gt;=</span><span style="color:#D19A66"> 80</span><span style="color:#E06C75">) </span><span style="color:#C678DD">return</span><span style="color:#98C379"> &quot;B&quot;</span><span style="color:#ABB2BF">;</span><span style="color:#7F848E;font-style:italic">   // +1</span></span>
+<span class="line"><span style="color:#C678DD">    else</span><span style="color:#C678DD"> if</span><span style="color:#E06C75"> (score </span><span style="color:#56B6C2">&gt;=</span><span style="color:#D19A66"> 70</span><span style="color:#E06C75">) </span><span style="color:#C678DD">return</span><span style="color:#98C379"> &quot;C&quot;</span><span style="color:#ABB2BF">;</span><span style="color:#7F848E;font-style:italic">   // +1</span></span>
+<span class="line"><span style="color:#C678DD">    return</span><span style="color:#98C379"> &quot;F&quot;</span><span style="color:#ABB2BF">;</span></span>
+<span class="line"><span style="color:#E06C75">}</span></span></code></pre>
+<h2 id="thresholds-that-matter">Thresholds That Matter</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>CC Range</th><th>Risk Level</th><th>Recommendation</th></tr></thead><tbody><tr><td>1–5</td><td>Low</td><td>Ideal</td></tr><tr><td>6–10</td><td>Moderate</td><td>Acceptable for complex algorithms</td></tr><tr><td>11–20</td><td>High</td><td>Mandatory refactoring target</td></tr><tr><td>21–50</td><td>Very High</td><td>Significant risk, prioritize</td></tr><tr><td>50+</td><td>Untestable</td><td>Rewrite</td></tr></tbody></table>
+<h2 id="measuring-in-java">Measuring in Java</h2>
+<p>With Maven and the Checkstyle plugin:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="xml"><code><span class="line"><span style="color:#ABB2BF">&lt;</span><span style="color:#E06C75">module</span><span style="color:#D19A66"> name</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;CyclomaticComplexity&quot;</span><span style="color:#ABB2BF">&gt;</span></span>
+<span class="line"><span style="color:#ABB2BF">  &lt;</span><span style="color:#E06C75">property</span><span style="color:#D19A66"> name</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;max&quot;</span><span style="color:#D19A66"> value</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;10&quot;</span><span style="color:#ABB2BF">/&gt;</span></span>
+<span class="line"><span style="color:#ABB2BF">  &lt;</span><span style="color:#E06C75">property</span><span style="color:#D19A66"> name</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;severity&quot;</span><span style="color:#D19A66"> value</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;error&quot;</span><span style="color:#ABB2BF">/&gt;</span></span>
+<span class="line"><span style="color:#ABB2BF">&lt;/</span><span style="color:#E06C75">module</span><span style="color:#ABB2BF">&gt;</span></span></code></pre>
+<p>Or with PMD:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="xml"><code><span class="line"><span style="color:#ABB2BF">&lt;</span><span style="color:#E06C75">rule</span><span style="color:#D19A66"> ref</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;category/java/design.xml/CyclomaticComplexity&quot;</span><span style="color:#ABB2BF">&gt;</span></span>
+<span class="line"><span style="color:#ABB2BF">  &lt;</span><span style="color:#E06C75">properties</span><span style="color:#ABB2BF">&gt;</span></span>
+<span class="line"><span style="color:#ABB2BF">    &lt;</span><span style="color:#E06C75">property</span><span style="color:#D19A66"> name</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;classReportLevel&quot;</span><span style="color:#D19A66"> value</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;80&quot;</span><span style="color:#ABB2BF">/&gt;</span></span>
+<span class="line"><span style="color:#ABB2BF">    &lt;</span><span style="color:#E06C75">property</span><span style="color:#D19A66"> name</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;methodReportLevel&quot;</span><span style="color:#D19A66"> value</span><span style="color:#ABB2BF">=</span><span style="color:#98C379">&quot;10&quot;</span><span style="color:#ABB2BF">/&gt;</span></span>
+<span class="line"><span style="color:#ABB2BF">  &lt;/</span><span style="color:#E06C75">properties</span><span style="color:#ABB2BF">&gt;</span></span>
+<span class="line"><span style="color:#ABB2BF">&lt;/</span><span style="color:#E06C75">rule</span><span style="color:#ABB2BF">&gt;</span></span></code></pre>
+<h2 id="the-architectural-perspective">The Architectural Perspective</h2>
+<p>Cyclomatic complexity is a proxy for coupling. Functions with CC &gt; 10 usually exhibit:</p>
+<ol>
+<li><strong>Multiple responsibilities</strong> — violates SRP</li>
+<li><strong>Deep nesting</strong> — indicates control flow that should be polymorphism</li>
+<li><strong>Implicit state machines</strong> — candidate for the State pattern</li>
+<li><strong>Combinatorial testing burden</strong> — CC = 15 means 15 test cases minimum</li>
+</ol>
+<p>The refactoring moves:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word" tabindex="0" data-language="java"><code><span class="line"><span style="color:#7F848E;font-style:italic">// Before: CC = 8</span></span>
+<span class="line"><span style="color:#C678DD">public</span><span style="color:#E5C07B"> BigDecimal</span><span style="color:#61AFEF"> calculateDiscount</span><span style="color:#E06C75">(</span><span style="color:#E5C07B">Order</span><span style="color:#E06C75"> order) {</span></span>
+<span class="line"><span style="color:#C678DD">    if</span><span style="color:#E06C75"> (</span><span style="color:#E5C07B">order</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">getCustomerType</span><span style="color:#ABB2BF">()</span><span style="color:#56B6C2"> ==</span><span style="color:#E06C75"> PREMIUM) {</span></span>
+<span class="line"><span style="color:#C678DD">        if</span><span style="color:#E06C75"> (</span><span style="color:#E5C07B">order</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">getTotal</span><span style="color:#ABB2BF">().</span><span style="color:#61AFEF">compareTo</span><span style="color:#ABB2BF">(LARGE_ORDER)</span><span style="color:#56B6C2"> &gt;</span><span style="color:#D19A66"> 0</span><span style="color:#E06C75">) {</span></span>
+<span class="line"><span style="color:#C678DD">            return</span><span style="color:#E5C07B"> order</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">getTotal</span><span style="color:#ABB2BF">().</span><span style="color:#61AFEF">multiply</span><span style="color:#ABB2BF">(</span><span style="color:#C678DD">new</span><span style="color:#61AFEF"> BigDecimal</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">&quot;0.20&quot;</span><span style="color:#ABB2BF">));</span></span>
+<span class="line"><span style="color:#E06C75">        } </span><span style="color:#C678DD">else</span><span style="color:#E06C75"> {</span></span>
+<span class="line"><span style="color:#C678DD">            return</span><span style="color:#E5C07B"> order</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">getTotal</span><span style="color:#ABB2BF">().</span><span style="color:#61AFEF">multiply</span><span style="color:#ABB2BF">(</span><span style="color:#C678DD">new</span><span style="color:#61AFEF"> BigDecimal</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">&quot;0.10&quot;</span><span style="color:#ABB2BF">));</span></span>
+<span class="line"><span style="color:#E06C75">        }</span></span>
+<span class="line"><span style="color:#E06C75">    } </span><span style="color:#C678DD">else</span><span style="color:#C678DD"> if</span><span style="color:#E06C75"> (</span><span style="color:#E5C07B">order</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">getCustomerType</span><span style="color:#ABB2BF">()</span><span style="color:#56B6C2"> ==</span><span style="color:#E06C75"> VIP) {</span></span>
+<span class="line"><span style="color:#7F848E;font-style:italic">        // ... more branches</span></span>
+<span class="line"><span style="color:#E06C75">    }</span></span>
+<span class="line"><span style="color:#C678DD">    return</span><span style="color:#E5C07B"> BigDecimal</span><span style="color:#ABB2BF">.</span><span style="color:#E5C07B">ZERO</span><span style="color:#ABB2BF">;</span></span>
+<span class="line"><span style="color:#E06C75">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic">// After: CC = 1 per strategy</span></span>
+<span class="line"><span style="color:#C678DD">public</span><span style="color:#C678DD"> interface</span><span style="color:#E5C07B"> DiscountStrategy</span><span style="color:#ABB2BF"> {</span></span>
+<span class="line"><span style="color:#E5C07B">    BigDecimal</span><span style="color:#61AFEF"> apply</span><span style="color:#ABB2BF">(</span><span style="color:#E5C07B">Order</span><span style="color:#E06C75;font-style:italic"> order</span><span style="color:#ABB2BF">);</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C678DD">public</span><span style="color:#C678DD"> class</span><span style="color:#E5C07B"> PremiumDiscountStrategy</span><span style="color:#C678DD"> implements</span><span style="color:#E5C07B"> DiscountStrategy</span><span style="color:#ABB2BF"> {</span></span>
+<span class="line"><span style="color:#ABB2BF">    @</span><span style="color:#E5C07B">Override</span></span>
+<span class="line"><span style="color:#C678DD">    public</span><span style="color:#E5C07B"> BigDecimal</span><span style="color:#61AFEF"> apply</span><span style="color:#ABB2BF">(</span><span style="color:#E5C07B">Order</span><span style="color:#E06C75;font-style:italic"> order</span><span style="color:#ABB2BF">)</span><span style="color:#ABB2BF"> {</span></span>
+<span class="line"><span style="color:#C678DD">        var</span><span style="color:#E06C75"> rate</span><span style="color:#56B6C2"> =</span><span style="color:#E5C07B"> order</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">getTotal</span><span style="color:#ABB2BF">().</span><span style="color:#61AFEF">compareTo</span><span style="color:#ABB2BF">(LARGE_ORDER) </span><span style="color:#56B6C2">&gt;</span><span style="color:#D19A66"> 0</span><span style="color:#ABB2BF"> </span></span>
+<span class="line"><span style="color:#C678DD">            ?</span><span style="color:#C678DD"> new</span><span style="color:#61AFEF"> BigDecimal</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">&quot;0.20&quot;</span><span style="color:#ABB2BF">) </span></span>
+<span class="line"><span style="color:#C678DD">            :</span><span style="color:#C678DD"> new</span><span style="color:#61AFEF"> BigDecimal</span><span style="color:#ABB2BF">(</span><span style="color:#98C379">&quot;0.10&quot;</span><span style="color:#ABB2BF">);</span></span>
+<span class="line"><span style="color:#C678DD">        return</span><span style="color:#E5C07B"> order</span><span style="color:#ABB2BF">.</span><span style="color:#61AFEF">getTotal</span><span style="color:#ABB2BF">().</span><span style="color:#61AFEF">multiply</span><span style="color:#ABB2BF">(rate);</span></span>
+<span class="line"><span style="color:#ABB2BF">    }</span></span>
+<span class="line"><span style="color:#ABB2BF">}</span></span></code></pre>
+<h2 id="when-to-ignore-it">When to Ignore It</h2>
+<p>Cyclomatic complexity is a tool, not a law:</p>
+<ul>
+<li><strong>Parsers and state machines</strong>: inherently complex, often appropriately so</li>
+<li><strong>Generated code</strong>: don’t waste time on it</li>
+<li><strong>Switch on discriminated unions</strong>: acceptable pattern, low cognitive load despite high CC</li>
+</ul>
+<p>The goal is to use complexity as a detection mechanism, not to game the metric.</p>  </div> <footer class="mt-12 border-t border-white/10 pt-8"> <div class="flex items-center gap-4"> <div> <p class="font-semibold text-[#f1f1f1]">Kristian López</p> <p class="text-sm text-[#9ca3af]">Software Architect · Staff Engineer</p> </div> </div> </footer> </article> <aside class="hidden lg:block"> <div class="sticky top-24"> <nav aria-label="Table of contents" class="rounded-xl border border-white/10 bg-[#111111] p-6"><h2 class="mb-4 text-sm font-semibold uppercase tracking-wider text-[#9ca3af]">
+On this page
+</h2><ul class="space-y-2"><li class><a href="#the-formula" class="text-sm text-[#9ca3af] hover:text-violet-400 transition-colors">The Formula</a></li><li class><a href="#thresholds-that-matter" class="text-sm text-[#9ca3af] hover:text-violet-400 transition-colors">Thresholds That Matter</a></li><li class><a href="#measuring-in-java" class="text-sm text-[#9ca3af] hover:text-violet-400 transition-colors">Measuring in Java</a></li><li class><a href="#the-architectural-perspective" class="text-sm text-[#9ca3af] hover:text-violet-400 transition-colors">The Architectural Perspective</a></li><li class><a href="#when-to-ignore-it" class="text-sm text-[#9ca3af] hover:text-violet-400 transition-colors">When to Ignore It</a></li></ul></nav> </div> </aside> </div> </div>  </main> <footer class="border-t border-white/10 py-12"> <div class="mx-auto max-w-6xl px-6"> <div class="flex flex-col items-center justify-between gap-6 sm:flex-row"> <div> <p class="text-sm text-[#9ca3af]">
+© 2026 Kristian López. All rights reserved.
+</p> <p class="mt-1 text-xs text-[#9ca3af]/60">
+Built with <a href="https://astro.build" class="hover:text-violet-400 transition-colors">Astro</a> + TypeScript + Tailwind
+</p> </div> <nav aria-label="Footer navigation"> <ul class="flex items-center gap-4" role="list"> <li> <a href="https://github.com/kristianlom" target="_blank" rel="noopener noreferrer" class="text-sm text-[#9ca3af] hover:text-[#f1f1f1] transition-colors" aria-label="GitHub profile">
+GitHub
+</a> </li> <li> <a href="https://linkedin.com/in/lopezkristian" target="_blank" rel="noopener noreferrer" class="text-sm text-[#9ca3af] hover:text-[#f1f1f1] transition-colors" aria-label="LinkedIn profile">
+LinkedIn
+</a> </li> <li> <a href="/writing/rss.xml" class="text-sm text-[#9ca3af] hover:text-[#f1f1f1] transition-colors" aria-label="RSS feed">
+RSS
+</a> </li> <li> <a href="/privacy" class="text-sm text-[#9ca3af] hover:text-[#f1f1f1] transition-colors">
+Privacy
+</a> </li> </ul> </nav> </div> </div> </footer> </body></html>

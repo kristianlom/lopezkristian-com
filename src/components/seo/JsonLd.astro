@@ -1,0 +1,74 @@
+---
+interface PersonSchema {
+  type: 'Person';
+}
+interface ArticleSchema {
+  type: 'Article';
+  title: string;
+  description: string;
+  publishedTime: string;
+  url: string;
+}
+interface WebSiteSchema {
+  type: 'WebSite';
+}
+
+type Props = PersonSchema | ArticleSchema | WebSiteSchema;
+
+const props = Astro.props;
+const siteUrl = 'https://lopezkristian.com';
+
+let schema: Record<string, unknown> = {};
+
+if (props.type === 'Person') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Kristian López',
+    url: siteUrl,
+    jobTitle: 'Software Architect & Staff Engineer',
+    knowsAbout: [
+      'Software Architecture',
+      'Microservices',
+      'AWS',
+      'Hexagonal Architecture',
+      'Clean Architecture',
+      'DDD',
+      'CQRS',
+      'Event-Driven Architecture',
+      'Java',
+      'Go',
+      'Rust',
+      'Vert.x',
+    ],
+    sameAs: [
+      'https://linkedin.com/in/lopezkristian',
+      'https://github.com/kristianlom',
+    ],
+  };
+} else if (props.type === 'Article') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: props.title,
+    description: props.description,
+    datePublished: props.publishedTime,
+    url: props.url,
+    author: {
+      '@type': 'Person',
+      name: 'Kristian López',
+      url: siteUrl,
+    },
+  };
+} else if (props.type === 'WebSite') {
+  schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Kristian López',
+    url: siteUrl,
+    description: 'Software Architect & Staff Engineer specialized in microservices, AWS, DDD, and reactive systems.',
+  };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
