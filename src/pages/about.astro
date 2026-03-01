@@ -3,6 +3,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/layout/Section.astro';
 import Tag from '@components/ui/Tag.astro';
 import CTA from '@components/ui/CTA.astro';
+import { Image } from 'astro:assets';
+import profileImage from '../assets/profile/profile-original.jpg';
 
 const specialties = [
   'Hexagonal Architecture',
@@ -26,28 +28,42 @@ const experience = [
 <BaseLayout
   title="About — Kristian López"
   description="Software Architect and Staff Engineer with 7+ years building distributed systems, microservices, and event-driven architectures on AWS."
+  image="/og/og-about.png"
 >
   <Section>
-    <div class="max-w-3xl">
-      <h1 class="mb-6 text-4xl font-bold text-text-primary">About Me</h1>
+    <div class="grid gap-10 md:grid-cols-[1fr_280px] md:items-start">
+      <div class="max-w-3xl">
+        <h1 class="mb-6 text-4xl font-bold text-text-primary">About Me</h1>
 
-      <div class="space-y-4 text-lg leading-relaxed text-muted">
-        <p>
-          I'm Kristian López, a Software Architect and Staff Engineer with 7+ years of experience 
-          designing distributed systems that survive contact with reality. My work sits at the 
-          intersection of clean architecture, cloud-native deployment, and developer experience.
-        </p>
-        <p>
-          My engineering philosophy is simple: <strong class="text-text-primary">complexity is the enemy</strong>. 
-          I design for replaceability — systems where any component can be swapped, tested, and 
-          reasoned about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven 
-          patterns not because they're fashionable, but because they work.
-        </p>
-        <p>
-          Outside of architecture decisions, I enjoy writing about the trade-offs I've made in 
-          production, mentoring engineers through the jump from senior to staff, and exploring 
-          what Rust can do in domains traditionally owned by JVM languages.
-        </p>
+        <div class="space-y-4 text-lg leading-relaxed text-muted">
+          <p>
+            I'm Kristian López, a Software Architect and Staff Engineer with 7+ years of experience 
+            designing distributed systems that survive contact with reality. My work sits at the 
+            intersection of clean architecture, cloud-native deployment, and developer experience.
+          </p>
+          <p>
+            My engineering philosophy is simple: <strong class="text-text-primary">complexity is the enemy</strong>. 
+            I design for replaceability — systems where any component can be swapped, tested, and 
+            reasoned about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven 
+            patterns not because they're fashionable, but because they work.
+          </p>
+          <p>
+            Outside of architecture decisions, I enjoy writing about the trade-offs I've made in 
+            production, mentoring engineers through the jump from senior to staff, and exploring 
+            what Rust can do in domains traditionally owned by JVM languages.
+          </p>
+        </div>
+      </div>
+      <div class="mx-auto w-full max-w-[240px] md:justify-self-end">
+        <Image
+          src={profileImage}
+          alt="Portrait of Kristian López"
+          widths={[240, 320, 400]}
+          sizes="(max-width: 768px) 220px, 240px"
+          format="webp"
+          loading="lazy"
+          class="aspect-square rounded-2xl border border-border object-cover shadow-lg shadow-violet-500/10"
+        />
       </div>
     </div>
   </Section>
