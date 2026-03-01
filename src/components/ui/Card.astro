@@ -8,7 +8,7 @@ interface Props {
   variant?: 'post' | 'project';
 }
 
-const { title, description, href, tags = [], date, variant = 'post' } = Astro.props;
+const { title, description, href, tags = [], date } = Astro.props;
 ---
 
 <article class="group relative flex flex-col rounded-xl border border-white/10 bg-[#111111] p-6 transition-all duration-200 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/5">

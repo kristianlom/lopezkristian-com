@@ -43,7 +43,7 @@ const { title, description, canonical, image, type, publishedTime, tags } = Astr
           var stored = localStorage.getItem('theme');
           var preferred = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
           if (preferred === 'light') document.documentElement.classList.add('light');
-        } catch (e) {}
+        } catch {}
       })();
     </script>
   </head>
