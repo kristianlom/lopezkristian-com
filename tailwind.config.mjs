@@ -5,10 +5,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: 'var(--color-bg)',
-        surface: 'var(--color-surface)',
-        'text-primary': 'var(--color-text)',
-        muted: 'var(--color-muted)',
+        bg: 'rgb(var(--color-bg) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        'text-primary': 'rgb(var(--color-text) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
         border: 'var(--color-border)',
         'surface-hover': 'var(--color-surface-hover)',
         accent: {

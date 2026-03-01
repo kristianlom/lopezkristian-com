@@ -5,27 +5,27 @@
 @layer base {
   :root {
     color-scheme: dark;
-    --color-bg: #0a0a0a;
-    --color-surface: #111111;
-    --color-text: #f1f1f1;
-    --color-muted: #9ca3af;
+    --color-bg: 10 10 10;
+    --color-surface: 17 17 17;
+    --color-text: 241 241 241;
+    --color-muted: 156 163 175;
     --color-border: rgba(255, 255, 255, 0.1);
     --color-surface-hover: rgba(255, 255, 255, 0.05);
   }
 
   html.light {
     color-scheme: light;
-    --color-bg: #f9f9f9;
-    --color-surface: #ffffff;
-    --color-text: #111111;
-    --color-muted: #6b7280;
+    --color-bg: 249 249 249;
+    --color-surface: 255 255 255;
+    --color-text: 17 17 17;
+    --color-muted: 107 114 128;
     --color-border: rgba(0, 0, 0, 0.1);
     --color-surface-hover: rgba(0, 0, 0, 0.05);
   }
 
   html {
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
     scroll-behavior: smooth;
   }
 
