@@ -6,30 +6,95 @@ import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('projects'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const allStacks = [...new Set(projects.flatMap((project) => project.data.stack))].sort();
 ---
 
 <BaseLayout
   title="Projects — Kristian López"
   description="Case studies and engineering projects: distributed systems, Rust microservices on AWS EKS, Restaurant POS platforms, and Git automation tooling."
+  image="/og/og-projects.png"
 >
   <Section>
     <header class="mb-12">
-      <h1 class="mb-4 text-4xl font-bold text-[#f1f1f1]">Projects</h1>
-      <p class="max-w-2xl text-lg text-[#9ca3af]">
+      <h1 class="mb-4 text-4xl font-bold text-text-primary">Projects</h1>
+      <p class="max-w-2xl text-lg text-muted">
         Case studies from real production systems. Each project documents the architecture 
         decisions, technical trade-offs, and outcomes.
       </p>
     </header>
 
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mb-8 flex flex-wrap gap-2" id="stack-filters" role="group" aria-label="Filter projects by technology">
+      <button
+        data-stack=""
+        aria-pressed="true"
+        class="stack-btn rounded-full bg-violet-600 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-violet-500"
+      >
+        All
+      </button>
+      {allStacks.map((stack) => (
+        <button
+          data-stack={stack}
+          aria-pressed="false"
+          class="stack-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400"
+        >
+          {stack}
+        </button>
+      ))}
+    </div>
+
+    <p id="projects-empty" class="mb-6 hidden text-sm text-muted">
+      No projects found for the selected stack.
+    </p>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="projects-grid">
       {projects.map((project) => (
-        <Card
-          title={project.data.title}
-          description={project.data.description}
-          href={`/projects/${project.slug}`}
-          tags={project.data.stack}
-        />
+        <div class="project-card" data-stack={project.data.stack.join(',')}>
+          <Card
+            title={project.data.title}
+            description={project.data.description}
+            href={`/projects/${project.slug}`}
+            tags={project.data.stack}
+            date={project.data.date}
+            variant="project"
+            status={project.data.status}
+            repoUrl={project.data.repoUrl}
+          />
+        </div>
       ))}
     </div>
   </Section>
 </BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.stack-btn');
+  const cards = document.querySelectorAll<HTMLElement>('.project-card');
+  const emptyState = document.getElementById('projects-empty');
+
+  function applyButtonStyle(btn: HTMLButtonElement, active: boolean) {
+    btn.className = active
+      ? 'stack-btn rounded-full bg-violet-600 px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-violet-500'
+      : 'stack-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400';
+    btn.setAttribute('aria-pressed', String(active));
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const selected = btn.dataset.stack ?? '';
+      let visible = 0;
+
+      buttons.forEach((button) => applyButtonStyle(button, button === btn));
+
+      cards.forEach((card) => {
+        const stacks = (card.dataset.stack ?? '').split(',');
+        const show = !selected || stacks.includes(selected);
+        card.classList.toggle('hidden', !show);
+        if (show) visible += 1;
+      });
+
+      if (emptyState) {
+        emptyState.classList.toggle('hidden', visible > 0);
+      }
+    });
+  });
+</script>

@@ -5,14 +5,15 @@ import Section from '@components/layout/Section.astro';
 
 <BaseLayout
   title="Privacy Policy — Kristian López"
-  description="Privacy policy for lopezkristian.com — how data is handled, analytics opt-in, and your rights under GDPR."
+  description="Privacy policy for lopezkristian.com — contact data handling, analytics, retention, and your rights."
+  image="/og/og-home.png"
 >
   <Section>
     <div class="max-w-3xl">
-      <h1 class="mb-4 text-4xl font-bold text-[#f1f1f1]">Privacy Policy</h1>
-      <p class="mb-8 text-sm text-[#9ca3af]">Last updated: March 2025</p>
+      <h1 class="mb-4 text-4xl font-bold text-text-primary">Privacy Policy</h1>
+      <p class="mb-8 text-sm text-muted">Last updated: March 2026</p>
 
-      <div class="prose prose-invert max-w-none prose-headings:text-[#f1f1f1] prose-p:text-[#9ca3af] prose-li:text-[#9ca3af] prose-a:text-violet-400">
+      <div class="prose max-w-none prose-headings:text-text-primary prose-p:text-muted prose-li:text-muted prose-a:text-violet-400 prose-strong:text-text-primary">
         <h2>1. Introduction</h2>
         <p>
           This Privacy Policy describes how lopezkristian.com handles information 
@@ -22,29 +23,37 @@ import Section from '@components/layout/Section.astro';
 
         <h2>2. What Data Is Collected</h2>
         <p>
-          <strong class="text-[#f1f1f1]">This site does not collect personal data by default.</strong> 
-          There are no tracking cookies, no third-party analytics scripts, and no user accounts.
+          <strong class="text-text-primary">This site does not use accounts, profiling, or tracking cookies by default.</strong>
+          Basic server logs (IP address, user-agent, timestamp, requested path) may be processed by the hosting provider
+          for operational security, abuse prevention, and reliability.
         </p>
         <p>
           If analytics are enabled via the PUBLIC_ANALYTICS_ID environment variable, 
-          a privacy-first analytics tool (Plausible or Umami) may collect aggregate, anonymized 
-          page view data. These tools do not use cookies and do not collect personal information.
+          a privacy-first analytics tool may collect aggregate, anonymized pageview data.
+          The goal is product improvement, not user profiling.
         </p>
 
         <h2>3. Contact Form</h2>
         <p>
-          If you submit the contact form, the data you provide (name, email, message) is sent 
-          to the configured serverless form handler. It is used solely to respond to your inquiry 
-          and is not shared with third parties.
+          If you submit the contact form, the data you provide (name, email, message) is sent
+          to a third-party form processing service (Web3Forms) and is used solely to respond to your inquiry.
+          Form submissions include anti-spam protections (honeypot and client-side rate limiting).
+          Messages are retained only as long as needed for communication and follow-up.
         </p>
 
-        <h2>4. Third-Party Links</h2>
+        <h2>4. Legal Basis</h2>
+        <p>
+          Personal data sent through the contact form is processed under legitimate interest
+          (responding to business and professional inquiries) or your explicit request.
+        </p>
+
+        <h2>5. Third-Party Links</h2>
         <p>
           This site links to external services (GitHub, LinkedIn). Those services have their own 
           privacy policies. I am not responsible for their practices.
         </p>
 
-        <h2>5. Your Rights (GDPR)</h2>
+        <h2>6. Your Rights (GDPR)</h2>
         <p>If you are in the EU, you have the right to:</p>
         <ul>
           <li>Access any data I hold about you</li>
@@ -56,7 +65,7 @@ import Section from '@components/layout/Section.astro';
           To exercise any of these rights, contact me via the contact form.
         </p>
 
-        <h2>6. Changes to This Policy</h2>
+        <h2>7. Changes to This Policy</h2>
         <p>
           This policy may be updated occasionally. Significant changes will be noted at the top 
           of this page with the updated date.

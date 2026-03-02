@@ -1,8 +1,9 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import JsonLd from '@components/seo/JsonLd.astro';
 import Tag from '@components/ui/Tag.astro';
 import CTA from '@components/ui/CTA.astro';
-import { formatDate } from '@utils/date';
+import { formatDate, isoDate } from '@utils/date';
 
 interface Props {
   title: string;
@@ -11,28 +12,37 @@ interface Props {
   date: Date;
   status: 'active' | 'archived';
   repoUrl?: string;
+  slug: string;
 }
 
-const { title, description, stack, date, status, repoUrl } = Astro.props;
+const { title, description, stack, date, status, repoUrl, slug } = Astro.props;
+const projectUrl = `https://lopezkristian.com/projects/${slug}`;
 ---
 
 <BaseLayout title={title} description={description}>
+  <JsonLd
+    type="Article"
+    title={title}
+    description={description}
+    publishedTime={isoDate(date)}
+    url={projectUrl}
+  />
   <div class="mx-auto max-w-4xl px-6 py-12">
     <article>
       <header class="mb-10">
         <div class="mb-4 flex items-center gap-3">
           <span class={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            status === 'active' ? 'bg-green-500/10 text-green-400' : 'bg-white/10 text-[#9ca3af]'
+            status === 'active' ? 'bg-green-500/10 text-green-400' : 'bg-surface-hover text-muted'
           }`}>
             {status}
           </span>
-          <time class="text-sm text-[#9ca3af]" datetime={date.toISOString()}>
+          <time class="text-sm text-muted" datetime={date.toISOString()}>
             {formatDate(date)}
           </time>
         </div>
 
-        <h1 class="mb-4 text-3xl font-bold text-[#f1f1f1] sm:text-4xl">{title}</h1>
-        <p class="text-lg text-[#9ca3af]">{description}</p>
+        <h1 class="mb-4 text-3xl font-bold text-text-primary sm:text-4xl">{title}</h1>
+        <p class="text-lg text-muted">{description}</p>
 
         <div class="mt-6 flex flex-wrap items-center gap-3">
           {stack.map((tech) => (
@@ -46,7 +56,7 @@ const { title, description, stack, date, status, repoUrl } = Astro.props;
         </div>
       </header>
 
-      <div class="prose prose-invert prose-violet max-w-none prose-headings:font-bold prose-a:text-violet-400 prose-code:font-mono prose-pre:rounded-xl">
+      <div class="prose prose-violet max-w-none prose-headings:font-bold prose-headings:text-text-primary prose-p:text-muted prose-li:text-muted prose-a:text-violet-400 prose-strong:text-text-primary prose-code:font-mono prose-code:text-text-primary prose-pre:rounded-xl">
         <slot />
       </div>
     </article>

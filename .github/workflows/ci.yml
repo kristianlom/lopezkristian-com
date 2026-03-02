@@ -30,6 +30,11 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          PUBLIC_WEB3FORMS_KEY: ${{ secrets.PUBLIC_WEB3FORMS_KEY }}
+
+      - name: Check for broken links
+        run: npx --yes hyperlink dist/ --internal
 
       - name: Upload dist artifact
         uses: actions/upload-artifact@v4

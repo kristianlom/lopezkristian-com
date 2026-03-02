@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import JsonLd from '@components/seo/JsonLd.astro';
 import Section from '@components/layout/Section.astro';
 import Tag from '@components/ui/Tag.astro';
 import CTA from '@components/ui/CTA.astro';
+import { Image } from 'astro:assets';
+import profileImage from '../assets/profile/profile-original.jpg';
 
 const specialties = [
   'Hexagonal Architecture',
@@ -25,35 +28,51 @@ const experience = [
 
 <BaseLayout
   title="About — Kristian López"
-  description="Software Architect and Staff Engineer with 7+ years building distributed systems, microservices, and event-driven architectures on AWS."
+  description="Software Architect and Staff Engineer building distributed systems, microservices, and cloud-native platforms."
+  image="/og/og-about.png"
 >
+  <JsonLd type="Person" />
   <Section>
-    <div class="max-w-3xl">
-      <h1 class="mb-6 text-4xl font-bold text-[#f1f1f1]">About Me</h1>
+    <div class="grid gap-10 md:grid-cols-[1fr_280px] md:items-start">
+      <div class="max-w-3xl">
+        <h1 class="mb-6 text-4xl font-bold text-text-primary">About Me</h1>
 
-      <div class="space-y-4 text-lg leading-relaxed text-[#9ca3af]">
-        <p>
-          I'm Kristian López, a Software Architect and Staff Engineer with 7+ years of experience 
-          designing distributed systems that survive contact with reality. My work sits at the 
-          intersection of clean architecture, cloud-native deployment, and developer experience.
-        </p>
-        <p>
-          My engineering philosophy is simple: <strong class="text-[#f1f1f1]">complexity is the enemy</strong>. 
-          I design for replaceability — systems where any component can be swapped, tested, and 
-          reasoned about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven 
-          patterns not because they're fashionable, but because they work.
-        </p>
-        <p>
-          Outside of architecture decisions, I enjoy writing about the trade-offs I've made in 
-          production, mentoring engineers through the jump from senior to staff, and exploring 
-          what Rust can do in domains traditionally owned by JVM languages.
-        </p>
+        <div class="space-y-4 text-lg leading-relaxed text-muted">
+          <p>
+            I'm Kristian López, a Software Architect and Staff Engineer focused on distributed systems
+            that remain maintainable as teams and traffic grow. My work sits at the intersection of
+            architecture clarity, cloud-native delivery, and execution quality.
+          </p>
+          <p>
+            My engineering philosophy is simple:
+            <strong class="text-text-primary">complexity is a cost center</strong>.
+            I design for replaceability and fast feedback, so components can be tested, evolved, and
+            reasoned about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven
+            patterns because they reduce long-term friction.
+          </p>
+          <p>
+            Outside architecture decisions, I write about production trade-offs, mentor engineers
+            growing from senior to staff scope, and share practical patterns for cloud and platform
+            engineering.
+          </p>
+        </div>
+      </div>
+      <div class="mx-auto w-full max-w-[240px] md:justify-self-end">
+        <Image
+          src={profileImage}
+          alt="Portrait of Kristian López"
+          widths={[240, 320, 400]}
+          sizes="(max-width: 768px) 220px, 240px"
+          format="webp"
+          loading="lazy"
+          class="aspect-square rounded-2xl border border-border object-cover shadow-lg shadow-violet-500/10"
+        />
       </div>
     </div>
   </Section>
 
-  <Section class="border-t border-white/10">
-    <h2 class="mb-8 text-2xl font-bold text-[#f1f1f1]">Specialties</h2>
+  <Section class="border-t border-border">
+    <h2 class="mb-8 text-2xl font-bold text-text-primary">Specialties</h2>
     <div class="flex flex-wrap gap-3">
       {specialties.map((s) => (
         <Tag label={s} />
@@ -61,9 +80,9 @@ const experience = [
     </div>
 
     <div class="mt-12 grid gap-6 sm:grid-cols-2">
-      <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
-        <h3 class="mb-3 font-semibold text-[#f1f1f1]">Architecture Principles</h3>
-        <ul class="space-y-2 text-sm text-[#9ca3af]">
+      <div class="rounded-xl border border-border bg-surface p-6">
+        <h3 class="mb-3 font-semibold text-text-primary">Architecture Principles</h3>
+        <ul class="space-y-2 text-sm text-muted">
           <li>• Ports & Adapters (Hexagonal) as the default shape</li>
           <li>• Bounded contexts over shared databases</li>
           <li>• Event-first design — facts, not commands</li>
@@ -71,9 +90,9 @@ const experience = [
           <li>• Evolutionary architecture over big-bang rewrites</li>
         </ul>
       </div>
-      <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
-        <h3 class="mb-3 font-semibold text-[#f1f1f1]">Cloud & Infrastructure</h3>
-        <ul class="space-y-2 text-sm text-[#9ca3af]">
+      <div class="rounded-xl border border-border bg-surface p-6">
+        <h3 class="mb-3 font-semibold text-text-primary">Cloud & Infrastructure</h3>
+        <ul class="space-y-2 text-sm text-muted">
           <li>• AWS: EKS, S3, SQS, SNS, Secrets Manager, IAM</li>
           <li>• Kubernetes: workloads, RBAC, Helm, GitOps</li>
           <li>• Observability: OpenTelemetry, Prometheus, Grafana</li>
@@ -84,20 +103,20 @@ const experience = [
     </div>
   </Section>
 
-  <Section class="border-t border-white/10">
-    <h2 class="mb-8 text-2xl font-bold text-[#f1f1f1]">Experience</h2>
+  <Section class="border-t border-border">
+    <h2 class="mb-8 text-2xl font-bold text-text-primary">Experience</h2>
     <div class="space-y-6">
       {experience.map(({ year, role, company, tech }) => (
-        <div class="flex gap-6 rounded-xl border border-white/10 bg-[#111111] p-6">
+        <div class="flex gap-6 rounded-xl border border-border bg-surface p-6">
           <div class="w-28 shrink-0">
             <span class="text-sm font-mono text-violet-400">{year}</span>
           </div>
           <div>
-            <p class="font-semibold text-[#f1f1f1]">{role}</p>
-            <p class="mb-3 text-sm text-[#9ca3af]">{company}</p>
+            <p class="font-semibold text-text-primary">{role}</p>
+            <p class="mb-3 text-sm text-muted">{company}</p>
             <div class="flex flex-wrap gap-2">
               {tech.map((t) => (
-                <span class="rounded bg-white/5 px-2 py-0.5 text-xs text-[#9ca3af]">{t}</span>
+                <span class="rounded bg-surface-hover px-2 py-0.5 text-xs text-muted">{t}</span>
               ))}
             </div>
           </div>
@@ -106,7 +125,7 @@ const experience = [
     </div>
   </Section>
 
-  <Section class="border-t border-white/10">
+  <Section class="border-t border-border">
     <div class="flex flex-wrap gap-4">
       <CTA href="/resume" variant="primary">View full resume →</CTA>
       <CTA href="/contact" variant="secondary">Let's talk</CTA>

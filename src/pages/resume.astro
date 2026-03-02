@@ -1,35 +1,43 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/layout/Section.astro';
-import CTA from '@components/ui/CTA.astro';
 import Tag from '@components/ui/Tag.astro';
 ---
 
 <BaseLayout
   title="Resume — Kristian López"
-  description="Software Architect and Staff Engineer resume: experience, skills, education, and certifications."
+  description="Resume of Kristian López: architecture leadership, backend engineering, cloud platforms, and delivery impact."
+  image="/og/og-home.png"
 >
   <Section>
     <div class="mb-8 flex items-start justify-between gap-4">
       <div>
-        <h1 class="mb-2 text-4xl font-bold text-[#f1f1f1]">Kristian López</h1>
-        <p class="text-lg text-[#9ca3af]">Software Architect · Staff Engineer</p>
+        <h1 class="mb-2 text-4xl font-bold text-text-primary">Kristian López</h1>
+        <p class="text-lg text-muted">Software Architect · Staff Engineer</p>
+        <p class="mt-1 text-sm text-muted">Last updated: March 2026</p>
       </div>
-      <CTA href="/resume.pdf" variant="secondary" external>Download PDF</CTA>
+      <a
+        href="/Kristian_Lopez_Resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-violet-500/40 hover:text-violet-400 print:hidden"
+      >
+        Download PDF
+      </a>
     </div>
 
     <div class="mb-12">
-      <h2 class="mb-6 text-xl font-bold text-[#f1f1f1]">Experience</h2>
+      <h2 class="mb-6 text-xl font-bold text-text-primary">Experience</h2>
       <div class="space-y-6">
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+        <div class="rounded-xl border border-border bg-surface p-6">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold text-[#f1f1f1]">Staff Software Engineer</h3>
-              <p class="text-[#9ca3af]">Leading tech company</p>
+              <h3 class="font-semibold text-text-primary">Staff Software Engineer</h3>
+              <p class="text-muted">Leading tech company</p>
             </div>
             <span class="shrink-0 text-sm font-mono text-violet-400">2023 – present</span>
           </div>
-          <ul class="mt-3 space-y-1 text-sm text-[#9ca3af]">
+          <ul class="mt-3 space-y-1 text-sm text-muted">
             <li>• Designed event-driven microservices processing 1M+ daily transactions</li>
             <li>• Led migration from monolith to bounded-context services on AWS EKS</li>
             <li>• Established hexagonal architecture standards across 3 engineering teams</li>
@@ -42,15 +50,15 @@ import Tag from '@components/ui/Tag.astro';
           </div>
         </div>
 
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+        <div class="rounded-xl border border-border bg-surface p-6">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold text-[#f1f1f1]">Senior Software Architect</h3>
-              <p class="text-[#9ca3af]">Fintech startup</p>
+              <h3 class="font-semibold text-text-primary">Senior Software Architect</h3>
+              <p class="text-muted">Fintech startup</p>
             </div>
             <span class="shrink-0 text-sm font-mono text-violet-400">2021 – 2023</span>
           </div>
-          <ul class="mt-3 space-y-1 text-sm text-[#9ca3af]">
+          <ul class="mt-3 space-y-1 text-sm text-muted">
             <li>• Architected POS and payments platform for 50+ restaurant locations</li>
             <li>• Implemented CQRS + Event Sourcing with Vert.x for the order domain</li>
             <li>• Built CFDI 4.0 compliance pipeline achieving 99.97% success rate</li>
@@ -63,15 +71,15 @@ import Tag from '@components/ui/Tag.astro';
           </div>
         </div>
 
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
+        <div class="rounded-xl border border-border bg-surface p-6">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold text-[#f1f1f1]">Backend Engineer</h3>
-              <p class="text-[#9ca3af]">Software consultancy</p>
+              <h3 class="font-semibold text-text-primary">Backend Engineer</h3>
+              <p class="text-muted">Software consultancy</p>
             </div>
             <span class="shrink-0 text-sm font-mono text-violet-400">2019 – 2021</span>
           </div>
-          <ul class="mt-3 space-y-1 text-sm text-[#9ca3af]">
+          <ul class="mt-3 space-y-1 text-sm text-muted">
             <li>• Built REST APIs and microservices for healthcare and logistics clients</li>
             <li>• Introduced DDD patterns to a legacy Java codebase (500k lines)</li>
             <li>• Delivered Go services for high-throughput data ingestion pipelines</li>
@@ -86,46 +94,46 @@ import Tag from '@components/ui/Tag.astro';
     </div>
 
     <div class="mb-12">
-      <h2 class="mb-6 text-xl font-bold text-[#f1f1f1]">Technical Skills</h2>
+      <h2 class="mb-6 text-xl font-bold text-text-primary">Technical Skills</h2>
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+        <div class="rounded-xl border border-border bg-surface p-4">
           <h3 class="mb-2 text-sm font-semibold text-violet-400">Languages</h3>
-          <p class="text-sm text-[#9ca3af]">Java (expert), Go (proficient), Rust (proficient), TypeScript (proficient), Bash (advanced)</p>
+          <p class="text-sm text-muted">Java (expert), Go (proficient), Rust (proficient), TypeScript (proficient), Bash (advanced)</p>
         </div>
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+        <div class="rounded-xl border border-border bg-surface p-4">
           <h3 class="mb-2 text-sm font-semibold text-violet-400">Architecture</h3>
-          <p class="text-sm text-[#9ca3af]">Hexagonal, Clean, DDD, CQRS, Event Sourcing, EDA, microservices, monorepo strategy</p>
+          <p class="text-sm text-muted">Hexagonal, Clean, DDD, CQRS, Event Sourcing, EDA, microservices, monorepo strategy</p>
         </div>
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+        <div class="rounded-xl border border-border bg-surface p-4">
           <h3 class="mb-2 text-sm font-semibold text-violet-400">Cloud & Infrastructure</h3>
-          <p class="text-sm text-[#9ca3af]">AWS (EKS, S3, SQS, SNS, IAM, Secrets Manager), Kubernetes, Helm, Terraform, Docker</p>
+          <p class="text-sm text-muted">AWS (EKS, S3, SQS, SNS, IAM, Secrets Manager), Kubernetes, Helm, Terraform, Docker</p>
         </div>
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
+        <div class="rounded-xl border border-border bg-surface p-4">
           <h3 class="mb-2 text-sm font-semibold text-violet-400">Frameworks & Tools</h3>
-          <p class="text-sm text-[#9ca3af]">Spring Boot, Vert.x, Axum (Rust), Kafka, PostgreSQL, Redis, GitHub Actions, ArgoCD</p>
+          <p class="text-sm text-muted">Spring Boot, Vert.x, Axum (Rust), Kafka, PostgreSQL, Redis, GitHub Actions, ArgoCD</p>
         </div>
       </div>
     </div>
 
     <div class="mb-12">
-      <h2 class="mb-6 text-xl font-bold text-[#f1f1f1]">Education</h2>
-      <div class="rounded-xl border border-white/10 bg-[#111111] p-6">
-        <h3 class="font-semibold text-[#f1f1f1]">B.Sc. Computer Science</h3>
-        <p class="text-[#9ca3af]">Universidad · Mexico City</p>
+      <h2 class="mb-6 text-xl font-bold text-text-primary">Education</h2>
+      <div class="rounded-xl border border-border bg-surface p-6">
+        <h3 class="font-semibold text-text-primary">B.Sc. Computer Science</h3>
+        <p class="text-muted">Universidad · Mexico City</p>
         <p class="text-sm font-mono text-violet-400">2013 – 2017</p>
       </div>
     </div>
 
     <div>
-      <h2 class="mb-6 text-xl font-bold text-[#f1f1f1]">Certifications</h2>
+      <h2 class="mb-6 text-xl font-bold text-text-primary">Certifications</h2>
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
-          <h3 class="font-semibold text-[#f1f1f1]">AWS Certified Solutions Architect</h3>
-          <p class="text-sm text-[#9ca3af]">Amazon Web Services · Associate level</p>
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="font-semibold text-text-primary">AWS Certified Solutions Architect</h3>
+          <p class="text-sm text-muted">Amazon Web Services · Associate level</p>
         </div>
-        <div class="rounded-xl border border-white/10 bg-[#111111] p-4">
-          <h3 class="font-semibold text-[#f1f1f1]">Certified Kubernetes Administrator</h3>
-          <p class="text-sm text-[#9ca3af]">CNCF</p>
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="font-semibold text-text-primary">Certified Kubernetes Administrator</h3>
+          <p class="text-sm text-muted">CNCF</p>
         </div>
       </div>
     </div>

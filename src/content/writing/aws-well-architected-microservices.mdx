@@ -1,0 +1,41 @@
+---
+title: "AWS Well-Architected aplicado a microservicios"
+description: "Aplicación práctica del framework Well-Architected en microservicios: seguridad, resiliencia, costos y excelencia operativa."
+pubDate: 2026-02-28
+tags: ["aws", "microservices", "well-architected", "cloud", "reliability"]
+draft: false
+heroImage: "/og/og-writing.png"
+lang: "es"
+---
+
+El framework Well-Architected es más útil cuando se baja a decisiones concretas por servicio.
+
+## Seguridad
+
+- IAM de mínimo privilegio por workload
+- secretos fuera de código y rotación periódica
+- separación estricta por ambientes
+
+## Confiabilidad
+
+- health checks live/ready
+- reintentos acotados y dead-letter queues
+- pruebas de recuperación y rollback
+
+## Excelencia operativa
+
+- runbooks versionados
+- postmortems sin culpa con acciones verificables
+- despliegues pequeños y frecuentes
+
+## Eficiencia de costos
+
+- rightsizing por perfil de carga
+- autoscaling por métricas reales
+- alertas por desviación de costo
+
+## Cierre
+
+Well-Architected no es una auditoría anual. Es una rutina operativa semanal.
+
+Relacionado: [Rust microservices en EKS](/writing/rust-microservices-aws-eks).

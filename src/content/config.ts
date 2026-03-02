@@ -10,6 +10,7 @@ const writing = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     heroImage: z.string().optional(),
+    lang: z.enum(['en', 'es']).default('en'),
   }),
 });
 

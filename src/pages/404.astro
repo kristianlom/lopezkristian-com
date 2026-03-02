@@ -9,11 +9,24 @@ import CTA from '@components/ui/CTA.astro';
 >
   <div class="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
     <p class="mb-4 font-mono text-6xl font-bold text-violet-600">404</p>
-    <h1 class="mb-4 text-3xl font-bold text-[#f1f1f1]">Page Not Found</h1>
-    <p class="mb-8 max-w-md text-[#9ca3af]">
+    <h1 class="mb-4 text-3xl font-bold text-text-primary">Page Not Found</h1>
+    <p class="mb-8 max-w-md text-muted">
       The page you're looking for doesn't exist or has been moved. 
       Let's get you back on track.
     </p>
-    <CTA href="/" variant="primary">Back to Home →</CTA>
+    <div class="mb-8 flex flex-wrap justify-center gap-3">
+      <CTA href="/" variant="primary">Back to Home →</CTA>
+      <CTA href="/writing" variant="secondary">Go to Writing</CTA>
+      <CTA href="/contact" variant="secondary">Contact</CTA>
+    </div>
+
+    <div class="w-full max-w-lg rounded-xl border border-border bg-surface p-5 text-left">
+      <p class="mb-3 text-sm font-semibold text-text-primary">Try one of these:</p>
+      <ul class="space-y-2 text-sm text-muted">
+        <li><a class="transition-colors hover:text-violet-400 focus:text-violet-400 focus:outline-none" href="/about">About</a></li>
+        <li><a class="transition-colors hover:text-violet-400 focus:text-violet-400 focus:outline-none" href="/projects">Projects</a></li>
+        <li><a class="transition-colors hover:text-violet-400 focus:text-violet-400 focus:outline-none" href="/writing">Latest articles</a></li>
+      </ul>
+    </div>
   </div>
 </BaseLayout>

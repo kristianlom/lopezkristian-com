@@ -1,0 +1,196 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/layout/Section.astro';
+import CTA from '@components/ui/CTA.astro';
+import Card from '@components/ui/Card.astro';
+import Tag from '@components/ui/Tag.astro';
+---
+
+<BaseLayout
+  title="Style Guide"
+  description="Internal design system reference for lopezkristian.com"
+>
+  <Section>
+    <h1 class="mb-4 text-4xl font-bold">Style Guide</h1>
+    <p class="mb-12 text-muted">
+      Internal reference for design tokens, typography, and components.
+    </p>
+
+    <!-- ───────── Colors ───────── -->
+    <h2 class="mb-6 text-2xl font-bold">Colors</h2>
+
+    <h3 class="mb-3 text-lg font-semibold text-muted">Theme Colors</h3>
+    <div class="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
+      <div>
+        <div class="mb-2 h-16 rounded-lg bg-bg border border-border"></div>
+        <p class="text-xs font-mono text-muted">bg</p>
+      </div>
+      <div>
+        <div class="mb-2 h-16 rounded-lg bg-surface border border-border"></div>
+        <p class="text-xs font-mono text-muted">surface</p>
+      </div>
+      <div>
+        <div class="mb-2 h-16 rounded-lg bg-text-primary"></div>
+        <p class="text-xs font-mono text-muted">text-primary</p>
+      </div>
+      <div>
+        <div class="mb-2 h-16 rounded-lg bg-muted"></div>
+        <p class="text-xs font-mono text-muted">muted</p>
+      </div>
+      <div>
+        <div class="mb-2 h-16 rounded-lg border border-border bg-surface-hover"></div>
+        <p class="text-xs font-mono text-muted">surface-hover</p>
+      </div>
+      <div>
+        <div class="mb-2 h-16 rounded-lg border-2 border-border"></div>
+        <p class="text-xs font-mono text-muted">border</p>
+      </div>
+    </div>
+
+    <h3 class="mb-3 text-lg font-semibold text-muted">Accent Colors</h3>
+    <div class="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div>
+        <div class="mb-2 h-16 rounded-lg bg-violet-600"></div>
+        <p class="text-xs font-mono text-muted">violet-600 (primary)</p>
+      </div>
+      <div>
+        <div class="mb-2 h-16 rounded-lg bg-violet-400"></div>
+        <p class="text-xs font-mono text-muted">violet-400 (hover/dark)</p>
+      </div>
+      <div>
+        <div class="mb-2 h-16 rounded-lg bg-red-500"></div>
+        <p class="text-xs font-mono text-muted">red-500 (secondary)</p>
+      </div>
+      <div>
+        <div class="mb-2 h-16 rounded-lg bg-gradient-to-r from-violet-500 to-red-500"></div>
+        <p class="text-xs font-mono text-muted">gradient</p>
+      </div>
+    </div>
+
+    <!-- ───────── Typography ───────── -->
+    <h2 class="mb-6 text-2xl font-bold">Typography</h2>
+
+    <div class="mb-12 space-y-4">
+      <div>
+        <p class="mb-1 text-xs font-mono text-muted">font-sans (Inter) &mdash; Headings & Body</p>
+        <h1 class="text-5xl font-bold tracking-tight">Heading 1 &mdash; The quick brown fox</h1>
+      </div>
+      <div>
+        <h2 class="text-3xl font-bold tracking-tight">Heading 2 &mdash; Architecture decisions</h2>
+      </div>
+      <div>
+        <h3 class="text-2xl font-bold tracking-tight">Heading 3 &mdash; Component patterns</h3>
+      </div>
+      <div>
+        <h4 class="text-xl font-semibold">Heading 4 &mdash; Implementation details</h4>
+      </div>
+      <div>
+        <p class="leading-body">
+          Body text at 1.7 line-height. Good architecture is about making
+          decisions that keep options open for as long as possible. The goal
+          is to minimize the cost of change over the lifetime of the system.
+        </p>
+      </div>
+      <div>
+        <p class="text-sm text-muted">
+          Muted text &mdash; used for dates, captions, and secondary information.
+        </p>
+      </div>
+      <div>
+        <p class="mb-1 text-xs font-mono text-muted">font-mono (JetBrains Mono) &mdash; Code</p>
+        <code class="rounded bg-surface px-2 py-1 text-sm font-mono text-violet-400">
+          const result = await fetchData();
+        </code>
+      </div>
+      <div>
+        <p class="text-gradient text-2xl font-bold">Gradient text utility</p>
+      </div>
+    </div>
+
+    <!-- ───────── Buttons (CTA) ───────── -->
+    <h2 class="mb-6 text-2xl font-bold">Buttons</h2>
+
+    <div class="mb-12 flex flex-wrap items-center gap-4">
+      <CTA href="#" variant="primary">Primary CTA</CTA>
+      <CTA href="#" variant="secondary">Secondary CTA</CTA>
+      <CTA href="https://github.com" variant="primary" external>External Link &rarr;</CTA>
+    </div>
+
+    <!-- ───────── Tags ───────── -->
+    <h2 class="mb-6 text-2xl font-bold">Tags</h2>
+
+    <div class="mb-12 flex flex-wrap gap-2">
+      <Tag label="TypeScript" />
+      <Tag label="Astro" active />
+      <Tag label="React" />
+      <Tag label="Tailwind CSS" />
+      <Tag label="Architecture" href="#" />
+    </div>
+
+    <!-- ───────── Cards ───────── -->
+    <h2 class="mb-6 text-2xl font-bold">Cards</h2>
+
+    <div class="mb-12 grid gap-6 md:grid-cols-2">
+      <Card
+        title="Sample Blog Post"
+        description="A deep dive into event-driven architecture patterns and how they scale in distributed systems."
+        href="#"
+        tags={['Architecture', 'DDD']}
+        date={new Date('2025-01-15')}
+      />
+      <Card
+        title="Sample Project"
+        description="High-performance API gateway built with Go and deployed on AWS ECS with auto-scaling."
+        href="#"
+        tags={['Go', 'AWS', 'Microservices']}
+        variant="project"
+      />
+    </div>
+
+    <!-- ───────── Spacing ───────── -->
+    <h2 class="mb-6 text-2xl font-bold">Spacing Scale</h2>
+
+    <div class="mb-12 space-y-2">
+      {[1, 2, 3, 4, 6, 8, 12, 16, 20, 24].map((n) => (
+        <div class="flex items-center gap-4">
+          <span class="w-12 text-right text-xs font-mono text-muted">{n}</span>
+          <div class={`h-4 rounded bg-violet-600/60`} style={`width: ${n * 4}px`}></div>
+          <span class="text-xs text-muted">{n * 4}px</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- ───────── Shadows ───────── -->
+    <h2 class="mb-6 text-2xl font-bold">Shadows</h2>
+
+    <div class="mb-12 grid gap-6 sm:grid-cols-3">
+      <div class="rounded-xl bg-surface p-6 shadow-accent-sm">
+        <p class="text-sm font-mono text-muted">shadow-accent-sm</p>
+      </div>
+      <div class="rounded-xl bg-surface p-6 shadow-accent-md">
+        <p class="text-sm font-mono text-muted">shadow-accent-md</p>
+      </div>
+      <div class="rounded-xl bg-surface p-6 shadow-lg shadow-violet-500/5">
+        <p class="text-sm font-mono text-muted">shadow-lg violet-500/5</p>
+      </div>
+    </div>
+
+    <!-- ───────── Border Radius ───────── -->
+    <h2 class="mb-6 text-2xl font-bold">Border Radius</h2>
+
+    <div class="mb-12 flex flex-wrap items-end gap-6">
+      <div class="flex flex-col items-center gap-2">
+        <div class="h-16 w-16 rounded-lg border border-border bg-surface"></div>
+        <span class="text-xs font-mono text-muted">rounded-lg</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <div class="h-16 w-16 rounded-xl border border-border bg-surface"></div>
+        <span class="text-xs font-mono text-muted">rounded-xl</span>
+      </div>
+      <div class="flex flex-col items-center gap-2">
+        <div class="h-16 w-16 rounded-full border border-border bg-surface"></div>
+        <span class="text-xs font-mono text-muted">rounded-full</span>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

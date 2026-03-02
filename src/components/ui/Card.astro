@@ -6,25 +6,38 @@ interface Props {
   tags?: string[];
   date?: Date;
   variant?: 'post' | 'project';
+  status?: 'active' | 'archived';
+  repoUrl?: string;
 }
 
-const { title, description, href, tags = [], date } = Astro.props;
+const { title, description, href, tags = [], date, variant = 'project', status, repoUrl } = Astro.props;
 ---
 
-<article class="group relative flex flex-col rounded-xl border border-white/10 bg-[#111111] p-6 transition-all duration-200 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/5">
-  {date && (
-    <time class="mb-2 text-xs text-[#9ca3af]" datetime={date.toISOString()}>
-      {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-    </time>
+<article class="group relative flex flex-col rounded-xl border border-border bg-surface p-6 transition-all duration-200 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/5">
+  {(date || (variant === 'project' && status)) && (
+    <div class="mb-2 flex flex-wrap items-center gap-2">
+      {variant === 'project' && status && (
+        <span class={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
+          status === 'active' ? 'bg-green-500/10 text-green-400' : 'bg-surface-hover text-muted'
+        }`}>
+          {status}
+        </span>
+      )}
+      {date && (
+        <time class="text-xs text-muted" datetime={date.toISOString()}>
+          {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+      )}
+    </div>
   )}
-  
-  <h3 class="mb-2 text-lg font-semibold text-[#f1f1f1] group-hover:text-violet-400 transition-colors">
+
+  <h3 class="mb-2 text-lg font-semibold text-text-primary group-hover:text-violet-400 transition-colors">
     <a href={href} class="after:absolute after:inset-0">
       {title}
     </a>
   </h3>
-  
-  <p class="mb-4 flex-1 text-sm leading-relaxed text-[#9ca3af]">
+
+  <p class="mb-4 flex-1 text-sm leading-relaxed text-muted">
     {description}
   </p>
   
@@ -35,6 +48,19 @@ const { title, description, href, tags = [], date } = Astro.props;
           {tag}
         </span>
       ))}
+    </div>
+  )}
+
+  {variant === 'project' && repoUrl && (
+    <div class="mt-4">
+      <a
+        href={repoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="relative z-10 inline-flex items-center text-xs font-medium text-violet-400 transition-colors hover:text-violet-300"
+      >
+        Repository →
+      </a>
     </div>
   )}
 </article>

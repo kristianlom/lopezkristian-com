@@ -3,6 +3,9 @@ import Header from '@components/layout/Header.astro';
 import Footer from '@components/layout/Footer.astro';
 import SEO from '@components/seo/SEO.astro';
 import JsonLd from '@components/seo/JsonLd.astro';
+import '@fontsource-variable/inter';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/700.css';
 import '@styles/global.css';
 
 interface Props {
@@ -13,13 +16,14 @@ interface Props {
   type?: 'website' | 'article';
   publishedTime?: string;
   tags?: string[];
+  lang?: string;
 }
 
-const { title, description, canonical, image, type, publishedTime, tags } = Astro.props;
+const { title, description, canonical, image, type, publishedTime, tags, lang } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang={lang ?? 'en'} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,11 +36,16 @@ const { title, description, canonical, image, type, publishedTime, tags } = Astr
       type={type}
       publishedTime={publishedTime}
       tags={tags}
+      lang={lang}
     />
     <JsonLd type="WebSite" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title="Kristian López — Writing" href="/writing/rss.xml" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script is:inline>
       (function () {
         try {
@@ -47,7 +56,7 @@ const { title, description, canonical, image, type, publishedTime, tags } = Astr
       })();
     </script>
   </head>
-  <body class="min-h-screen bg-[#0a0a0a] text-[#f1f1f1]">
+  <body class="min-h-screen bg-bg text-text-primary">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:rounded focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white">
       Skip to main content
     </a>
