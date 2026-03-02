@@ -25,7 +25,11 @@ const siteUrl = 'https://lopezkristian.com';
 const canonicalUrl = canonical ?? Astro.url.href;
 const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 const fullTitle = title.includes('Kristian') ? title : `${title} | Kristian López`;
-const ogLocale = lang === 'es' ? 'es_MX' : 'en_US';
+const ogLocaleMap: Record<string, string> = {
+  en: 'en_US',
+  es: 'es_ES',
+};
+const ogLocale = ogLocaleMap[lang ?? 'en'] ?? 'en_US';
 ---
 
 <title>{fullTitle}</title>

@@ -32,5 +32,14 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# ─── Planning & AI agent config (internal, no publicar) ──────────────────────
+plan_execution*.md
+plan-de-trabajo.md
+*_plan-*.md
+*plan-*.md
+AGENTS.md
+GEMINI.md
+CLAUDE.md
+
 # ─── Misc ──────────────────────────────────────────────────────────────────────
 *.tsbuildinfo
