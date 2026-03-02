@@ -1,0 +1,42 @@
+---
+title: "Payment Orchestration & Observability Platform"
+description: "Case study: orchestration layer for multiple payment providers with SLO-driven alerting, retry policies, and end-to-end traceability."
+stack: ["Java", "Kafka", "PostgreSQL", "OpenTelemetry", "Prometheus", "Grafana"]
+date: 2025-12-01
+status: "active"
+repoUrl: "https://github.com/kristianlom/payment-orchestration"
+featured: true
+---
+
+## Problema
+
+El negocio operaba con múltiples proveedores de pago sin una capa de orquestación unificada. El resultado era alto acoplamiento, tiempos de recuperación largos y conciliación manual diaria.
+
+## Solución
+
+Se diseñó una plataforma de orquestación con:
+
+- motor de ruteo por reglas de riesgo/costo/disponibilidad
+- contratos unificados para autorización/captura/reversa
+- trazabilidad con `trace_id` de extremo a extremo
+- métricas SLI/SLO por proveedor y operación
+
+## Diagrama
+
+```mermaid
+flowchart LR
+  Client[Checkout API] --> Orchestrator[Payment Orchestrator]
+  Orchestrator --> P1[Provider A]
+  Orchestrator --> P2[Provider B]
+  Orchestrator --> P3[Provider C]
+  Orchestrator --> Events[(Kafka Events)]
+  Events --> Obs[Observability Pipeline]
+  Obs --> Dash[Grafana / Alerts]
+```
+
+## Impacto
+
+- éxito de autorización: +4.8%
+- MTTR de incidentes de pago: 52 min -> 14 min
+- conciliación manual: 4h/día -> 30 min/día
+- incidentes repetitivos: -41% en 3 meses

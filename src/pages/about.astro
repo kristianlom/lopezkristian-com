@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import JsonLd from '@components/seo/JsonLd.astro';
 import Section from '@components/layout/Section.astro';
 import Tag from '@components/ui/Tag.astro';
 import CTA from '@components/ui/CTA.astro';
@@ -27,9 +28,10 @@ const experience = [
 
 <BaseLayout
   title="About — Kristian López"
-  description="Software Architect and Staff Engineer with 7+ years building distributed systems, microservices, and event-driven architectures on AWS."
+  description="Software Architect and Staff Engineer building distributed systems, microservices, and cloud-native platforms."
   image="/og/og-about.png"
 >
+  <JsonLd type="Person" />
   <Section>
     <div class="grid gap-10 md:grid-cols-[1fr_280px] md:items-start">
       <div class="max-w-3xl">
@@ -37,20 +39,21 @@ const experience = [
 
         <div class="space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            I'm Kristian López, a Software Architect and Staff Engineer with 7+ years of experience 
-            designing distributed systems that survive contact with reality. My work sits at the 
-            intersection of clean architecture, cloud-native deployment, and developer experience.
+            I'm Kristian López, a Software Architect and Staff Engineer focused on distributed systems
+            that remain maintainable as teams and traffic grow. My work sits at the intersection of
+            architecture clarity, cloud-native delivery, and execution quality.
           </p>
           <p>
-            My engineering philosophy is simple: <strong class="text-text-primary">complexity is the enemy</strong>. 
-            I design for replaceability — systems where any component can be swapped, tested, and 
-            reasoned about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven 
-            patterns not because they're fashionable, but because they work.
+            My engineering philosophy is simple:
+            <strong class="text-text-primary">complexity is a cost center</strong>.
+            I design for replaceability and fast feedback, so components can be tested, evolved, and
+            reasoned about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven
+            patterns because they reduce long-term friction.
           </p>
           <p>
-            Outside of architecture decisions, I enjoy writing about the trade-offs I've made in 
-            production, mentoring engineers through the jump from senior to staff, and exploring 
-            what Rust can do in domains traditionally owned by JVM languages.
+            Outside architecture decisions, I write about production trade-offs, mentor engineers
+            growing from senior to staff scope, and share practical patterns for cloud and platform
+            engineering.
           </p>
         </div>
       </div>

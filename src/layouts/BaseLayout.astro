@@ -16,13 +16,14 @@ interface Props {
   type?: 'website' | 'article';
   publishedTime?: string;
   tags?: string[];
+  lang?: string;
 }
 
-const { title, description, canonical, image, type, publishedTime, tags } = Astro.props;
+const { title, description, canonical, image, type, publishedTime, tags, lang } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang={lang ?? 'en'} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,6 +36,7 @@ const { title, description, canonical, image, type, publishedTime, tags } = Astr
       type={type}
       publishedTime={publishedTime}
       tags={tags}
+      lang={lang}
     />
     <JsonLd type="WebSite" />
     <link rel="sitemap" href="/sitemap-index.xml" />

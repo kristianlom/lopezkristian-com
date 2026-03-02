@@ -23,6 +23,7 @@ interface Props {
   updatedDate?: Date;
   tags?: string[];
   heroImage?: string;
+  lang?: string;
   headings?: Array<{ depth: number; slug: string; text: string }>;
   readingTime?: string;
   slug: string;
@@ -38,6 +39,7 @@ const {
   updatedDate,
   tags = [],
   heroImage,
+  lang,
   headings = [],
   readingTime,
   slug,
@@ -56,6 +58,7 @@ const postUrl = `https://lopezkristian.com/writing/${slug}`;
   type="article"
   publishedTime={isoDate(pubDate)}
   tags={tags}
+  lang={lang}
 >
   <JsonLd
     type="Article"
