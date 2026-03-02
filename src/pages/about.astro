@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import JsonLd from '@components/seo/JsonLd.astro';
 import Section from '@components/layout/Section.astro';
 import Tag from '@components/ui/Tag.astro';
 import CTA from '@components/ui/CTA.astro';
@@ -30,6 +31,7 @@ const experience = [
   description="Software Architect and Staff Engineer building distributed systems, microservices, and cloud-native platforms."
   image="/og/og-about.png"
 >
+  <JsonLd type="Person" />
   <Section>
     <div class="grid gap-10 md:grid-cols-[1fr_280px] md:items-start">
       <div class="max-w-3xl">
