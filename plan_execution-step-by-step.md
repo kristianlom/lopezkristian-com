@@ -186,36 +186,36 @@ Antes de planificar, lo que **ya existe**:
 
 ### Tarea 3.1 — Revisión del contenido existente
 
-- [ ] 3.1.1 Revisar y actualizar la bio en la página About
-- [ ] 3.1.2 Revisar y actualizar la página Resume
-- [ ] 3.1.3 Revisar los 5 blog posts existentes: ortografía, tono, consistencia
-- [ ] 3.1.4 Revisar los 3 proyectos existentes: descripciones, métricas de impacto, stack actualizado
-- [ ] 3.1.5 Actualizar la Privacy Policy con información real del sitio
+- [x] 3.1.1 Revisar y actualizar la bio en la página About
+- [x] 3.1.2 Revisar y actualizar la página Resume
+- [x] 3.1.3 Revisar los 5 blog posts existentes: ortografía, tono, consistencia
+- [x] 3.1.4 Revisar los 3 proyectos existentes: descripciones, métricas de impacto, stack actualizado
+- [x] 3.1.5 Actualizar la Privacy Policy con información real del sitio
 
 ### Tarea 3.2 — Nuevos artículos técnicos (objetivo: 10 total al lanzamiento)
 
-- [ ] 3.2.1 Redactar artículo 6: "Microservicios production-grade en Java 21"
-- [ ] 3.2.2 Redactar artículo 7: "Observabilidad práctica: SLO/SLI y alerting"
-- [ ] 3.2.3 Redactar artículo 8: "APIs: idempotencia, contratos y versionado"
-- [ ] 3.2.4 Redactar artículo 9: "AWS Well-Architected aplicado a microservicios"
-- [ ] 3.2.5 Redactar artículo 10: "Data Governance para pagos (alto nivel)"
-- [ ] 3.2.6 Agregar cada artículo como archivo MDX en `/src/content/writing/`
-- [ ] 3.2.7 Agregar hero images a los artículos que no tengan
+- [x] 3.2.1 Redactar artículo 6: "Microservicios production-grade en Java 21"
+- [x] 3.2.2 Redactar artículo 7: "Observabilidad práctica: SLO/SLI y alerting"
+- [x] 3.2.3 Redactar artículo 8: "APIs: idempotencia, contratos y versionado"
+- [x] 3.2.4 Redactar artículo 9: "AWS Well-Architected aplicado a microservicios"
+- [x] 3.2.5 Redactar artículo 10: "Data Governance para pagos (alto nivel)"
+- [x] 3.2.6 Agregar cada artículo como archivo MDX en `/src/content/writing/`
+- [x] 3.2.7 Agregar hero images a los artículos que no tengan
 
 ### Tarea 3.3 — Nuevos proyectos / Case Studies (objetivo: 5 total)
 
-- [ ] 3.3.1 Redactar proyecto 4: siguiendo plantilla Case Study (problema → solución → impacto)
-- [ ] 3.3.2 Redactar proyecto 5: siguiendo plantilla Case Study
-- [ ] 3.3.3 Agregar diagramas de arquitectura (Mermaid o imágenes) a los proyectos
-- [ ] 3.3.4 Incluir métricas de impacto medibles en cada proyecto
+- [x] 3.3.1 Redactar proyecto 4: siguiendo plantilla Case Study (problema → solución → impacto)
+- [x] 3.3.2 Redactar proyecto 5: siguiendo plantilla Case Study
+- [x] 3.3.3 Agregar diagramas de arquitectura (Mermaid o imágenes) a los proyectos
+- [x] 3.3.4 Incluir métricas de impacto medibles en cada proyecto
 
 ### Tarea 3.4 — SEO de contenido (on-page)
 
-- [ ] 3.4.1 Verificar que cada artículo tiene meta description única y atractiva (< 160 chars)
-- [ ] 3.4.2 Verificar que cada artículo tiene tags relevantes
-- [ ] 3.4.3 Agregar internal linking entre artículos relacionados
-- [ ] 3.4.4 Verificar que las URLs (slugs) son descriptivas y SEO-friendly
-- [ ] 3.4.5 Agregar schema.org Article a cada blog post (verificar JsonLd component)
+- [x] 3.4.1 Verificar que cada artículo tiene meta description única y atractiva (< 160 chars)
+- [x] 3.4.2 Verificar que cada artículo tiene tags relevantes
+- [x] 3.4.3 Agregar internal linking entre artículos relacionados
+- [x] 3.4.4 Verificar que las URLs (slugs) son descriptivas y SEO-friendly
+- [x] 3.4.5 Agregar schema.org Article a cada blog post (verificar JsonLd component)
 
 **Definition of Done Fase 3:** Mínimo 10 artículos y 5 proyectos publicados, contenido revisado editorialmente, SEO on-page completo.
 
