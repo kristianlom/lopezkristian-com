@@ -1,0 +1,51 @@
+---
+title: "APIs: idempotencia, contratos y versionado"
+description: "Guía práctica para diseñar APIs evolutivas: idempotencia en mutaciones, contratos estables y estrategia de versionado."
+pubDate: 2026-03-01
+tags: ["api", "idempotency", "contracts", "versioning", "backend"]
+draft: false
+heroImage: "/og/og-writing.png"
+---
+
+Las APIs fallan por dos razones recurrentes: contratos ambiguos y cambios incompatibles sin estrategia.
+
+## 1. Idempotencia en operaciones mutables
+
+Para `POST` críticos, acepta un header `Idempotency-Key` y guarda:
+
+- clave
+- request hash
+- resultado previo
+
+Esto evita doble cobro o doble creación ante retries de cliente.
+
+## 2. Contratos explícitos
+
+Incluye:
+
+- errores tipados (`code`, `message`, `details`)
+- campos opcionales para compatibilidad hacia atrás
+- semántica clara de nulabilidad
+
+## 3. Versionado pragmático
+
+Evita versionar por costumbre. Versiona cuando cambias semántica o rompes contrato.
+
+Estrategias comunes:
+
+- URI (`/v2/...`) para cambios mayores
+- header para experimentación controlada
+
+## 4. Gobernanza
+
+Toda API pública necesita:
+
+- pruebas de contrato en CI
+- changelog de breaking changes
+- deprecation policy con fecha
+
+## Cierre
+
+Una API bien diseñada optimiza para evolución, no para velocidad inicial.
+
+Relacionado: [Automating Git workflows](/writing/automating-git-workflows).

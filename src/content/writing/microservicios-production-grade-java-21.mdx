@@ -1,0 +1,52 @@
+---
+title: "Microservicios production-grade en Java 21"
+description: "Prácticas reales para operar microservicios Java 21 en producción: diseño, observabilidad, resiliencia y despliegue progresivo."
+pubDate: 2026-03-01
+tags: ["java", "microservices", "architecture", "resilience", "observability"]
+draft: false
+heroImage: "/og/og-writing.png"
+---
+
+Java 21 no vuelve mágicamente robusto a un sistema distribuido. Lo que sí ofrece es una base sólida para escribir servicios más predecibles y fáciles de operar.
+
+## 1. Contratos primero
+
+Define contratos API y eventos antes de implementar handlers. En producción, el principal riesgo es romper consumidores, no escribir menos líneas.
+
+## 2. Concurrencia controlada
+
+Virtual threads simplifican I/O, pero no eliminan límites. Mantén:
+
+- timeouts explícitos por dependencia
+- bulkheads por cliente externo
+- circuit breakers para proteger latencia
+
+## 3. Resiliencia por defecto
+
+Cada endpoint crítico necesita:
+
+- idempotency key para operaciones mutables
+- retries con backoff y jitter
+- outbox para eventos de dominio
+
+## 4. Observabilidad mínima viable
+
+No despliegues sin:
+
+- trazas distribuidas con `trace_id`
+- métricas RED (rate, errors, duration)
+- logs estructurados en JSON
+
+## 5. Entrega segura
+
+Haz releases pequeños y reversibles:
+
+- feature flags para cambios de comportamiento
+- canary de 5-10%
+- rollback automatizado ante error budget breach
+
+## Cierre
+
+Si el servicio no se puede degradar con gracia, todavía no está listo para producción.
+
+También te puede interesar: [Hexagonal Architecture in Java](/writing/hexagonal-architecture-java) y [CQRS + Event Sourcing con Vert.x](/writing/cqrs-eventsourcing-vertx).
