@@ -26,6 +26,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             href="https://linkedin.com/in/lopezkristian"
             target="_blank"
             rel="noopener noreferrer"
+            data-track-event="external-link"
+            data-track-label="LinkedIn"
             class="flex items-center gap-4 rounded-xl border border-border bg-surface p-4 transition-colors hover:border-violet-500/30"
           >
             <span class="text-2xl" aria-hidden="true">💼</span>
@@ -39,6 +41,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
             href="https://github.com/kristianlom"
             target="_blank"
             rel="noopener noreferrer"
+            data-track-event="external-link"
+            data-track-label="GitHub"
             class="flex items-center gap-4 rounded-xl border border-border bg-surface p-4 transition-colors hover:border-violet-500/30"
           >
             <span class="text-2xl" aria-hidden="true">⚙️</span>
@@ -156,6 +160,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 }
 
 <script>
+  import { track } from '@utils/analytics';
+
   const RATE_LIMIT_KEY = 'contact_form_attempts';
   const MAX_SUBMISSIONS_PER_HOUR = 3;
 
@@ -332,6 +338,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         }
         turnstileToken = '';
         setFeedback('Message sent successfully. Thanks for reaching out.', 'success');
+        track('contact-submit', {});
       } catch {
         setFeedback('Network error while sending message. Please try again.', 'error');
       } finally {

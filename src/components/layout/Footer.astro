@@ -10,7 +10,10 @@ const currentYear = new Date().getFullYear();
           © {currentYear} Kristian López. All rights reserved.
         </p>
         <p class="mt-1 text-xs text-muted">
-          Built with <a href="https://astro.build" class="text-muted hover:text-violet-400 transition-colors">Astro</a> + TypeScript + Tailwind
+          Built with <a
+            href="https://astro.build"
+            class="text-muted transition-colors hover:text-violet-400">Astro</a
+          > + TypeScript + Tailwind
         </p>
       </div>
 
@@ -21,8 +24,10 @@ const currentYear = new Date().getFullYear();
               href="https://github.com/kristianlom"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-muted hover:text-text-primary transition-colors"
+              class="text-sm text-muted transition-colors hover:text-text-primary"
               aria-label="GitHub profile"
+              data-track-event="external-link"
+              data-track-label="GitHub"
             >
               GitHub
             </a>
@@ -32,19 +37,25 @@ const currentYear = new Date().getFullYear();
               href="https://linkedin.com/in/lopezkristian"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-muted hover:text-text-primary transition-colors"
+              class="text-sm text-muted transition-colors hover:text-text-primary"
               aria-label="LinkedIn profile"
+              data-track-event="external-link"
+              data-track-label="LinkedIn"
             >
               LinkedIn
             </a>
           </li>
           <li>
-            <a href="/writing/rss.xml" class="text-sm text-muted hover:text-text-primary transition-colors" aria-label="RSS feed">
+            <a
+              href="/writing/rss.xml"
+              class="text-sm text-muted transition-colors hover:text-text-primary"
+              aria-label="RSS feed"
+            >
               RSS
             </a>
           </li>
           <li>
-            <a href="/privacy" class="text-sm text-muted hover:text-text-primary transition-colors">
+            <a href="/privacy" class="text-sm text-muted transition-colors hover:text-text-primary">
               Privacy
             </a>
           </li>
