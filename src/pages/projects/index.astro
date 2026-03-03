@@ -43,7 +43,7 @@ const allStacks = [...new Set(projects.flatMap((project) => project.data.stack))
       ))}
     </div>
 
-    <p id="projects-empty" class="mb-6 hidden text-sm text-muted">
+    <p id="projects-empty" class="mb-6 hidden text-sm text-muted" aria-live="polite">
       No projects found for the selected stack.
     </p>
 
