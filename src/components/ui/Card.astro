@@ -8,9 +8,11 @@ interface Props {
   variant?: 'post' | 'project';
   status?: 'active' | 'archived';
   repoUrl?: string;
+  headingLevel?: 2 | 3;
 }
 
-const { title, description, href, tags = [], date, variant = 'project', status, repoUrl } = Astro.props;
+const { title, description, href, tags = [], date, variant = 'project', status, repoUrl, headingLevel = 3 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
 ---
 
 <article class="group relative flex flex-col rounded-xl border border-border bg-surface p-6 transition-all duration-200 hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/5">
@@ -31,11 +33,11 @@ const { title, description, href, tags = [], date, variant = 'project', status, 
     </div>
   )}
 
-  <h3 class="mb-2 text-lg font-semibold text-text-primary group-hover:text-violet-400 transition-colors">
+  <Heading class="mb-2 text-lg font-semibold text-text-primary group-hover:text-violet-400 transition-colors">
     <a href={href} class="after:absolute after:inset-0">
       {title}
     </a>
-  </h3>
+  </Heading>
 
   <p class="mb-4 flex-1 text-sm leading-relaxed text-muted">
     {description}

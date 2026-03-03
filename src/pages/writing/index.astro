@@ -58,6 +58,7 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
             tags={post.data.tags.slice(0, 3)}
             date={post.data.pubDate}
             variant="post"
+            headingLevel={2}
           />
         </div>
       ))}

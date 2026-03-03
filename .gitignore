@@ -41,5 +41,9 @@ AGENTS.md
 GEMINI.md
 CLAUDE.md
 
+# ─── Lighthouse CI (artefactos locales) ──────────────────────────────────────
+.lighthouseci/
+*.report.html
+
 # ─── Misc ──────────────────────────────────────────────────────────────────────
 *.tsbuildinfo

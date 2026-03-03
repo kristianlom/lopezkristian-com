@@ -59,6 +59,7 @@ const allStacks = [...new Set(projects.flatMap((project) => project.data.stack))
             variant="project"
             status={project.data.status}
             repoUrl={project.data.repoUrl}
+            headingLevel={2}
           />
         </div>
       ))}
