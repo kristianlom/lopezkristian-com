@@ -148,8 +148,12 @@ const experience = [
 
   <Section class="border-t border-border">
     <div class="flex flex-wrap gap-4">
-      <CTA href="/resume" variant="primary">View full resume →</CTA>
-      <CTA href="/contact" variant="secondary">Let's talk</CTA>
+      <CTA href="/resume" variant="primary" trackEvent="cta-click" trackLabel="View full resume"
+        >View full resume →</CTA
+      >
+      <CTA href="/contact" variant="secondary" trackEvent="cta-click" trackLabel="Lets talk"
+        >Let's talk</CTA
+      >
     </div>
   </Section>
 </BaseLayout>

@@ -31,9 +31,11 @@ const projectUrl = `https://lopezkristian.com/projects/${slug}`;
     <article>
       <header class="mb-10">
         <div class="mb-4 flex items-center gap-3">
-          <span class={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            status === 'active' ? 'bg-green-500/10 text-green-400' : 'bg-surface-hover text-muted'
-          }`}>
+          <span
+            class={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
+              status === 'active' ? 'bg-green-500/10 text-green-400' : 'bg-surface-hover text-muted'
+            }`}
+          >
             {status}
           </span>
           <time class="text-sm text-muted" datetime={date.toISOString()}>
@@ -45,18 +47,26 @@ const projectUrl = `https://lopezkristian.com/projects/${slug}`;
         <p class="text-lg text-muted">{description}</p>
 
         <div class="mt-6 flex flex-wrap items-center gap-3">
-          {stack.map((tech) => (
-            <Tag label={tech} />
-          ))}
-          {repoUrl && (
-            <CTA href={repoUrl} variant="secondary" external>
-              View on GitHub →
-            </CTA>
-          )}
+          {stack.map((tech) => <Tag label={tech} />)}
+          {
+            repoUrl && (
+              <CTA
+                href={repoUrl}
+                variant="secondary"
+                external
+                trackEvent="cta-click"
+                trackLabel="View on GitHub"
+              >
+                View on GitHub →
+              </CTA>
+            )
+          }
         </div>
       </header>
 
-      <div class="prose prose-violet max-w-none prose-headings:font-bold prose-headings:text-text-primary prose-p:text-muted prose-li:text-muted prose-a:text-violet-400 prose-strong:text-text-primary prose-code:font-mono prose-code:text-text-primary prose-pre:rounded-xl">
+      <div
+        class="prose prose-violet max-w-none prose-headings:font-bold prose-headings:text-text-primary prose-p:text-muted prose-a:text-violet-400 prose-strong:text-text-primary prose-code:font-mono prose-code:text-text-primary prose-pre:rounded-xl prose-li:text-muted"
+      >
         <slot />
       </div>
     </article>
