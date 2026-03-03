@@ -4,19 +4,31 @@ interface Props {
   variant?: 'primary' | 'secondary';
   external?: boolean;
   class?: string;
+  trackEvent?: string;
+  trackLabel?: string;
 }
-const { href, variant = 'primary', external = false, class: className = '' } = Astro.props;
+const {
+  href,
+  variant = 'primary',
+  external = false,
+  class: className = '',
+  trackEvent,
+  trackLabel,
+} = Astro.props;
 const isExternal = external || href.startsWith('http');
 
-const classes = variant === 'primary'
-  ? `inline-flex items-center gap-2 rounded-lg bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition-all hover:bg-violet-500 hover:shadow-violet-500/30 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-bg ${className}`
-  : `inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-text-primary transition-all hover:border-violet-500/50 hover:text-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-bg ${className}`;
+const classes =
+  variant === 'primary'
+    ? `inline-flex items-center gap-2 rounded-lg bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-600/20 transition-all hover:bg-violet-500 hover:shadow-violet-500/30 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-bg ${className}`
+    : `inline-flex items-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-text-primary transition-all hover:border-violet-500/50 hover:text-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-bg ${className}`;
 ---
 
 <a
   href={href}
   class={classes}
   {...isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+  {...trackEvent ? { 'data-track-event': trackEvent } : {}}
+  {...trackLabel ? { 'data-track-label': trackLabel } : {}}
 >
   <slot />
 </a>
