@@ -23,6 +23,7 @@ const projects = defineCollection({
     date: z.coerce.date(),
     status: z.enum(['active', 'archived']),
     repoUrl: z.string().optional(),
+    heroImage: z.string().optional(),
     featured: z.boolean().default(false),
   }),
 });

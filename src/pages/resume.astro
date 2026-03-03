@@ -8,14 +8,14 @@ import Tag from '@components/ui/Tag.astro';
   title="Resume — Kristian López"
   ogTitle="Resume — Kristian López | Software Architect & Staff Engineer"
   description="Resume of Kristian López: architecture leadership, backend engineering, cloud platforms, and delivery impact."
-  image="/og/og-home.png"
+  image="/og/og-about.png"
 >
   <Section>
     <div class="mb-8 flex items-start justify-between gap-4">
       <div>
         <h1 class="mb-2 text-4xl font-bold text-text-primary">Kristian López</h1>
-        <p class="text-lg text-muted">Software Architect · Staff Engineer</p>
-        <p class="mt-1 text-sm text-muted">Last updated: March 2026</p>
+        <p class="text-lg text-muted">Software Architect (Java | AWS | Docker)</p>
+        <p class="mt-1 text-sm text-muted">Ciudad de México, México</p>
       </div>
       <a
         href="/Kristian_Lopez_Resume.pdf"
@@ -29,70 +29,247 @@ import Tag from '@components/ui/Tag.astro';
       </a>
     </div>
 
+    <div class="mb-12 rounded-xl border border-border bg-surface p-6">
+      <h2 class="mb-3 text-xl font-bold text-text-primary">Professional Summary</h2>
+      <p class="text-sm leading-relaxed text-muted">
+        Results-driven Software Architect and Technical Leader with over 9 years of experience
+        designing and implementing cloud-native architectures and microservices solutions using
+        Java, Go, Python, and Rust. Proven track record leading teams of 4–8 engineers to deliver
+        scalable, secure, and high-performance systems on AWS. Skilled in software optimisation,
+        CI/CD automation, and clean architecture principles, with a strong focus on reliability,
+        performance, and collaboration across multidisciplinary teams.
+      </p>
+    </div>
+
     <div class="mb-12">
       <h2 class="mb-6 text-xl font-bold text-text-primary">Experience</h2>
       <div class="space-y-6">
         <div class="rounded-xl border border-border bg-surface p-6">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold text-text-primary">Staff Software Engineer</h3>
-              <p class="text-muted">Leading tech company</p>
+              <h3 class="font-semibold text-text-primary">Software Architect</h3>
+              <p class="text-muted">Smart Payment Services</p>
             </div>
-            <span class="shrink-0 font-mono text-sm text-violet-400">2023 – present</span>
+            <span class="shrink-0 font-mono text-sm text-violet-400">Feb 2025 – Oct 2025</span>
           </div>
           <ul class="mt-3 space-y-1 text-sm text-muted">
-            <li>• Designed event-driven microservices processing 1M+ daily transactions</li>
-            <li>• Led migration from monolith to bounded-context services on AWS EKS</li>
-            <li>• Established hexagonal architecture standards across 3 engineering teams</li>
-            <li>• Reduced deployment lead time from 2 days to 45 minutes via GitOps</li>
+            <li>
+              • Designed and implemented a microservices architecture on AWS, leveraging
+              multi-language solutions using Rust, Java, Go, and Python to optimise system
+              scalability and performance
+            </li>
+            <li>
+              • Established and enforced best development practices, conducting code reviews focused
+              on maintainability, security, and performance
+            </li>
+            <li>
+              • Integrated SonarQube for automated code analysis and dependency security
+              verification, improving code quality and reducing vulnerabilities across multiple
+              projects
+            </li>
           </ul>
           <div class="mt-4 flex flex-wrap gap-2">
-            {
-              ['Java', 'Kafka', 'AWS EKS', 'Kubernetes', 'Hexagonal Arch'].map((t) => (
-                <Tag label={t} />
-              ))
-            }
+            {['Rust', 'Java', 'Go', 'Python', 'AWS', 'SonarQube'].map((t) => <Tag label={t} />)}
           </div>
         </div>
 
         <div class="rounded-xl border border-border bg-surface p-6">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold text-text-primary">Senior Software Architect</h3>
-              <p class="text-muted">Fintech startup</p>
+              <h3 class="font-semibold text-text-primary">Software Engineer</h3>
+              <p class="text-muted">Smart Payment Services</p>
             </div>
-            <span class="shrink-0 font-mono text-sm text-violet-400">2021 – 2023</span>
+            <span class="shrink-0 font-mono text-sm text-violet-400">Jul 2024 – Feb 2025</span>
           </div>
           <ul class="mt-3 space-y-1 text-sm text-muted">
-            <li>• Architected POS and payments platform for 50+ restaurant locations</li>
-            <li>• Implemented CQRS + Event Sourcing with Vert.x for the order domain</li>
-            <li>• Built CFDI 4.0 compliance pipeline achieving 99.97% success rate</li>
-            <li>• Grew engineering team from 3 to 12 engineers</li>
+            <li>
+              • Developed microservices using Java (Eclipse Vert.x and Spring Boot), ensuring high
+              performance and scalability in production environments
+            </li>
+            <li>
+              • Defined and maintained RESTful APIs on AWS, integrating cloud-native components
+              aligned with best architecture practices
+            </li>
+            <li>
+              • Managed production deployments, troubleshooting incidents and optimizing response
+              times for critical services
+            </li>
+            <li>
+              • Designed and implemented PostgreSQL schemas, stored procedures, and tables to
+              support transactional and analytical operations
+            </li>
           </ul>
           <div class="mt-4 flex flex-wrap gap-2">
-            {
-              ['Java', 'Vert.x', 'CQRS', 'Event Sourcing', 'PostgreSQL'].map((t) => (
-                <Tag label={t} />
-              ))
-            }
+            {['Java', 'Vert.x', 'Spring Boot', 'AWS', 'PostgreSQL'].map((t) => <Tag label={t} />)}
           </div>
         </div>
 
         <div class="rounded-xl border border-border bg-surface p-6">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="font-semibold text-text-primary">Backend Engineer</h3>
-              <p class="text-muted">Software consultancy</p>
+              <h3 class="font-semibold text-text-primary">Software Engineer</h3>
+              <p class="text-muted">Buk</p>
             </div>
-            <span class="shrink-0 font-mono text-sm text-violet-400">2019 – 2021</span>
+            <span class="shrink-0 font-mono text-sm text-violet-400">Oct 2023 – Apr 2024</span>
           </div>
           <ul class="mt-3 space-y-1 text-sm text-muted">
-            <li>• Built REST APIs and microservices for healthcare and logistics clients</li>
-            <li>• Introduced DDD patterns to a legacy Java codebase (500k lines)</li>
-            <li>• Delivered Go services for high-throughput data ingestion pipelines</li>
+            <li>
+              • Developed and maintained core features within a Groovy-based monolithic application,
+              improving stability and performance across multiple business modules
+            </li>
+            <li>
+              • Resolved production incidents and customer-reported issues, ensuring high system
+              availability and reliability
+            </li>
+            <li>
+              • Designed and delivered new functionalities and enhancements, aligning with product
+              requirements and agile delivery timelines
+            </li>
           </ul>
           <div class="mt-4 flex flex-wrap gap-2">
-            {['Java', 'Go', 'REST APIs', 'DDD', 'MySQL'].map((t) => <Tag label={t} />)}
+            {['Groovy', 'Monolith', 'Agile'].map((t) => <Tag label={t} />)}
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border bg-surface p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold text-text-primary">Senior Java Software Engineer</h3>
+              <p class="text-muted">Globant</p>
+            </div>
+            <span class="shrink-0 font-mono text-sm text-violet-400">Feb 2022 – Sep 2023</span>
+          </div>
+          <ul class="mt-3 space-y-1 text-sm text-muted">
+            <li>
+              • Developed and implemented new features for financial systems using Java, enhancing
+              process efficiency and transaction reliability
+            </li>
+            <li>
+              • Produced technical documentation and deployment guides, ensuring seamless delivery
+              and consistent application rollout across environments
+            </li>
+            <li>
+              • Collaborated with cross-functional teams (QA, DevOps, Product, and Architecture) to
+              align development efforts with business objectives
+            </li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {['Java', 'Financial Systems', 'Cross-functional'].map((t) => <Tag label={t} />)}
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border bg-surface p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold text-text-primary">Software Engineer</h3>
+              <p class="text-muted">Subastas Ventura</p>
+            </div>
+            <span class="shrink-0 font-mono text-sm text-violet-400">Dec 2020 – Feb 2022</span>
+          </div>
+          <ul class="mt-3 space-y-1 text-sm text-muted">
+            <li>
+              • Led the migration from SVN to GitLab, serving as repository administrator and
+              implementing branch and merge strategies aligned with CI/CD best practices
+            </li>
+            <li>
+              • Integrated SonarQube for static code analysis, improving code quality and reducing
+              technical debt
+            </li>
+            <li>
+              • Planned and initiated the transition from a monolithic system to a microservices
+              architecture, defining core services and modular boundaries
+            </li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {['GitLab', 'SonarQube', 'Microservices', 'CI/CD'].map((t) => <Tag label={t} />)}
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border bg-surface p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold text-text-primary">Java Software Engineer</h3>
+              <p class="text-muted">GFT</p>
+            </div>
+            <span class="shrink-0 font-mono text-sm text-violet-400">Apr 2020 – Sep 2020</span>
+          </div>
+          <ul class="mt-3 space-y-1 text-sm text-muted">
+            <li>
+              • Developed and integrated microservices into the Banking-as-a-Service (BaaS)
+              architecture, ensuring secure and efficient data exchange
+            </li>
+            <li>
+              • Built reactive applications using Spring Boot WebFlux, improving system
+              responsiveness and scalability under high load
+            </li>
+            <li>
+              • Implemented MongoDB and Redis for optimised data access and caching, enhancing
+              performance and reducing latency
+            </li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {['Spring Boot', 'WebFlux', 'MongoDB', 'Redis', 'BaaS'].map((t) => <Tag label={t} />)}
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border bg-surface p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold text-text-primary">Java Software Engineer</h3>
+              <p class="text-muted">4Work (Consis Internacional)</p>
+            </div>
+            <span class="shrink-0 font-mono text-sm text-violet-400">Dec 2019 – Mar 2020</span>
+          </div>
+          <ul class="mt-3 space-y-1 text-sm text-muted">
+            <li>
+              • Contributed to the development and maintenance of enterprise-grade Java applications
+            </li>
+            <li>
+              • Designed and implemented RESTful APIs and web services using Hibernate, JSF, and
+              Maven
+            </li>
+            <li>
+              • Conducted code reviews, unit testing, and applied object-oriented programming
+              principles
+            </li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {['Java', 'Hibernate', 'JSF', 'Maven', 'REST APIs'].map((t) => <Tag label={t} />)}
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-border bg-surface p-6">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="font-semibold text-text-primary">IT Consultant</h3>
+              <p class="text-muted">SOA Professionals Latam</p>
+            </div>
+            <span class="shrink-0 font-mono text-sm text-violet-400">Nov 2017 – Dec 2019</span>
+          </div>
+          <ul class="mt-3 space-y-1 text-sm text-muted">
+            <li>
+              • Served as Software Engineer for multiple banking integration projects, delivering
+              high-availability solutions
+            </li>
+            <li>
+              • Led data migration project for Scotiabank (CMOD migration, Jun–Dec 2018),
+              manipulating AIX-IBM server data from e2vault to CMOD
+            </li>
+            <li>
+              • Developed and maintained Java-based APIs and web services using Hibernate, XML, and
+              OOP principles
+            </li>
+            <li>
+              • Applied Clean Code and agile methodologies to ensure maintainable, secure, and
+              efficient codebases
+            </li>
+          </ul>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {
+              ['Java', 'Hibernate', 'XML', 'Banking', 'Scotiabank', 'Clean Code'].map((t) => (
+                <Tag label={t} />
+              ))
+            }
           </div>
         </div>
       </div>
@@ -102,28 +279,40 @@ import Tag from '@components/ui/Tag.astro';
       <h2 class="mb-6 text-xl font-bold text-text-primary">Technical Skills</h2>
       <div class="grid gap-4 sm:grid-cols-2">
         <div class="rounded-xl border border-border bg-surface p-4">
-          <h3 class="mb-2 text-sm font-semibold text-violet-400">Languages</h3>
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Programming Languages</h3>
+          <p class="text-sm text-muted">Java, Go, Rust, Python, JavaScript, TypeScript, SQL</p>
+        </div>
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Frameworks & Libraries</h3>
           <p class="text-sm text-muted">
-            Java (expert), Go (proficient), Rust (proficient), TypeScript (proficient), Bash
-            (advanced)
+            Spring Boot, Spring Framework, Vert.x, Hibernate, Jakarta EE, JSF, Maven, WebFlux
           </p>
         </div>
         <div class="rounded-xl border border-border bg-surface p-4">
-          <h3 class="mb-2 text-sm font-semibold text-violet-400">Architecture</h3>
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Cloud & DevOps</h3>
           <p class="text-sm text-muted">
-            Hexagonal, Clean, DDD, CQRS, Event Sourcing, EDA, microservices, monorepo strategy
+            AWS, Docker, Kubernetes (EKS), Terraform, Jenkins, GitHub Actions, SonarQube, CI/CD
+            Pipelines, New Relic, Elasticsearch
           </p>
         </div>
         <div class="rounded-xl border border-border bg-surface p-4">
-          <h3 class="mb-2 text-sm font-semibold text-violet-400">Cloud & Infrastructure</h3>
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Databases</h3>
           <p class="text-sm text-muted">
-            AWS (EKS, S3, SQS, SNS, IAM, Secrets Manager), Kubernetes, Helm, Terraform, Docker
+            PostgreSQL, MongoDB, Redis, SQL Server, MySQL, MariaDB, DynamoDB
           </p>
         </div>
         <div class="rounded-xl border border-border bg-surface p-4">
-          <h3 class="mb-2 text-sm font-semibold text-violet-400">Frameworks & Tools</h3>
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Architecture & Practices</h3>
           <p class="text-sm text-muted">
-            Spring Boot, Vert.x, Axum (Rust), Kafka, PostgreSQL, Redis, GitHub Actions, ArgoCD
+            Microservices, Cloud-Native Architecture, Distributed Systems, API Design, Clean Code,
+            Agile Methodologies, OOP, Design Patterns
+          </p>
+        </div>
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Soft Skills</h3>
+          <p class="text-sm text-muted">
+            Technical Leadership, Project Management, Problem Solving, Team Collaboration,
+            Analytical Thinking
           </p>
         </div>
       </div>
@@ -132,22 +321,83 @@ import Tag from '@components/ui/Tag.astro';
     <div class="mb-12">
       <h2 class="mb-6 text-xl font-bold text-text-primary">Education</h2>
       <div class="rounded-xl border border-border bg-surface p-6">
-        <h3 class="font-semibold text-text-primary">B.Sc. Computer Science</h3>
-        <p class="text-muted">Universidad · Mexico City</p>
-        <p class="font-mono text-sm text-violet-400">2013 – 2017</p>
+        <h3 class="font-semibold text-text-primary">Ingeniería en Informática</h3>
+        <p class="text-muted">Universidad Politécnica de Sinaloa</p>
+        <p class="font-mono text-sm text-violet-400">2011 – 2014</p>
+      </div>
+    </div>
+
+    <div class="mb-12">
+      <h2 class="mb-6 text-xl font-bold text-text-primary">Certifications</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="font-semibold text-text-primary">Scrum Developer Certified (SDC)</h3>
+          <p class="text-sm text-muted">SCRUMstudy · Dec 2015</p>
+        </div>
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="font-semibold text-text-primary">Scrum Fundamentals Certified (SFC)</h3>
+          <p class="text-sm text-muted">SCRUMstudy · Dec 2015</p>
+        </div>
+        <div class="rounded-xl border border-dashed border-violet-500/30 bg-surface p-4">
+          <h3 class="font-semibold text-text-primary">AWS Solutions Architect</h3>
+          <p class="text-sm text-muted">Amazon Web Services · In Progress</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-12">
+      <h2 class="mb-6 text-xl font-bold text-text-primary">Professional Development</h2>
+      <p class="mb-4 text-sm leading-relaxed text-muted">
+        Continuous training through Platzi and Udemy, completing courses in databases, programming,
+        DevOps, and software architecture. Committed to lifelong learning and staying current with
+        emerging technologies and cloud-native design patterns.
+      </p>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="mb-3 text-sm font-semibold text-violet-400">Platzi Courses</h3>
+          <ul class="space-y-1 text-sm text-muted">
+            <li>• Bases de Datos</li>
+            <li>• Curso de PostgreSQL</li>
+            <li>• Curso de SQL y MySQL</li>
+            <li>• Curso de Programación Básica</li>
+            <li>• Curso profesional de Git y GitHub</li>
+            <li>• Curso de Java</li>
+            <li>• Curso de Desarrollo Web Online</li>
+            <li>• Introducción a Terminal y Línea de Comandos</li>
+          </ul>
+        </div>
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="mb-3 text-sm font-semibold text-violet-400">Continuing Education</h3>
+          <ul class="space-y-1 text-sm text-muted">
+            <li>• Software Architecture</li>
+            <li>• Microservices Design Patterns</li>
+            <li>• AWS Cloud Services</li>
+            <li>• Java Performance Optimisation</li>
+            <li>• Clean Architecture</li>
+            <li>• DevOps Fundamentals</li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <div>
-      <h2 class="mb-6 text-xl font-bold text-text-primary">Certifications</h2>
-      <div class="grid gap-4 sm:grid-cols-2">
+      <h2 class="mb-6 text-xl font-bold text-text-primary">Additional Information</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
         <div class="rounded-xl border border-border bg-surface p-4">
-          <h3 class="font-semibold text-text-primary">AWS Certified Solutions Architect</h3>
-          <p class="text-sm text-muted">Amazon Web Services · Associate level</p>
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Languages</h3>
+          <p class="text-sm text-muted">Spanish — Native</p>
+          <p class="text-sm text-muted">English — Professional working proficiency</p>
+          <p class="text-sm text-muted">Japanese — Elementary</p>
         </div>
         <div class="rounded-xl border border-border bg-surface p-4">
-          <h3 class="font-semibold text-text-primary">Certified Kubernetes Administrator</h3>
-          <p class="text-sm text-muted">CNCF</p>
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Work Preferences</h3>
+          <p class="text-sm text-muted">Open to remote, hybrid, or on-site roles</p>
+          <p class="text-sm text-muted">Scrum methodology, team leadership</p>
+        </div>
+        <div class="rounded-xl border border-border bg-surface p-4">
+          <h3 class="mb-2 text-sm font-semibold text-violet-400">Online Presence</h3>
+          <p class="text-sm text-muted">30,000+ points on Platzi</p>
+          <p class="text-sm text-muted">500+ LinkedIn connections</p>
         </div>
       </div>
     </div>

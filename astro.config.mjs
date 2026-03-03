@@ -10,7 +10,9 @@ export default defineConfig({
     tailwind({ applyBaseStyles: false }),
     react(),
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('style-guide'),
+    }),
   ],
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },

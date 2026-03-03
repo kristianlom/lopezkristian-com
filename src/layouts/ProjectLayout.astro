@@ -12,14 +12,15 @@ interface Props {
   date: Date;
   status: 'active' | 'archived';
   repoUrl?: string;
+  image?: string;
   slug: string;
 }
 
-const { title, description, stack, date, status, repoUrl, slug } = Astro.props;
+const { title, description, stack, date, status, repoUrl, image, slug } = Astro.props;
 const projectUrl = `https://lopezkristian.com/projects/${slug}`;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} image={image}>
   <JsonLd
     type="Article"
     title={title}
