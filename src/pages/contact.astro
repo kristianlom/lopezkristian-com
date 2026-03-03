@@ -136,7 +136,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
           <p id="contact-feedback" class="hidden text-sm" role="status" aria-live="polite"></p>
 
           <p class="text-xs text-muted">
-            Protected by Cloudflare Turnstile, honeypot anti-spam, and rate limiting.
+            {
+              turnstileSiteKey
+                ? 'Protected by Cloudflare Turnstile, honeypot anti-spam, and rate limiting.'
+                : 'Protected with client-side validation, honeypot anti-spam, and rate limiting.'
+            }
           </p>
         </form>
       </div>
@@ -144,7 +148,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   </Section>
 </BaseLayout>
 
-<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{
+  turnstileSiteKey && (
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer />
+  )
+}
 
 <script>
   const RATE_LIMIT_KEY = 'contact_form_attempts';
