@@ -20,6 +20,7 @@ interface Props {
 }
 
 const { title, description, canonical, image, type, publishedTime, tags, lang } = Astro.props;
+const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
 ---
 
 <!doctype html>
@@ -65,5 +66,12 @@ const { title, description, canonical, image, type, publishedTime, tags, lang } 
       <slot />
     </main>
     <Footer />
+    {cfBeaconToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${cfBeaconToken}"}`}
+      />
+    )}
   </body>
 </html>
