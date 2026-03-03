@@ -44,7 +44,7 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
       ))}
     </div>
 
-    <p id="posts-empty" class="mb-6 hidden text-sm text-muted">
+    <p id="posts-empty" class="mb-6 hidden text-sm text-muted" aria-live="polite">
       No posts found for the selected tag.
     </p>
 
