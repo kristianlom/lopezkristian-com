@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint src --ext .ts,.tsx,.astro",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "lh:ci" : "lhci autorun",
+    "perf:check" : "npm run build && npm run lh:ci"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -32,6 +34,7 @@
     "@astrojs/check": "^0.9.6",
     "@commitlint/cli": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
+    "@lhci/cli": "^0.15.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
