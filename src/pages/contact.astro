@@ -3,6 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/layout/Section.astro';
 
 const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <BaseLayout
@@ -15,8 +16,8 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
       <div>
         <h1 class="mb-4 text-4xl font-bold text-text-primary">Get in Touch</h1>
         <p class="mb-8 text-lg leading-relaxed text-muted">
-          I'm open to senior engineering roles, architecture consulting, and interesting
-          technical conversations. Fill out the form or reach me directly.
+          I'm open to senior engineering roles, architecture consulting, and interesting technical
+          conversations. Fill out the form or reach me directly.
         </p>
 
         <div class="space-y-4">
@@ -64,13 +65,7 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
           <input type="hidden" name="from_name" value="Portfolio Contact Form" />
           <div class="hidden" aria-hidden="true">
             <label for="botcheck">Botcheck</label>
-            <input
-              type="checkbox"
-              id="botcheck"
-              name="botcheck"
-              tabindex="-1"
-              autocomplete="off"
-            />
+            <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off" />
           </div>
 
           <div>
@@ -89,7 +84,8 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
           </div>
 
           <div>
-            <label for="email" class="mb-2 block text-sm font-medium text-text-primary">Email</label>
+            <label for="email" class="mb-2 block text-sm font-medium text-text-primary">Email</label
+            >
             <input
               type="email"
               id="email"
@@ -103,7 +99,9 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
           </div>
 
           <div>
-            <label for="message" class="mb-2 block text-sm font-medium text-text-primary">Message</label>
+            <label for="message" class="mb-2 block text-sm font-medium text-text-primary"
+              >Message</label
+            >
             <textarea
               id="message"
               name="message"
@@ -112,9 +110,20 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
               maxlength="2000"
               rows={6}
               class="w-full resize-none rounded-lg border border-border bg-surface-hover px-4 py-3 text-text-primary placeholder-muted transition-colors focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
-              placeholder="Tell me about the opportunity or project..."
-            ></textarea>
+              placeholder="Tell me about the opportunity or project..."></textarea>
           </div>
+
+          {
+            turnstileSiteKey && (
+              <div
+                class="cf-turnstile"
+                data-sitekey={turnstileSiteKey}
+                data-theme="auto"
+                data-callback="onTurnstileSuccess"
+                data-expired-callback="onTurnstileExpired"
+              />
+            )
+          }
 
           <button
             id="contact-submit"
@@ -127,7 +136,7 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
           <p id="contact-feedback" class="hidden text-sm" role="status" aria-live="polite"></p>
 
           <p class="text-xs text-muted">
-            Protected with client-side validation, honeypot anti-spam and basic rate limiting.
+            Protected by Cloudflare Turnstile, honeypot anti-spam, and rate limiting.
           </p>
         </form>
       </div>
@@ -135,19 +144,40 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
   </Section>
 </BaseLayout>
 
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <script>
   const RATE_LIMIT_KEY = 'contact_form_attempts';
   const MAX_SUBMISSIONS_PER_HOUR = 3;
 
+  interface TurnstileWindow extends Window {
+    onTurnstileSuccess?: (token: string) => void;
+    onTurnstileExpired?: () => void;
+    turnstile?: { reset: () => void };
+  }
+  const win = window as TurnstileWindow;
+
+  let turnstileToken = '';
+
+  win.onTurnstileSuccess = (token: string) => {
+    turnstileToken = token;
+  };
+  win.onTurnstileExpired = () => {
+    turnstileToken = '';
+  };
+
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const submitButton = document.getElementById('contact-submit') as HTMLButtonElement | null;
   const feedback = document.getElementById('contact-feedback');
+  const turnstileEnabled = !!form?.querySelector('.cf-turnstile');
 
   if (form) {
     const nameField = form.querySelector<HTMLInputElement>('#name');
     const emailField = form.querySelector<HTMLInputElement>('#email');
     const messageField = form.querySelector<HTMLTextAreaElement>('#message');
-    const fields = [nameField, emailField, messageField].filter(Boolean) as Array<HTMLInputElement | HTMLTextAreaElement>;
+    const fields = [nameField, emailField, messageField].filter(Boolean) as Array<
+      HTMLInputElement | HTMLTextAreaElement
+    >;
 
     function clearFeedback() {
       if (!feedback) return;
@@ -256,6 +286,11 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
         return;
       }
 
+      if (turnstileEnabled && !turnstileToken) {
+        setFeedback('Please complete the security check.', 'error');
+        return;
+      }
+
       if (submitButton) {
         submitButton.disabled = true;
         submitButton.textContent = 'Sending...';
@@ -263,6 +298,9 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 
       try {
         const formData = new FormData(form);
+        if (turnstileToken) {
+          formData.append('cf_turnstile_response', turnstileToken);
+        }
         const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           body: formData,
@@ -271,12 +309,19 @@ const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok || !data.success) {
-          setFeedback(data?.message ?? 'Unable to send your message right now. Try again later.', 'error');
+          setFeedback(
+            data?.message ?? 'Unable to send your message right now. Try again later.',
+            'error'
+          );
           return;
         }
 
         registerAttempt();
         form.reset();
+        if (win.turnstile) {
+          win.turnstile.reset();
+        }
+        turnstileToken = '';
         setFeedback('Message sent successfully. Thanks for reaching out.', 'success');
       } catch {
         setFeedback('Network error while sending message. Please try again.', 'error');
