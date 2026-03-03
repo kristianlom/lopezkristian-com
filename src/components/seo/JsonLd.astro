@@ -1,4 +1,6 @@
 ---
+import { SITE_URL } from '@config/site';
+
 interface PersonSchema {
   type: 'Person';
 }
@@ -17,7 +19,7 @@ interface WebSiteSchema {
 type Props = PersonSchema | ArticleSchema | WebSiteSchema;
 
 const props = Astro.props;
-const siteUrl = 'https://lopezkristian.com';
+const siteUrl = SITE_URL;
 
 let schema: Record<string, unknown> = {};
 

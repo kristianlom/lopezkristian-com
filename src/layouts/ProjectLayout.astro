@@ -4,6 +4,7 @@ import JsonLd from '@components/seo/JsonLd.astro';
 import Tag from '@components/ui/Tag.astro';
 import CTA from '@components/ui/CTA.astro';
 import { formatDate, isoDate } from '@utils/date';
+import { getFullUrl } from '@config/site';
 
 interface Props {
   title: string;
@@ -12,15 +13,15 @@ interface Props {
   date: Date;
   status: 'active' | 'archived';
   repoUrl?: string;
-  image?: string;
+  heroImage?: string;
   slug: string;
 }
 
-const { title, description, stack, date, status, repoUrl, image, slug } = Astro.props;
-const projectUrl = `https://lopezkristian.com/projects/${slug}`;
+const { title, description, stack, date, status, repoUrl, heroImage, slug } = Astro.props;
+const projectUrl = getFullUrl(`/projects/${slug}`);
 ---
 
-<BaseLayout title={title} description={description} image={image}>
+<BaseLayout title={title} description={description} image={heroImage}>
   <JsonLd
     type="Article"
     title={title}

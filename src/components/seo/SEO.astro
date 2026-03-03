@@ -1,4 +1,6 @@
 ---
+import { SITE_URL } from '@config/site';
+
 interface Props {
   title: string;
   description: string;
@@ -23,7 +25,7 @@ const {
   lang,
 } = Astro.props;
 
-const siteUrl = 'https://lopezkristian.com';
+const siteUrl = SITE_URL;
 const canonicalUrl = canonical ?? Astro.url.href;
 const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 const fullTitle = title.includes('Kristian') ? title : `${title} | Kristian López`;
