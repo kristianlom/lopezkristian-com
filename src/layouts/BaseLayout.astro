@@ -13,13 +13,15 @@ interface Props {
   description: string;
   canonical?: string;
   image?: string;
+  ogTitle?: string;
   type?: 'website' | 'article';
   publishedTime?: string;
   tags?: string[];
   lang?: string;
 }
 
-const { title, description, canonical, image, type, publishedTime, tags, lang } = Astro.props;
+const { title, description, canonical, image, ogTitle, type, publishedTime, tags, lang } =
+  Astro.props;
 const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
 ---
 
@@ -34,6 +36,7 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
       description={description}
       canonical={canonical}
       image={image}
+      ogTitle={ogTitle}
       type={type}
       publishedTime={publishedTime}
       tags={tags}
@@ -41,7 +44,12 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     />
     <JsonLd type="WebSite" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="alternate" type="application/rss+xml" title="Kristian López — Writing" href="/writing/rss.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Kristian López — Writing"
+      href="/writing/rss.xml"
+    />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -51,14 +59,19 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
       (function () {
         try {
           var stored = localStorage.getItem('theme');
-          var preferred = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          var preferred =
+            stored ||
+            (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
           if (preferred === 'light') document.documentElement.classList.add('light');
         } catch {}
       })();
     </script>
   </head>
   <body class="min-h-screen bg-bg text-text-primary">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:rounded focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:rounded focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-white"
+    >
       Skip to main content
     </a>
     <Header />
@@ -66,12 +79,14 @@ const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
       <slot />
     </main>
     <Footer />
-    {cfBeaconToken && (
-      <script
-        defer
-        src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon={`{"token": "${cfBeaconToken}"}`}
-      />
-    )}
+    {
+      cfBeaconToken && (
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={`{"token": "${cfBeaconToken}"}`}
+        />
+      )
+    }
   </body>
 </html>

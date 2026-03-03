@@ -4,14 +4,16 @@ import Section from '@components/layout/Section.astro';
 import Card from '@components/ui/Card.astro';
 import { getCollection } from 'astro:content';
 
-const projects = (await getCollection('projects'))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 
 const allStacks = [...new Set(projects.flatMap((project) => project.data.stack))].sort();
 ---
 
 <BaseLayout
   title="Projects — Kristian López"
+  ogTitle="Engineering Projects — Distributed Systems, Rust & Cloud Platforms"
   description="Case studies and engineering projects: distributed systems, Rust microservices on AWS EKS, Restaurant POS platforms, and Git automation tooling."
   image="/og/og-projects.png"
 >
@@ -19,12 +21,17 @@ const allStacks = [...new Set(projects.flatMap((project) => project.data.stack))
     <header class="mb-12">
       <h1 class="mb-4 text-4xl font-bold text-text-primary">Projects</h1>
       <p class="max-w-2xl text-lg text-muted">
-        Case studies from real production systems. Each project documents the architecture 
+        Case studies from real production systems. Each project documents the architecture
         decisions, technical trade-offs, and outcomes.
       </p>
     </header>
 
-    <div class="mb-8 flex flex-wrap gap-2" id="stack-filters" role="group" aria-label="Filter projects by technology">
+    <div
+      class="mb-8 flex flex-wrap gap-2"
+      id="stack-filters"
+      role="group"
+      aria-label="Filter projects by technology"
+    >
       <button
         data-stack=""
         aria-pressed="true"
@@ -32,15 +39,17 @@ const allStacks = [...new Set(projects.flatMap((project) => project.data.stack))
       >
         All
       </button>
-      {allStacks.map((stack) => (
-        <button
-          data-stack={stack}
-          aria-pressed="false"
-          class="stack-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400"
-        >
-          {stack}
-        </button>
-      ))}
+      {
+        allStacks.map((stack) => (
+          <button
+            data-stack={stack}
+            aria-pressed="false"
+            class="stack-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400"
+          >
+            {stack}
+          </button>
+        ))
+      }
     </div>
 
     <p id="projects-empty" class="mb-6 hidden text-sm text-muted" aria-live="polite">
@@ -48,21 +57,23 @@ const allStacks = [...new Set(projects.flatMap((project) => project.data.stack))
     </p>
 
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="projects-grid">
-      {projects.map((project) => (
-        <div class="project-card" data-stack={project.data.stack.join(',')}>
-          <Card
-            title={project.data.title}
-            description={project.data.description}
-            href={`/projects/${project.slug}`}
-            tags={project.data.stack}
-            date={project.data.date}
-            variant="project"
-            status={project.data.status}
-            repoUrl={project.data.repoUrl}
-            headingLevel={2}
-          />
-        </div>
-      ))}
+      {
+        projects.map((project) => (
+          <div class="project-card" data-stack={project.data.stack.join(',')}>
+            <Card
+              title={project.data.title}
+              description={project.data.description}
+              href={`/projects/${project.slug}`}
+              tags={project.data.stack}
+              date={project.data.date}
+              variant="project"
+              status={project.data.status}
+              repoUrl={project.data.repoUrl}
+              headingLevel={2}
+            />
+          </div>
+        ))
+      }
     </div>
   </Section>
 </BaseLayout>

@@ -4,14 +4,16 @@ import Section from '@components/layout/Section.astro';
 import Card from '@components/ui/Card.astro';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('writing', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
 
 const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 ---
 
 <BaseLayout
   title="Writing — Kristian López"
+  ogTitle="Technical Writing — Architecture, Microservices & Cloud Engineering"
   description="Technical articles on software architecture, microservices, Rust, Java, AWS, DDD, CQRS, and distributed systems."
   image="/og/og-writing.png"
 >
@@ -19,9 +21,9 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
     <header class="mb-12">
       <h1 class="mb-4 text-4xl font-bold text-text-primary">Writing</h1>
       <p class="max-w-2xl text-lg text-muted">
-        Deep dives into architecture patterns, production lessons, and technical trade-offs. 
-        No fluff, no tutorials for beginners — written for engineers who've shipped systems 
-        and want to think more carefully about them.
+        Deep dives into architecture patterns, production lessons, and technical trade-offs. No
+        fluff, no tutorials for beginners — written for engineers who've shipped systems and want to
+        think more carefully about them.
       </p>
     </header>
 
@@ -33,15 +35,17 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
       >
         All
       </button>
-      {allTags.map((tag) => (
-        <button
-          data-tag={tag}
-          aria-pressed="false"
-          class="tag-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400"
-        >
-          {tag}
-        </button>
-      ))}
+      {
+        allTags.map((tag) => (
+          <button
+            data-tag={tag}
+            aria-pressed="false"
+            class="tag-btn rounded-full bg-surface-hover px-3 py-1 text-xs font-medium text-muted transition-colors hover:bg-violet-600/20 hover:text-violet-400"
+          >
+            {tag}
+          </button>
+        ))
+      }
     </div>
 
     <p id="posts-empty" class="mb-6 hidden text-sm text-muted" aria-live="polite">
@@ -49,22 +53,28 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
     </p>
 
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="posts-grid">
-      {posts.map((post) => (
-        <div class="post-card" data-tags={post.data.tags.join(',')}>
-          <Card
-            title={post.data.title}
-            description={post.data.description}
-            href={`/writing/${post.slug}`}
-            tags={post.data.tags.slice(0, 3)}
-            date={post.data.pubDate}
-            variant="post"
-            headingLevel={2}
-          />
-        </div>
-      ))}
+      {
+        posts.map((post) => (
+          <div class="post-card" data-tags={post.data.tags.join(',')}>
+            <Card
+              title={post.data.title}
+              description={post.data.description}
+              href={`/writing/${post.slug}`}
+              tags={post.data.tags.slice(0, 3)}
+              date={post.data.pubDate}
+              variant="post"
+              headingLevel={2}
+            />
+          </div>
+        ))
+      }
     </div>
 
-    <nav id="pagination" class="mt-10 hidden items-center justify-center gap-3" aria-label="Posts pagination">
+    <nav
+      id="pagination"
+      class="mt-10 hidden items-center justify-center gap-3"
+      aria-label="Posts pagination"
+    >
       <button
         id="pagination-prev"
         class="rounded-lg border border-border px-4 py-2 text-sm text-muted transition-colors hover:border-violet-500/40 hover:text-text-primary disabled:cursor-not-allowed disabled:opacity-50"

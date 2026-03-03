@@ -19,15 +19,36 @@ const specialties = [
 ];
 
 const experience = [
-  { year: '2023–now', role: 'Staff Software Engineer', company: 'Leading tech company', tech: ['Java', 'Kafka', 'AWS EKS', 'Kubernetes'] },
-  { year: '2021–2023', role: 'Senior Software Architect', company: 'Fintech startup', tech: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'] },
-  { year: '2019–2021', role: 'Backend Engineer', company: 'Software consultancy', tech: ['Java', 'Go', 'REST APIs', 'MySQL'] },
-  { year: '2017–2019', role: 'Junior Developer', company: 'First role', tech: ['Java', 'JavaScript', 'SQL'] },
+  {
+    year: '2023–now',
+    role: 'Staff Software Engineer',
+    company: 'Leading tech company',
+    tech: ['Java', 'Kafka', 'AWS EKS', 'Kubernetes'],
+  },
+  {
+    year: '2021–2023',
+    role: 'Senior Software Architect',
+    company: 'Fintech startup',
+    tech: ['Java', 'Spring Boot', 'PostgreSQL', 'Docker'],
+  },
+  {
+    year: '2019–2021',
+    role: 'Backend Engineer',
+    company: 'Software consultancy',
+    tech: ['Java', 'Go', 'REST APIs', 'MySQL'],
+  },
+  {
+    year: '2017–2019',
+    role: 'Junior Developer',
+    company: 'First role',
+    tech: ['Java', 'JavaScript', 'SQL'],
+  },
 ];
 ---
 
 <BaseLayout
   title="About — Kristian López"
+  ogTitle="About Kristian López — Software Architect & Staff Engineer"
   description="Software Architect and Staff Engineer building distributed systems, microservices, and cloud-native platforms."
   image="/og/og-about.png"
 >
@@ -39,16 +60,16 @@ const experience = [
 
         <div class="space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            I'm Kristian López, a Software Architect and Staff Engineer focused on distributed systems
-            that remain maintainable as teams and traffic grow. My work sits at the intersection of
-            architecture clarity, cloud-native delivery, and execution quality.
+            I'm Kristian López, a Software Architect and Staff Engineer focused on distributed
+            systems that remain maintainable as teams and traffic grow. My work sits at the
+            intersection of architecture clarity, cloud-native delivery, and execution quality.
           </p>
           <p>
             My engineering philosophy is simple:
-            <strong class="text-text-primary">complexity is a cost center</strong>.
-            I design for replaceability and fast feedback, so components can be tested, evolved, and
-            reasoned about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven
-            patterns because they reduce long-term friction.
+            <strong class="text-text-primary">complexity is a cost center</strong>. I design for
+            replaceability and fast feedback, so components can be tested, evolved, and reasoned
+            about independently. I rely on Hexagonal Architecture, DDD, and Event-Driven patterns
+            because they reduce long-term friction.
           </p>
           <p>
             Outside architecture decisions, I write about production trade-offs, mentor engineers
@@ -74,9 +95,7 @@ const experience = [
   <Section class="border-t border-border">
     <h2 class="mb-8 text-2xl font-bold text-text-primary">Specialties</h2>
     <div class="flex flex-wrap gap-3">
-      {specialties.map((s) => (
-        <Tag label={s} />
-      ))}
+      {specialties.map((s) => <Tag label={s} />)}
     </div>
 
     <div class="mt-12 grid gap-6 sm:grid-cols-2">
@@ -106,22 +125,24 @@ const experience = [
   <Section class="border-t border-border">
     <h2 class="mb-8 text-2xl font-bold text-text-primary">Experience</h2>
     <div class="space-y-6">
-      {experience.map(({ year, role, company, tech }) => (
-        <div class="flex gap-6 rounded-xl border border-border bg-surface p-6">
-          <div class="w-28 shrink-0">
-            <span class="text-sm font-mono text-violet-400">{year}</span>
-          </div>
-          <div>
-            <p class="font-semibold text-text-primary">{role}</p>
-            <p class="mb-3 text-sm text-muted">{company}</p>
-            <div class="flex flex-wrap gap-2">
-              {tech.map((t) => (
-                <span class="rounded bg-surface-hover px-2 py-0.5 text-xs text-muted">{t}</span>
-              ))}
+      {
+        experience.map(({ year, role, company, tech }) => (
+          <div class="flex gap-6 rounded-xl border border-border bg-surface p-6">
+            <div class="w-28 shrink-0">
+              <span class="font-mono text-sm text-violet-400">{year}</span>
+            </div>
+            <div>
+              <p class="font-semibold text-text-primary">{role}</p>
+              <p class="mb-3 text-sm text-muted">{company}</p>
+              <div class="flex flex-wrap gap-2">
+                {tech.map((t) => (
+                  <span class="rounded bg-surface-hover px-2 py-0.5 text-xs text-muted">{t}</span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </Section>
 
