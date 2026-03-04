@@ -1,4 +1,6 @@
 ---
+import { SITE_URL } from '@config/site';
+
 interface PersonSchema {
   type: 'Person';
 }
@@ -17,7 +19,7 @@ interface WebSiteSchema {
 type Props = PersonSchema | ArticleSchema | WebSiteSchema;
 
 const props = Astro.props;
-const siteUrl = 'https://lopezkristian.com';
+const siteUrl = SITE_URL;
 
 let schema: Record<string, unknown> = {};
 
@@ -27,7 +29,8 @@ if (props.type === 'Person') {
     '@type': 'Person',
     name: 'Kristian López',
     url: siteUrl,
-    description: 'Software Architect and Staff Engineer specialized in microservices, AWS, DDD, and reactive systems.',
+    description:
+      'Software Architect and Staff Engineer specialized in microservices, AWS, DDD, and reactive systems.',
     image: `${siteUrl}/og-default.png`,
     jobTitle: 'Software Architect & Staff Engineer',
     knowsAbout: [
@@ -44,10 +47,7 @@ if (props.type === 'Person') {
       'Rust',
       'Vert.x',
     ],
-    sameAs: [
-      'https://linkedin.com/in/lopezkristian',
-      'https://github.com/kristianlom',
-    ],
+    sameAs: ['https://linkedin.com/in/kristianlom', 'https://github.com/kristianlom'],
   };
 } else if (props.type === 'Article') {
   schema = {
@@ -70,7 +70,8 @@ if (props.type === 'Person') {
     '@type': 'WebSite',
     name: 'Kristian López',
     url: siteUrl,
-    description: 'Software Architect & Staff Engineer specialized in microservices, AWS, DDD, and reactive systems.',
+    description:
+      'Software Architect & Staff Engineer specialized in microservices, AWS, DDD, and reactive systems.',
   };
 }
 ---

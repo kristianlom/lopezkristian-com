@@ -3,14 +3,19 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import { DEFAULT_SITE_URL, normalizeSiteUrl } from './src/config/url.mjs';
+
+const siteUrl = normalizeSiteUrl(process.env.PUBLIC_SITE_URL ?? DEFAULT_SITE_URL);
 
 export default defineConfig({
-  site: 'https://lopezkristian.com',
+  site: siteUrl,
   integrations: [
     tailwind({ applyBaseStyles: false }),
     react(),
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('style-guide'),
+    }),
   ],
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },

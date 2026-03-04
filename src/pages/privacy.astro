@@ -5,6 +5,7 @@ import Section from '@components/layout/Section.astro';
 
 <BaseLayout
   title="Privacy Policy — Kristian López"
+  ogTitle="Privacy Policy — lopezkristian.com"
   description="Privacy policy for lopezkristian.com — contact data handling, analytics, retention, and your rights."
   image="/og/og-home.png"
 >
@@ -13,32 +14,36 @@ import Section from '@components/layout/Section.astro';
       <h1 class="mb-4 text-4xl font-bold text-text-primary">Privacy Policy</h1>
       <p class="mb-8 text-sm text-muted">Last updated: March 2026</p>
 
-      <div class="prose max-w-none prose-headings:text-text-primary prose-p:text-muted prose-li:text-muted prose-a:text-violet-400 prose-strong:text-text-primary">
+      <div
+        class="prose max-w-none prose-headings:text-text-primary prose-p:text-muted prose-a:text-violet-400 prose-strong:text-text-primary prose-li:text-muted"
+      >
         <h2>1. Introduction</h2>
         <p>
-          This Privacy Policy describes how lopezkristian.com handles information 
-          when you visit it. I take your privacy seriously and aim to be transparent about what 
-          data, if any, is collected.
+          This Privacy Policy describes how lopezkristian.com handles information when you visit it.
+          I take your privacy seriously and aim to be transparent about what data, if any, is
+          collected.
         </p>
 
         <h2>2. What Data Is Collected</h2>
         <p>
-          <strong class="text-text-primary">This site does not use accounts, profiling, or tracking cookies by default.</strong>
-          Basic server logs (IP address, user-agent, timestamp, requested path) may be processed by the hosting provider
-          for operational security, abuse prevention, and reliability.
+          <strong class="text-text-primary"
+            >This site does not use accounts, profiling, or tracking cookies by default.</strong
+          >
+          Basic server logs (IP address, user-agent, timestamp, requested path) may be processed by the
+          hosting provider for operational security, abuse prevention, and reliability.
         </p>
         <p>
-          If analytics are enabled via the PUBLIC_ANALYTICS_ID environment variable, 
-          a privacy-first analytics tool may collect aggregate, anonymized pageview data.
-          The goal is product improvement, not user profiling.
+          If analytics are enabled via the PUBLIC_ANALYTICS_ID environment variable, a privacy-first
+          analytics tool may collect aggregate, anonymized pageview data. The goal is product
+          improvement, not user profiling.
         </p>
 
         <h2>3. Contact Form</h2>
         <p>
-          If you submit the contact form, the data you provide (name, email, message) is sent
-          to a third-party form processing service (Web3Forms) and is used solely to respond to your inquiry.
-          Form submissions include anti-spam protections (honeypot and client-side rate limiting).
-          Messages are retained only as long as needed for communication and follow-up.
+          If you submit the contact form, the data you provide (name, email, message) is sent to a
+          third-party form processing service (Web3Forms) and is used solely to respond to your
+          inquiry. Form submissions include anti-spam protections (honeypot and client-side rate
+          limiting). Messages are retained only as long as needed for communication and follow-up.
         </p>
 
         <h2>4. Legal Basis</h2>
@@ -49,7 +54,7 @@ import Section from '@components/layout/Section.astro';
 
         <h2>5. Third-Party Links</h2>
         <p>
-          This site links to external services (GitHub, LinkedIn). Those services have their own 
+          This site links to external services (GitHub, LinkedIn). Those services have their own
           privacy policies. I am not responsible for their practices.
         </p>
 
@@ -61,14 +66,12 @@ import Section from '@components/layout/Section.astro';
           <li>Object to processing</li>
           <li>Lodge a complaint with your local data protection authority</li>
         </ul>
-        <p>
-          To exercise any of these rights, contact me via the contact form.
-        </p>
+        <p>To exercise any of these rights, contact me via the contact form.</p>
 
         <h2>7. Changes to This Policy</h2>
         <p>
-          This policy may be updated occasionally. Significant changes will be noted at the top 
-          of this page with the updated date.
+          This policy may be updated occasionally. Significant changes will be noted at the top of
+          this page with the updated date.
         </p>
       </div>
     </div>
