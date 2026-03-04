@@ -5,6 +5,7 @@ import TableOfContents from '@components/ui/TableOfContents.astro';
 import Tag from '@components/ui/Tag.astro';
 import Card from '@components/ui/Card.astro';
 import { formatDate, isoDate } from '@utils/date';
+import { getFullUrl } from '@config/site';
 
 interface RelatedPost {
   slug: string;
@@ -48,7 +49,7 @@ const {
   relatedPosts = [],
 } = Astro.props;
 
-const postUrl = `https://lopezkristian.com/writing/${slug}`;
+const postUrl = getFullUrl(`/writing/${slug}`);
 ---
 
 <BaseLayout
@@ -77,14 +78,12 @@ const postUrl = `https://lopezkristian.com/writing/${slug}`;
             <time class="text-sm text-muted" datetime={isoDate(pubDate)}>
               {formatDate(pubDate)}
             </time>
-            {updatedDate && (
-              <span class="text-sm text-muted">
-                · Updated {formatDate(updatedDate)}
-              </span>
-            )}
-            {readingTime && (
-              <span class="text-sm text-muted">· {readingTime}</span>
-            )}
+            {
+              updatedDate && (
+                <span class="text-sm text-muted">· Updated {formatDate(updatedDate)}</span>
+              )
+            }
+            {readingTime && <span class="text-sm text-muted">· {readingTime}</span>}
           </div>
 
           <h1 class="mb-4 text-3xl font-bold leading-tight text-text-primary sm:text-4xl">
@@ -92,16 +91,20 @@ const postUrl = `https://lopezkristian.com/writing/${slug}`;
           </h1>
           <p class="text-lg text-muted">{description}</p>
 
-          {tags.length > 0 && (
-            <div class="mt-4 flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <Tag label={tag} href={`/writing?tag=${tag}`} />
-              ))}
-            </div>
-          )}
+          {
+            tags.length > 0 && (
+              <div class="mt-4 flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <Tag label={tag} href={`/writing?tag=${tag}`} />
+                ))}
+              </div>
+            )
+          }
         </header>
 
-        <div class="prose prose-violet max-w-none prose-headings:font-bold prose-headings:text-text-primary prose-p:text-muted prose-li:text-muted prose-a:text-violet-400 prose-strong:text-text-primary prose-code:font-mono prose-code:text-text-primary prose-pre:rounded-xl prose-img:rounded-xl">
+        <div
+          class="prose prose-violet max-w-none prose-headings:font-bold prose-headings:text-text-primary prose-p:text-muted prose-a:text-violet-400 prose-strong:text-text-primary prose-code:font-mono prose-code:text-text-primary prose-pre:rounded-xl prose-li:text-muted prose-img:rounded-xl"
+        >
           <slot />
         </div>
 
@@ -114,52 +117,62 @@ const postUrl = `https://lopezkristian.com/writing/${slug}`;
           </div>
         </footer>
 
-        {(prevPost || nextPost) && (
-          <nav class="mt-10 grid gap-4 border-t border-border pt-8 sm:grid-cols-2" aria-label="Post navigation">
-            <div>
-              {prevPost && (
-                <a
-                  href={`/writing/${prevPost.slug}`}
-                  class="block rounded-xl border border-border bg-surface p-4 transition-colors hover:border-violet-500/40"
-                >
-                  <p class="text-xs uppercase tracking-wide text-muted">Previous</p>
-                  <p class="mt-1 font-semibold text-text-primary">{prevPost.data.title}</p>
-                </a>
-              )}
-            </div>
-            <div>
-              {nextPost && (
-                <a
-                  href={`/writing/${nextPost.slug}`}
-                  class="block rounded-xl border border-border bg-surface p-4 text-left transition-colors hover:border-violet-500/40 sm:text-right"
-                >
-                  <p class="text-xs uppercase tracking-wide text-muted">Next</p>
-                  <p class="mt-1 font-semibold text-text-primary">{nextPost.data.title}</p>
-                </a>
-              )}
-            </div>
-          </nav>
-        )}
+        {
+          (prevPost || nextPost) && (
+            <nav
+              class="mt-10 grid gap-4 border-t border-border pt-8 sm:grid-cols-2"
+              aria-label="Post navigation"
+            >
+              <div>
+                {prevPost && (
+                  <a
+                    href={`/writing/${prevPost.slug}`}
+                    class="block rounded-xl border border-border bg-surface p-4 transition-colors hover:border-violet-500/40"
+                  >
+                    <p class="text-xs uppercase tracking-wide text-muted">Previous</p>
+                    <p class="mt-1 font-semibold text-text-primary">{prevPost.data.title}</p>
+                  </a>
+                )}
+              </div>
+              <div>
+                {nextPost && (
+                  <a
+                    href={`/writing/${nextPost.slug}`}
+                    class="block rounded-xl border border-border bg-surface p-4 text-left transition-colors hover:border-violet-500/40 sm:text-right"
+                  >
+                    <p class="text-xs uppercase tracking-wide text-muted">Next</p>
+                    <p class="mt-1 font-semibold text-text-primary">{nextPost.data.title}</p>
+                  </a>
+                )}
+              </div>
+            </nav>
+          )
+        }
 
-        {relatedPosts.length > 0 && (
-          <section class="mt-10 border-t border-border pt-8" aria-labelledby="related-posts-title">
-            <h2 id="related-posts-title" class="mb-6 text-xl font-bold text-text-primary">
-              Related Articles
-            </h2>
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {relatedPosts.map((related) => (
-                <Card
-                  title={related.data.title}
-                  description={related.data.description}
-                  href={`/writing/${related.slug}`}
-                  tags={related.data.tags.slice(0, 3)}
-                  date={related.data.pubDate}
-                  variant="post"
-                />
-              ))}
-            </div>
-          </section>
-        )}
+        {
+          relatedPosts.length > 0 && (
+            <section
+              class="mt-10 border-t border-border pt-8"
+              aria-labelledby="related-posts-title"
+            >
+              <h2 id="related-posts-title" class="mb-6 text-xl font-bold text-text-primary">
+                Related Articles
+              </h2>
+              <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedPosts.map((related) => (
+                  <Card
+                    title={related.data.title}
+                    description={related.data.description}
+                    href={`/writing/${related.slug}`}
+                    tags={related.data.tags.slice(0, 3)}
+                    date={related.data.pubDate}
+                    variant="post"
+                  />
+                ))}
+              </div>
+            </section>
+          )
+        }
       </article>
 
       <aside class="hidden lg:block">
