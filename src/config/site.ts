@@ -3,16 +3,16 @@
  * Centralizes site URLs and metadata to support different deployment environments
  */
 
+import { DEFAULT_SITE_URL, normalizeSiteUrl } from './url.mjs';
+
 /**
  * Base site URL (production)
  * Override with PUBLIC_SITE_URL environment variable for staging/preview environments
  *
- * Normalized: trailing slashes and whitespace are automatically removed to ensure
- * consistent URL building across the application.
+ * Normalized via shared {@link normalizeSiteUrl} helper (also used by astro.config.mjs)
+ * so the two can never drift out of sync.
  */
-export const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? 'https://lopezkristian.com')
-  .trim()
-  .replace(/\/$/, '');
+export const SITE_URL = normalizeSiteUrl(import.meta.env.PUBLIC_SITE_URL ?? DEFAULT_SITE_URL);
 
 /**
  * Get the full URL for a given path

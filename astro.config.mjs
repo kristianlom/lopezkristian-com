@@ -3,10 +3,9 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import { DEFAULT_SITE_URL, normalizeSiteUrl } from './src/config/url.mjs';
 
-const siteUrl = (process.env.PUBLIC_SITE_URL ?? 'https://lopezkristian.com')
-  .trim()
-  .replace(/\/$/, '');
+const siteUrl = normalizeSiteUrl(process.env.PUBLIC_SITE_URL ?? DEFAULT_SITE_URL);
 
 export default defineConfig({
   site: siteUrl,
