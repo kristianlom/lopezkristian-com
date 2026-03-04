@@ -12,7 +12,7 @@ export async function GET(context: APIContext) {
     title: 'Kristian López — Writing',
     description:
       'Technical articles on software architecture, microservices, AWS, Rust, Java, DDD, CQRS, and distributed systems.',
-    site: context.site ?? SITE_URL,
+    site: SITE_URL ?? context.site,
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,

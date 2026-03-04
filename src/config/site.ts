@@ -6,8 +6,13 @@
 /**
  * Base site URL (production)
  * Override with PUBLIC_SITE_URL environment variable for staging/preview environments
+ *
+ * Normalized: trailing slashes and whitespace are automatically removed to ensure
+ * consistent URL building across the application.
  */
-export const SITE_URL = import.meta.env.PUBLIC_SITE_URL ?? 'https://lopezkristian.com';
+export const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? 'https://lopezkristian.com')
+  .trim()
+  .replace(/\/$/, '');
 
 /**
  * Get the full URL for a given path
@@ -17,9 +22,7 @@ export const SITE_URL = import.meta.env.PUBLIC_SITE_URL ?? 'https://lopezkristia
 export function getFullUrl(path: string): string {
   // Ensure path starts with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  // Remove trailing slash from SITE_URL if present
-  const baseUrl = SITE_URL.endsWith('/') ? SITE_URL.slice(0, -1) : SITE_URL;
-  return `${baseUrl}${normalizedPath}`;
+  return `${SITE_URL}${normalizedPath}`;
 }
 
 /**

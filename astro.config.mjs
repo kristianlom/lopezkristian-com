@@ -4,8 +4,12 @@ import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
+const siteUrl = (process.env.PUBLIC_SITE_URL ?? 'https://lopezkristian.com')
+  .trim()
+  .replace(/\/$/, '');
+
 export default defineConfig({
-  site: 'https://lopezkristian.com',
+  site: siteUrl,
   integrations: [
     tailwind({ applyBaseStyles: false }),
     react(),
