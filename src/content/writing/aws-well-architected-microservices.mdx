@@ -1,41 +1,40 @@
 ---
-title: "AWS Well-Architected aplicado a microservicios"
-description: "Aplicación práctica del framework Well-Architected en microservicios: seguridad, resiliencia, costos y excelencia operativa."
+title: 'AWS Well-Architected Applied to Microservices'
+description: 'Practical application of the Well-Architected Framework to microservices: security, resilience, cost, and operational excellence.'
 pubDate: 2026-02-28
-tags: ["aws", "microservices", "well-architected", "cloud", "reliability"]
+tags: ['aws', 'microservices', 'well-architected', 'cloud', 'reliability']
 draft: false
-heroImage: "/og/og-writing.png"
-lang: "es"
+heroImage: '/og/og-writing.png'
 ---
 
-El framework Well-Architected es más útil cuando se baja a decisiones concretas por servicio.
+The Well-Architected Framework is most useful when applied to concrete decisions per service.
 
-## Seguridad
+## Security
 
-- IAM de mínimo privilegio por workload
-- secretos fuera de código y rotación periódica
-- separación estricta por ambientes
+- Least-privilege IAM per workload
+- secrets outside code with periodic rotation
+- strict environment separation
 
-## Confiabilidad
+## Reliability
 
-- health checks live/ready
-- reintentos acotados y dead-letter queues
-- pruebas de recuperación y rollback
+- liveness and readiness health checks
+- bounded retries and dead-letter queues
+- recovery and rollback testing
 
-## Excelencia operativa
+## Operational Excellence
 
-- runbooks versionados
-- postmortems sin culpa con acciones verificables
-- despliegues pequeños y frecuentes
+- versioned runbooks
+- blameless postmortems with verifiable actions
+- small, frequent deployments
 
-## Eficiencia de costos
+## Cost Efficiency
 
-- rightsizing por perfil de carga
-- autoscaling por métricas reales
-- alertas por desviación de costo
+- rightsizing by load profile
+- autoscaling based on real metrics
+- cost deviation alerts
 
-## Cierre
+## Closing
 
-Well-Architected no es una auditoría anual. Es una rutina operativa semanal.
+Well-Architected is not an annual audit. It is a weekly operational routine.
 
-Relacionado: [Rust microservices en EKS](/writing/rust-microservices-aws-eks).
+Related: [Rust microservices on EKS](/writing/rust-microservices-aws-eks).

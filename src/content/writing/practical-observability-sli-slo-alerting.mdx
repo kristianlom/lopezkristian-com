@@ -1,0 +1,46 @@
+---
+title: 'Practical Observability: SLO, SLI, and Alerting'
+description: 'How to define actionable SLIs/SLOs and useful alerts to reduce operational noise and protect user experience.'
+pubDate: 2026-02-23
+tags: ['observability', 'slo', 'sli', 'alerting', 'operations']
+draft: false
+heroImage: '/og/og-writing.png'
+---
+
+Effective observability does not start with dashboards. It starts by defining what "healthy service" means for the user.
+
+## 1. User-Oriented SLIs
+
+Useful examples:
+
+- public API availability
+- p95 latency of critical operations
+- payment success rate
+
+Avoid internal metrics as the sole health signal.
+
+## 2. Realistic SLOs
+
+An aggressive SLO without operational capacity generates fatigue. Define:
+
+- target (e.g. 99.9%)
+- measurement window (28–30 days)
+- allowed error budget
+
+## 3. Alerts That Drive Action
+
+An alert must answer: who acts and what action they take.
+
+- page alert: active user impact
+- ticket alert: degradation without immediate impact
+- no runbook, no valid alert
+
+## 4. Burn Rate
+
+Use burn rate alerts to detect issues quickly and avoid over-alerting.
+
+## Closing
+
+The goal is not to observe more, but to make better decisions with less noise.
+
+Related: [Cyclomatic complexity](/writing/cyclomatic-complexity) and [Rust microservices on EKS](/writing/rust-microservices-aws-eks).
