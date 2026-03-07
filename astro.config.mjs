@@ -4,6 +4,7 @@ import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { DEFAULT_SITE_URL, normalizeSiteUrl } from './src/config/url.mjs';
+import mermaid from 'astro-mermaid';
 
 const siteUrl = normalizeSiteUrl(process.env.PUBLIC_SITE_URL ?? DEFAULT_SITE_URL);
 
@@ -16,6 +17,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.includes('style-guide'),
     }),
+    mermaid(),
   ],
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },

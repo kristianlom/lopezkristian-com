@@ -1,27 +1,27 @@
 ---
-title: "Internal Developer Platform for Microservices"
-description: "Case study: internal platform with golden paths, service templates, policy-as-code, and secure delivery controls for backend teams."
-stack: ["Backstage", "Kubernetes", "ArgoCD", "GitHub Actions", "Terraform", "OPA"]
+title: 'Internal Developer Platform for Microservices'
+description: 'Case study: internal platform with golden paths, service templates, policy-as-code, and secure delivery controls for backend teams.'
+stack: ['Backstage', 'Kubernetes', 'ArgoCD', 'GitHub Actions', 'Terraform', 'OPA']
 date: 2026-01-15
-status: "active"
-repoUrl: "https://github.com/kristianlom/internal-developer-platform"
+status: 'active'
+repoUrl: 'https://github.com/kristianlom/internal-developer-platform'
 featured: true
 ---
 
-## Problema
+## Problem
 
-Cada equipo creaba microservicios con convenciones distintas. La variabilidad generaba pipelines inconsistentes, deuda operativa y controles de seguridad incompletos.
+Each team was building microservices with different conventions. The variability produced inconsistent pipelines, operational debt, and incomplete security controls.
 
-## Solución
+## Solution
 
-Se construyó una IDP con enfoque de producto interno:
+An IDP was built with an internal product mindset:
 
-- plantillas de servicio (API, worker, consumer)
-- pipeline estándar con quality gates y seguridad
-- policy-as-code para despliegues y configuración
-- catálogo de servicios con ownership y runbooks
+- service templates (API, worker, consumer)
+- standard pipeline with quality gates and security checks
+- policy-as-code for deployments and configuration
+- service catalog with ownership and runbooks
 
-## Diagrama
+## Diagram
 
 ```mermaid
 flowchart TD
@@ -34,9 +34,9 @@ flowchart TD
   Cluster --> Obs[Metrics / Traces / Logs]
 ```
 
-## Impacto
+## Impact
 
-- lead time de servicio nuevo: 5 días -> 6 horas
-- fallas de configuración en producción: -63%
-- cobertura de estándares de seguridad: 100% de nuevos servicios
-- onboarding técnico: 2 semanas -> 3 días
+- New service lead time: 5 days → 6 hours
+- Configuration failures in production: -63%
+- Security standards coverage: 100% of new services
+- Technical onboarding: 2 weeks → 3 days
